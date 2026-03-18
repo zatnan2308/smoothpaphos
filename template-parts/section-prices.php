@@ -25,7 +25,7 @@ if ( empty( $categories ) ) {
                 array( 'name' => 'Lymphatic drainage massage',         'duration' => '90 min',  'price' => '80 €' ),
                 array( 'name' => 'Anti-cellulite massage',             'duration' => '40 min',  'price' => '40 €' ),
                 array( 'name' => 'Anti-cellulite massage',             'duration' => '60 min',  'price' => '55 €' ),
-                array( 'name' => 'Aphrodite's Touch',              'duration' => '90 min',  'price' => '90 €' ),
+                array( 'name' => "Aphrodite\u{2019}s Touch",              'duration' => '90 min',  'price' => '90 €' ),
                 array( 'name' => 'Head · neck · shoulders',           'duration' => '30 min',  'price' => '25 €' ),
             ),
         ),
