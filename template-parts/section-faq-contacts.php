@@ -34,7 +34,7 @@ if ( empty( $faq_items ) ) {
         ),
         array(
             'question' => 'Do you offer gift certificates?',
-            'answer'   => '<p>Yes\! Gift certificates are available for any service or amount. Contact us via Instagram or WhatsApp to arrange one.</p>',
+            'answer'   => '<p>Yes! Gift certificates are available for any service or amount. Contact us via Instagram or WhatsApp to arrange one.</p>',
         ),
     );
 }
@@ -70,8 +70,10 @@ $whatsapp         = get_field( 'whatsapp', 'option' );
                                     <?php echo esc_html( $item['question'] ?? '' ); ?>
                                     <span class="faq-icon" aria-hidden="true"></span>
                                 </button>
-                                <div class="faq-answer wysiwyg-content" hidden>
-                                    <?php echo smooth_wysiwyg( $item['answer'] ?? '' ); ?>
+                                <div class="faq-answer">
+                                    <div class="wysiwyg-content">
+                                        <?php echo smooth_wysiwyg( $item['answer'] ?? '' ); ?>
+                                    </div>
                                 </div>
                             </div>
                         <?php endforeach; ?>

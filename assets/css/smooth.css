@@ -807,6 +807,7 @@ h1, h2, h3, h4, h5 {
   user-select: none;
 }
 .faq-question:hover { background: var(--bg-card); }
+.faq-question,
 .faq-question h5 {
   font-family: var(--font-sans);
   font-size: 0.9rem;
