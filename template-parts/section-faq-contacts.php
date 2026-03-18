@@ -18,7 +18,7 @@ if ( empty( $faq_items ) ) {
         ),
         array(
             'question' => 'How long is a session?',
-            'answer'   => '<p>Sessions run from 30 minutes (express head, neck and shoulders) to 90 minutes (full-body or signature Aphrodite's Touch). You choose the duration that suits you best.</p>',
+            'answer'   => "<p>Sessions run from 30 minutes (express head, neck and shoulders) to 90 minutes (full-body or signature Aphrodite\u{2019}s Touch). You choose the duration that suits you best.</p>",
         ),
         array(
             'question' => 'Do I need to prepare anything?',
