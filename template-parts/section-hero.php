@@ -35,7 +35,9 @@ $card_text  = get_field( 'hero_card_text' ) ?: '';
                 </h1>
 
                 <?php if ( $desc ) : ?>
-                    <p class="hero-desc"><?php echo esc_html( $desc ); ?></p>
+                    <div class="hero-desc wysiwyg-content">
+                        <?php echo smooth_wysiwyg( $desc ); ?>
+                    </div>
                 <?php endif; ?>
 
                 <div class="hero-buttons">
@@ -68,7 +70,9 @@ $card_text  = get_field( 'hero_card_text' ) ?: '';
                             <p class="hero-card-label"><?php echo esc_html( $card_title ); ?></p>
                         <?php endif; ?>
                         <?php if ( $card_text ) : ?>
-                            <p class="hero-card-text"><?php echo esc_html( $card_text ); ?></p>
+                            <div class="hero-card-text wysiwyg-content">
+                                <?php echo smooth_wysiwyg( $card_text ); ?>
+                            </div>
                         <?php endif; ?>
                     </div>
                 <?php endif; ?>

@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$label    = get_field( 'philosophy_label' ) ?: 'Философия';
+$label    = get_field( 'philosophy_label' ) ?: 'Philosophy';
 $title    = get_field( 'philosophy_title' ) ?: '';
 $desc     = get_field( 'philosophy_description' ) ?: '';
 $features = get_field( 'philosophy_features' );
@@ -19,14 +19,18 @@ $features = get_field( 'philosophy_features' );
         <div class="philosophy-header">
             <span class="section-label"><?php echo esc_html( $label ); ?></span>
             <?php if ( $title ) : ?>
-                <h2 class="philosophy-title font-serif"><?php echo esc_html( $title ); ?></h2>
+                <h2 class="philosophy-title font-serif">
+                    <?php echo smooth_heading( $title ); ?>
+                </h2>
             <?php endif; ?>
         </div>
 
         <!-- Grid -->
         <div class="philosophy-grid">
             <?php if ( $desc ) : ?>
-                <p class="philosophy-desc"><?php echo esc_html( $desc ); ?></p>
+                <div class="philosophy-desc wysiwyg-content">
+                    <?php echo smooth_wysiwyg( $desc ); ?>
+                </div>
             <?php endif; ?>
 
             <?php if ( is_array( $features ) && ! empty( $features ) ) : ?>

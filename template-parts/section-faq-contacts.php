@@ -6,16 +6,16 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$faq_title     = get_field( 'faq_title' ) ?: 'Важно знать';
+$faq_title     = get_field( 'faq_title' ) ?: 'Good to Know';
 $faq_items     = get_field( 'faq_items' );
-$contact_title = get_field( 'contact_title' ) ?: 'На связи';
+$contact_title = get_field( 'contact_title' ) ?: 'Get in Touch';
 
 // Global options
 $address        = get_field( 'address', 'option' ) ?: '';
 $instagram      = get_field( 'instagram_handle', 'option' ) ?: '';
 $instagram_url  = get_field( 'instagram_url', 'option' ) ?: '#';
 $whatsapp_link  = get_field( 'whatsapp_link', 'option' ) ?: '#';
-$whatsapp_text  = get_field( 'whatsapp_button_text', 'option' ) ?: 'Написать в WhatsApp';
+$whatsapp_text  = get_field( 'whatsapp_button_text', 'option' ) ?: 'Message on WhatsApp';
 ?>
 
 <section class="faq-contacts" id="contacts">
@@ -35,7 +35,9 @@ $whatsapp_text  = get_field( 'whatsapp_button_text', 'option' ) ?: 'Написа
                                     <span class="faq-icon" aria-hidden="true"></span>
                                 </div>
                                 <div class="faq-answer" aria-hidden="true">
-                                    <p><?php echo esc_html( $item['answer'] ?? '' ); ?></p>
+                                    <div class="wysiwyg-content">
+                                        <?php echo smooth_wysiwyg( $item['answer'] ?? '' ); ?>
+                                    </div>
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -54,26 +56,26 @@ $whatsapp_text  = get_field( 'whatsapp_button_text', 'option' ) ?: 'Написа
                                 <?php echo smooth_icon( 'map-pin', 20 ); ?>
                             </div>
                             <div>
-                                <p class="contact-label"><?php esc_html_e( 'Адрес', 'smooth-theme' ); ?></p>
+                                <p class="contact-label"><?php esc_html_e( 'Address', 'smooth-theme' ); ?></p>
                                 <p class="contact-value"><?php echo esc_html( $address ); ?></p>
                             </div>
                         </div>
                     <?php endif; ?>
 
                     <?php if ( $instagram ) : ?>
-                        <a href="<?php echo esc_url( $instagram_url ); ?>" class="contact-item" target="_blank" rel="noopener">
+                        <a href="<?php echo esc_url( $instagram_url ); ?>" class="contact-item" target="_blank" rel="noopener noreferrer">
                             <div class="contact-icon">
                                 <?php echo smooth_icon( 'instagram', 20 ); ?>
                             </div>
                             <div>
-                                <p class="contact-label"><?php esc_html_e( 'Instagram', 'smooth-theme' ); ?></p>
+                                <p class="contact-label">Instagram</p>
                                 <p class="contact-value"><?php echo esc_html( $instagram ); ?></p>
                             </div>
                         </a>
                     <?php endif; ?>
                 </div>
 
-                <a href="<?php echo esc_url( $whatsapp_link ); ?>" class="btn-whatsapp" target="_blank" rel="noopener">
+                <a href="<?php echo esc_url( $whatsapp_link ); ?>" class="btn-whatsapp" target="_blank" rel="noopener noreferrer">
                     <?php echo smooth_icon( 'phone', 14 ); ?>
                     <?php echo esc_html( $whatsapp_text ); ?>
                 </a>

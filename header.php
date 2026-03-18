@@ -9,11 +9,19 @@
 <?php wp_body_open(); ?>
 
 <?php
-// Options Page data
+// Global Options
 $logo_text     = get_field( 'logo_text', 'option' ) ?: 'Smooth';
 $logo_sub      = get_field( 'logo_subtitle', 'option' ) ?: 'Studio';
-$booking_text  = get_field( 'booking_button_text', 'option' ) ?: 'Запись';
+$booking_text  = get_field( 'booking_button_text', 'option' ) ?: 'Book Now';
 $booking_link  = get_field( 'booking_link', 'option' ) ?: '#';
+
+// Fallback nav links — используются если меню не создано в WP Admin
+$fallback_links = array(
+    array( 'url' => home_url( '/#about' ),    'label' => 'About' ),
+    array( 'url' => home_url( '/services/' ), 'label' => 'Services' ),
+    array( 'url' => home_url( '/about/' ),    'label' => 'About Us' ),
+    array( 'url' => home_url( '/contacts/' ), 'label' => 'Contacts' ),
+);
 ?>
 
 <!-- Navbar -->
@@ -27,17 +35,31 @@ $booking_link  = get_field( 'booking_link', 'option' ) ?: '#';
         </a>
 
         <!-- Desktop Nav -->
-        <div class="nav-links">
-            <a href="#about" class="nav-link"><?php esc_html_e( 'О студии', 'smooth-theme' ); ?></a>
-            <a href="#prices" class="nav-link"><?php esc_html_e( 'Цены', 'smooth-theme' ); ?></a>
-            <a href="#master" class="nav-link"><?php esc_html_e( 'Мастер', 'smooth-theme' ); ?></a>
-            <a href="#contacts" class="nav-link"><?php esc_html_e( 'Контакты', 'smooth-theme' ); ?></a>
-        </div>
+        <?php if ( has_nav_menu( 'primary' ) ) : ?>
+            <?php wp_nav_menu( array(
+                'theme_location'  => 'primary',
+                'container'       => 'div',
+                'container_class' => 'nav-links',
+                'depth'           => 1,
+                'walker'          => new Smooth_Nav_Walker(),
+                'fallback_cb'     => false,
+            ) ); ?>
+        <?php else : ?>
+            <div class="nav-links">
+                <?php foreach ( $fallback_links as $link ) : ?>
+                    <a href="<?php echo esc_url( $link['url'] ); ?>" class="nav-link">
+                        <?php echo esc_html( $link['label'] ); ?>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
 
         <!-- Right side -->
         <div class="nav-right">
-            <a href="<?php echo esc_url( $booking_link ); ?>" class="btn-booking"><?php echo esc_html( $booking_text ); ?></a>
-            <button class="btn-menu" aria-label="Open menu">
+            <a href="<?php echo esc_url( $booking_link ); ?>" class="btn-booking">
+                <?php echo esc_html( $booking_text ); ?>
+            </a>
+            <button class="btn-menu" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-overlay">
                 <?php echo smooth_icon( 'menu', 24 ); ?>
             </button>
         </div>
@@ -46,16 +68,28 @@ $booking_link  = get_field( 'booking_link', 'option' ) ?: '#';
 </nav>
 
 <!-- Mobile Menu Overlay -->
-<div class="mobile-overlay" aria-hidden="true">
+<div class="mobile-overlay" id="mobile-overlay" aria-hidden="true" role="dialog" aria-label="Mobile navigation">
     <div class="mobile-menu">
         <button class="mobile-close" aria-label="Close menu">
             <?php echo smooth_icon( 'x', 24 ); ?>
         </button>
-        <nav class="mobile-nav">
-            <a href="#about"><?php esc_html_e( 'О студии', 'smooth-theme' ); ?></a>
-            <a href="#prices"><?php esc_html_e( 'Цены', 'smooth-theme' ); ?></a>
-            <a href="#master"><?php esc_html_e( 'Мастер', 'smooth-theme' ); ?></a>
-            <a href="#contacts"><?php esc_html_e( 'Контакты', 'smooth-theme' ); ?></a>
-        </nav>
+        <?php if ( has_nav_menu( 'mobile' ) ) : ?>
+            <?php wp_nav_menu( array(
+                'theme_location'  => 'mobile',
+                'container'       => 'nav',
+                'container_class' => 'mobile-nav',
+                'depth'           => 1,
+                'walker'          => new Smooth_Nav_Walker(),
+                'fallback_cb'     => false,
+            ) ); ?>
+        <?php else : ?>
+            <nav class="mobile-nav">
+                <?php foreach ( $fallback_links as $link ) : ?>
+                    <a href="<?php echo esc_url( $link['url'] ); ?>">
+                        <?php echo esc_html( $link['label'] ); ?>
+                    </a>
+                <?php endforeach; ?>
+            </nav>
+        <?php endif; ?>
     </div>
 </div>

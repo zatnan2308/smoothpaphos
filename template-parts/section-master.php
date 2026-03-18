@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$label = get_field( 'master_label' ) ?: 'Ваш мастер';
+$label = get_field( 'master_label' ) ?: 'Your Master';
 $name  = get_field( 'master_name' ) ?: '';
 $quote = get_field( 'master_quote' ) ?: '';
 $image = get_field( 'master_image' );
@@ -40,7 +40,9 @@ $stats = get_field( 'master_stats' );
                 <?php endif; ?>
 
                 <?php if ( $quote ) : ?>
-                    <p class="master-quote">&laquo;<?php echo esc_html( $quote ); ?>&raquo;</p>
+                    <div class="master-quote wysiwyg-content">
+                        <?php echo smooth_wysiwyg( $quote ); ?>
+                    </div>
                 <?php endif; ?>
 
                 <?php if ( is_array( $stats ) && ! empty( $stats ) ) : ?>

@@ -25,7 +25,8 @@ function smooth_setup() {
     add_theme_support( 'custom-logo' );
 
     register_nav_menus( array(
-        'primary' => __( 'Основное меню', 'smooth-theme' ),
+        'primary' => __( 'Primary Menu', 'smooth-theme' ),
+        'mobile'  => __( 'Mobile Menu', 'smooth-theme' ),
     ) );
 }
 add_action( 'after_setup_theme', 'smooth_setup' );
@@ -113,6 +114,59 @@ function smooth_icon( $name, $size = 20 ) {
     );
 
     return isset( $icons[ $name ] ) ? $icons[ $name ] : '';
+}
+
+
+/* =========================================================================
+   Nav Walker — убирает <li> теги, добавляет класс nav-link к ссылкам
+   ========================================================================= */
+class Smooth_Nav_Walker extends Walker_Nav_Menu {
+    /**
+     * @param string   $output
+     * @param WP_Post  $item
+     * @param int      $depth
+     * @param stdClass $args
+     * @param int      $id
+     */
+    public function start_el( &$output, $item, $depth = 0, $args = null, $id = 0 ) {
+        $classes = empty( $item->classes ) ? array() : (array) $item->classes;
+        $classes[] = 'nav-link';
+        if ( in_array( 'current-menu-item', $classes, true ) ) {
+            $classes[] = 'active';
+        }
+        $class_str = implode( ' ', array_unique( array_filter( $classes ) ) );
+
+        $output .= '<a href="' . esc_url( $item->url ) . '" class="' . esc_attr( $class_str ) . '"'
+            . ( $item->target ? ' target="' . esc_attr( $item->target ) . '"' : '' )
+            . ( $item->xfn ? ' rel="' . esc_attr( $item->xfn ) . '"' : '' )
+            . '>'
+            . esc_html( $item->title )
+            . '</a>';
+    }
+    public function end_el( &$output, $item, $depth = 0, $args = null ) {}
+    public function start_lvl( &$output, $depth = 0, $args = null ) {}
+    public function end_lvl( &$output, $depth = 0, $args = null ) {}
+}
+
+
+/* =========================================================================
+   Helper: WYSIWYG output — безопасный вывод ACF wysiwyg поля
+   ========================================================================= */
+function smooth_wysiwyg( $content ) {
+    return wp_kses_post( $content );
+}
+
+/**
+ * Вывод заголовка с разрешёнными inline-тегами (<em>, <strong>, <span>, <br>).
+ * Использовать вместо esc_html() там где нужен курсив/жирный в заголовке.
+ */
+function smooth_heading( $content ) {
+    return wp_kses( $content, array(
+        'em'     => array(),
+        'strong' => array(),
+        'span'   => array( 'class' => array() ),
+        'br'     => array(),
+    ) );
 }
 
 

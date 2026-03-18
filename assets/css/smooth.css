@@ -1187,6 +1187,431 @@ button {
 }
 
 /* ==========================================================================
+   WYSIWYG Content — стили для полей с редактором
+   ========================================================================== */
+.wysiwyg-content p {
+  margin-bottom: 1em;
+}
+.wysiwyg-content p:last-child {
+  margin-bottom: 0;
+}
+.wysiwyg-content strong {
+  font-weight: 700;
+}
+.wysiwyg-content em {
+  font-style: italic;
+}
+.wysiwyg-content a {
+  color: var(--color-gold);
+  text-decoration: underline;
+}
+.wysiwyg-content ul,
+.wysiwyg-content ol {
+  padding-left: 1.5em;
+  margin-bottom: 1em;
+}
+.wysiwyg-content li {
+  margin-bottom: 0.25em;
+}
+.wysiwyg-content h2,
+.wysiwyg-content h3,
+.wysiwyg-content h4 {
+  font-family: var(--font-serif);
+  margin-bottom: 0.5em;
+}
+
+/* ==========================================================================
+   Page Hero — общий hero для внутренних страниц
+   ========================================================================== */
+.page-hero {
+  padding-top: 8rem;
+  padding-bottom: 4rem;
+  background: var(--color-stone-100);
+  overflow: hidden;
+}
+
+.page-hero-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.page-hero-content {
+  text-align: center;
+}
+
+.page-hero-content > * + * {
+  margin-top: 1.25rem;
+}
+
+.page-hero-title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(2.5rem, 9vw, 5.5rem);
+  color: var(--color-stone-900);
+  line-height: 1.1;
+}
+
+.page-hero-image {
+  border-radius: 60px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  max-height: 420px;
+}
+
+.page-hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 1024px) {
+  .page-hero-inner {
+    grid-template-columns: 1fr 1fr;
+    text-align: left;
+  }
+  .page-hero-content {
+    text-align: left;
+  }
+}
+
+/* ==========================================================================
+   About Story Section
+   ========================================================================== */
+.about-story {
+  padding: 6rem 0;
+}
+
+.about-story-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.about-story-content > * + * {
+  margin-top: 1.5rem;
+}
+
+.about-story-title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(2rem, 6vw, 3.75rem);
+  color: var(--color-stone-900);
+  line-height: 1.2;
+}
+
+.about-story-text {
+  font-size: 1.125rem;
+  color: var(--color-stone-500);
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+.about-story-image-wrap {
+  position: relative;
+}
+
+.about-story-image {
+  border-radius: 60px;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+.about-story-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 1024px) {
+  .about-story-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ==========================================================================
+   About Values Section
+   ========================================================================== */
+.about-values {
+  padding: 6rem 0;
+  background: var(--color-stone-100);
+}
+
+.about-values-title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(2rem, 6vw, 3.75rem);
+  color: var(--color-stone-900);
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.about-values-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.value-item {
+  background: #fff;
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.value-icon {
+  width: 3rem;
+  height: 3rem;
+  background: var(--color-stone-100);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gold);
+}
+
+.value-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-stone-900);
+}
+
+.value-text {
+  font-size: 0.9375rem;
+  color: var(--color-stone-500);
+  line-height: 1.7;
+}
+
+@media (min-width: 768px) {
+  .about-values-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-values-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ==========================================================================
+   Page CTA Section
+   ========================================================================== */
+.page-cta {
+  padding: 5rem 0;
+}
+
+.page-cta-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  text-align: center;
+}
+
+.page-cta-text {
+  font-size: 1.25rem;
+  color: var(--color-stone-500);
+  font-weight: 300;
+  max-width: 560px;
+}
+
+/* ==========================================================================
+   Services Intro Section
+   ========================================================================== */
+.services-intro {
+  padding: 6rem 0;
+}
+
+.services-intro-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+.services-intro-header > * + * {
+  margin-top: 1.25rem;
+}
+
+.services-intro-title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(2rem, 7vw, 4.5rem);
+  color: var(--color-stone-900);
+  line-height: 1.15;
+}
+
+.services-intro-text {
+  font-size: 1.125rem;
+  color: var(--color-stone-500);
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+@media (min-width: 1024px) {
+  .services-intro-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+}
+
+/* ==========================================================================
+   Services Categories Section
+   ========================================================================== */
+.services-categories {
+  padding: 4rem 0 6rem;
+  background: var(--color-stone-100);
+}
+
+.services-categories-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.service-category-item {
+  background: #fff;
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.service-cat-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  background: var(--color-stone-100);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gold);
+}
+
+.service-cat-name {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--color-stone-900);
+}
+
+.service-cat-desc {
+  font-size: 0.9375rem;
+  color: var(--color-stone-500);
+  line-height: 1.7;
+}
+
+@media (min-width: 768px) {
+  .services-categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .services-categories-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ==========================================================================
+   Contacts Full Section
+   ========================================================================== */
+.contacts-full {
+  padding: 6rem 0;
+}
+
+.contacts-full-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem;
+}
+
+.contacts-info > * + * {
+  margin-top: 2rem;
+}
+
+.contacts-info-title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(2rem, 6vw, 3.75rem);
+  color: var(--color-stone-900);
+  line-height: 1.2;
+}
+
+.contacts-intro-text {
+  font-size: 1.125rem;
+  color: var(--color-stone-500);
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+.contacts-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.contacts-hours-label {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-stone-400);
+  margin-bottom: 0.75rem;
+}
+
+.contacts-hours-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.contacts-hours-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9375rem;
+  color: var(--color-stone-800);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-stone-100);
+}
+
+.hours-day {
+  font-weight: 600;
+}
+
+.hours-time {
+  color: var(--color-stone-500);
+}
+
+.contacts-map {
+  border-radius: 2rem;
+  overflow: hidden;
+  min-height: 400px;
+  background: var(--color-stone-100);
+}
+
+.contacts-map iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+}
+
+@media (min-width: 1024px) {
+  .contacts-full-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+/* ==========================================================================
    Utilities
    ========================================================================== */
 .sr-only {
