@@ -1,23 +1,81 @@
 /**
  * Smooth Studio — Main JS
- * Navbar scroll, mobile menu, FAQ accordion
+ * Hero slider, mobile menu, FAQ accordion, smooth scroll
  */
 (function () {
   'use strict';
 
-  /* --- Navbar scroll effect --- */
-  var navbar = document.querySelector('.navbar');
-  if (navbar) {
-    var onScroll = function () {
-      navbar.classList.toggle('scrolled', window.scrollY > 20);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+  /* ══════════════════════════════════════════
+     HERO SLIDER
+  ══════════════════════════════════════════ */
+  var heroSlider = document.querySelector('.hero-slider');
+  if (heroSlider) {
+    var slides   = heroSlider.querySelectorAll('.slide');
+    var pagDots  = heroSlider.querySelectorAll('.pag-dot');
+    var prevBtn  = heroSlider.querySelector('.slider-prev');
+    var nextBtn  = heroSlider.querySelector('.slider-next');
+    var total    = slides.length;
+    var current  = 0;
+    var autoTimer = null;
+    var AUTO_MS  = 5500;
+
+    function goTo(idx) {
+      idx = ((idx % total) + total) % total;
+      if (idx === current) return;
+
+      slides[current].classList.remove('is-active');
+      slides[current].setAttribute('aria-hidden', 'true');
+      if (pagDots[current]) {
+        pagDots[current].classList.remove('is-active');
+        pagDots[current].setAttribute('aria-selected', 'false');
+      }
+
+      current = idx;
+      slides[current].classList.add('is-active');
+      slides[current].setAttribute('aria-hidden', 'false');
+      if (pagDots[current]) {
+        pagDots[current].classList.add('is-active');
+        pagDots[current].setAttribute('aria-selected', 'true');
+      }
+    }
+
+    function startAuto() {
+      clearInterval(autoTimer);
+      if (total > 1) autoTimer = setInterval(function () { goTo(current + 1); }, AUTO_MS);
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', function () { goTo(current - 1); startAuto(); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { goTo(current + 1); startAuto(); });
+
+    pagDots.forEach(function (dot, i) {
+      dot.addEventListener('click', function () { goTo(i); startAuto(); });
+    });
+
+    /* Touch / swipe */
+    var touchX = 0;
+    heroSlider.addEventListener('touchstart', function (e) {
+      touchX = e.changedTouches[0].clientX;
+    }, { passive: true });
+    heroSlider.addEventListener('touchend', function (e) {
+      var dx = e.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 48) { goTo(dx < 0 ? current + 1 : current - 1); startAuto(); }
+    }, { passive: true });
+
+    /* Keyboard */
+    heroSlider.setAttribute('tabindex', '0');
+    heroSlider.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft')  { goTo(current - 1); startAuto(); }
+      if (e.key === 'ArrowRight') { goTo(current + 1); startAuto(); }
+    });
+
+    startAuto();
   }
 
-  /* --- Mobile menu --- */
-  var overlay = document.querySelector('.mobile-overlay');
-  var menuOpen = document.querySelector('.btn-menu');
+  /* ══════════════════════════════════════════
+     MOBILE MENU
+  ══════════════════════════════════════════ */
+  var overlay   = document.querySelector('.mobile-overlay');
+  var menuOpen  = document.querySelector('.navbar-burger');
   var menuClose = document.querySelector('.mobile-close');
 
   function openMenu() {
@@ -25,9 +83,7 @@
     overlay.classList.add('active');
     overlay.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-    // Анимация гамбургера
-    if (menuOpen) menuOpen.classList.add('open');
-    // Перемещаем фокус на первую ссылку меню
+    if (menuOpen) menuOpen.setAttribute('aria-expanded', 'true');
     var firstLink = overlay.querySelector('.mobile-nav a');
     if (firstLink) firstLink.focus();
   }
@@ -37,13 +93,11 @@
     overlay.classList.remove('active');
     overlay.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
-    // Анимация гамбургера
-    if (menuOpen) menuOpen.classList.remove('open');
-    // Возвращаем фокус на кнопку открытия меню
+    if (menuOpen) menuOpen.setAttribute('aria-expanded', 'false');
     if (menuOpen) menuOpen.focus();
   }
 
-  if (menuOpen) menuOpen.addEventListener('click', openMenu);
+  if (menuOpen)  menuOpen.addEventListener('click', openMenu);
   if (menuClose) menuClose.addEventListener('click', closeMenu);
   if (overlay) {
     overlay.addEventListener('click', function (e) {
@@ -51,73 +105,59 @@
     });
   }
 
-  // Close mobile menu on link click
   document.querySelectorAll('.mobile-nav a').forEach(function (link) {
     link.addEventListener('click', closeMenu);
   });
 
-  // Close mobile menu on Escape key
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && overlay && overlay.classList.contains('active')) {
-      closeMenu();
-    }
+    if (e.key === 'Escape' && overlay && overlay.classList.contains('active')) closeMenu();
   });
 
-  // Close mobile menu on window resize past mobile breakpoint
   var resizeTimer;
   window.addEventListener('resize', function () {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(function () {
-      if (window.innerWidth >= 768 && overlay && overlay.classList.contains('active')) {
-        closeMenu();
-      }
+      if (window.innerWidth >= 768 && overlay && overlay.classList.contains('active')) closeMenu();
     }, 300);
   });
 
-  /* --- FAQ Accordion --- */
+  /* ══════════════════════════════════════════
+     FAQ ACCORDION
+  ══════════════════════════════════════════ */
   var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
   var faqItems = document.querySelectorAll('.faq-item');
+
   faqItems.forEach(function (item) {
     var question = item.querySelector('.faq-question');
-    var answer = item.querySelector('.faq-answer');
+    var answer   = item.querySelector('.faq-answer');
 
     function toggleFaq(el, open) {
       var q = el.querySelector('.faq-question');
       var a = el.querySelector('.faq-answer');
       el.classList.toggle('active', open);
       if (q) q.setAttribute('aria-expanded', open ? 'true' : 'false');
-      if (a) a.setAttribute('aria-hidden', open ? 'false' : 'true');
+      if (a) a.setAttribute('aria-hidden',   open ? 'false' : 'true');
     }
 
     item.addEventListener('click', function () {
       var wasActive = this.classList.contains('active');
-      // Закрываем все элементы
-      faqItems.forEach(function (el) {
-        toggleFaq(el, false);
-      });
-      // Открываем кликнутый если он был закрыт
+      faqItems.forEach(function (el) { toggleFaq(el, false); });
       if (!wasActive) {
         toggleFaq(this, true);
-        // Убираем анимацию если пользователь предпочитает reduced motion
-        if (prefersReducedMotion && answer) {
-          answer.style.transition = 'none';
-        }
+        if (prefersReducedMotion && answer) answer.style.transition = 'none';
       }
     });
 
-    // Поддержка клавиатуры: Enter и Space на role=button
     if (question) {
       question.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          item.click();
-        }
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); item.click(); }
       });
     }
   });
 
-  /* --- Smooth scroll for anchor links --- */
+  /* ══════════════════════════════════════════
+     SMOOTH SCROLL — anchor links
+  ══════════════════════════════════════════ */
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     anchor.addEventListener('click', function (e) {
       var targetId = this.getAttribute('href');
@@ -129,4 +169,5 @@
       }
     });
   });
+
 })();

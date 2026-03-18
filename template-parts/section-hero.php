@@ -1,72 +1,137 @@
 <?php
 /**
- * Template Part: Hero Section
+ * Template Part: Hero Slider
+ * Full-screen slider — pagination dots (bottom-left), arrows (bottom-right)
  */
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$badge      = get_field( 'hero_badge' ) ?: 'Paphos, Cyprus';
-$title_1    = get_field( 'hero_title_1' ) ?: 'Smooth';
-$title_2    = get_field( 'hero_title_2' ) ?: 'Experience';
-$desc       = get_field( 'hero_description' ) ?: '<p>At Smooth Studio, each massage is individually tailored — for relaxation, recovery and lightness. We offer over ten techniques to help your body feel free and your mind — at peace.</p>';
-$btn1_text  = get_field( 'hero_button_1_text' ) ?: 'Book via Direct';
-$btn1_link  = get_field( 'hero_button_1_link' ) ?: 'https://instagram.com/smoothstudio.paphos';
-$btn2_text  = get_field( 'hero_button_2_text' ) ?: 'Our Services';
-$btn2_link  = get_field( 'hero_button_2_link' ) ?: '#prices';
-$image      = get_field( 'hero_image' );
-$card_title = get_field( 'hero_card_title' ) ?: 'Your Master';
-$card_text  = get_field( 'hero_card_text' ) ?: '<p>Diana — massage therapist with 5+ years of experience.</p>';
+/* ── ACF slides repeater (primary source) ── */
+$slides_acf = get_field( 'hero_slides' );
+
+/* ── Build slide-1 from legacy hero ACF fields ── */
+$legacy = array(
+    'slide_label'       => get_field( 'hero_badge' )         ?: 'Smooth Experience',
+    'slide_title_1'     => get_field( 'hero_title_1' )       ?: 'Your Body,',
+    'slide_title_2'     => get_field( 'hero_title_2' )       ?: 'Your Balance',
+    'slide_description' => get_field( 'hero_description' )   ?: '<p>Individually tailored massage — for relaxation, recovery and ease of your body.</p>',
+    'slide_btn_text'    => get_field( 'hero_button_1_text' ) ?: 'Book a Session',
+    'slide_btn_link'    => get_field( 'hero_button_1_link' ) ?: 'https://instagram.com/smoothstudio.paphos',
+    'slide_image'       => get_field( 'hero_image' ),
+);
+
+/* ── Fallback demo slides ── */
+$fallback_slides = array(
+    $legacy,
+    array(
+        'slide_label'       => 'Massage Therapy',
+        'slide_title_1'     => 'Deep Tissue',
+        'slide_title_2'     => 'Healing',
+        'slide_description' => '<p>Targeted techniques to release tension, restore mobility and revive your energy.</p>',
+        'slide_btn_text'    => 'Our Services',
+        'slide_btn_link'    => home_url( '/services/' ),
+        'slide_image'       => null,
+    ),
+    array(
+        'slide_label'       => 'Skin & Beauty',
+        'slide_title_1'     => 'Radiant',
+        'slide_title_2'     => 'Confidence',
+        'slide_description' => '<p>Professional skin care, nails and hair styling — all in one cozy studio in Paphos.</p>',
+        'slide_btn_text'    => 'View Prices',
+        'slide_btn_link'    => home_url( '/#prices' ),
+        'slide_image'       => null,
+    ),
+);
+
+$slides = ! empty( $slides_acf ) ? $slides_acf : $fallback_slides;
+$total  = count( $slides );
 ?>
 
-<section class="hero" id="hero">
-    <div class="container">
-        <div class="hero-grid">
-            <div class="hero-content">
-                <?php if ( $badge ) : ?>
-                    <div class="hero-badge"><?php echo esc_html( $badge ); ?></div>
+<section class="hero-slider" id="hero" aria-label="Hero slider">
+
+    <!-- ══ Slides ══ -->
+    <div class="slider-track">
+        <?php foreach ( $slides as $i => $slide ) :
+            $active   = ( $i === 0 );
+            $img      = $slide['slide_image'] ?? null;
+            $bg_url   = '';
+            if ( $img ) {
+                $bg_url = is_array( $img ) ? esc_url( $img['url'] ?? '' ) : esc_url( $img );
+            }
+            $label    = esc_html( $slide['slide_label']           ?? '' );
+            $title_1  = $slide['slide_title_1']                   ?? '';
+            $title_2  = $slide['slide_title_2']                   ?? '';
+            $desc     = wp_kses_post( $slide['slide_description'] ?? '' );
+            $btn_text = esc_html( $slide['slide_btn_text']        ?? '' );
+            $btn_link = esc_url( $slide['slide_btn_link']         ?? '#' );
+        ?>
+        <div class="slide<?php echo $active ? ' is-active' : ''; ?>"
+             aria-hidden="<?php echo $active ? 'false' : 'true'; ?>">
+
+            <!-- Background -->
+            <?php if ( $bg_url ) : ?>
+                <div class="slide-bg" style="background-image:url('<?php echo $bg_url; ?>')"></div>
+            <?php else : ?>
+                <div class="slide-bg slide-bg--grad-<?php echo $i % 3; ?>"></div>
+            <?php endif; ?>
+            <div class="slide-overlay"></div>
+
+            <!-- Content -->
+            <div class="slide-content">
+                <?php if ( $label ) : ?>
+                    <span class="slide-label"><?php echo $label; ?></span>
                 <?php endif; ?>
-                <h1 class="hero-title">
-                    <?php echo esc_html( $title_1 ); ?> <br>
-                    <span><?php echo esc_html( $title_2 ); ?></span>
+
+                <h1 class="slide-title">
+                    <span class="slide-title-line"><?php echo smooth_heading( $title_1 ); ?></span>
+                    <em   class="slide-title-line slide-title-italic"><?php echo smooth_heading( $title_2 ); ?></em>
                 </h1>
-                <div class="hero-desc wysiwyg-content">
-                    <?php echo smooth_wysiwyg( $desc ); ?>
-                </div>
-                <div class="hero-buttons">
-                    <?php if ( $btn1_text ) : ?>
-                        <a href="<?php echo esc_url( $btn1_link ); ?>" class="btn-primary"><?php echo esc_html( $btn1_text ); ?></a>
-                    <?php endif; ?>
-                    <?php if ( $btn2_text ) : ?>
-                        <a href="<?php echo esc_url( $btn2_link ); ?>" class="btn-secondary"><?php echo esc_html( $btn2_text ); ?></a>
-                    <?php endif; ?>
-                </div>
-            </div>
-            <div class="hero-image-wrap">
-                <?php if ( $image ) : ?>
-                    <div class="hero-image">
-                        <img src="<?php echo esc_url( $image['url'] ); ?>"
-                             alt="<?php echo esc_attr( $image['alt'] ?: $title_1 ); ?>"
-                             width="<?php echo esc_attr( $image['width'] ?? '' ); ?>"
-                             height="<?php echo esc_attr( $image['height'] ?? '' ); ?>"
-                             loading="eager"
-                             fetchpriority="high"
-                             decoding="async">
-                    </div>
+
+                <?php if ( $desc ) : ?>
+                    <div class="slide-desc wysiwyg-content"><?php echo $desc; ?></div>
                 <?php endif; ?>
-                <?php if ( $card_title || $card_text ) : ?>
-                    <div class="hero-card">
-                        <?php if ( $card_title ) : ?>
-                            <p class="hero-card-label"><?php echo esc_html( $card_title ); ?></p>
-                        <?php endif; ?>
-                        <?php if ( $card_text ) : ?>
-                            <div class="hero-card-text wysiwyg-content">
-                                <?php echo smooth_wysiwyg( $card_text ); ?>
-                            </div>
-                        <?php endif; ?>
-                    </div>
+
+                <?php if ( $btn_text ) : ?>
+                    <a href="<?php echo $btn_link; ?>" class="slide-btn"><?php echo $btn_text; ?></a>
                 <?php endif; ?>
             </div>
+
         </div>
+        <?php endforeach; ?>
+    </div><!-- .slider-track -->
+
+    <?php if ( $total > 1 ) : ?>
+
+    <!-- ══ Pagination — bottom left ══ -->
+    <div class="slider-pagination" role="tablist" aria-label="Slider pagination">
+        <?php for ( $i = 0; $i < $total; $i++ ) : ?>
+            <button class="pag-dot<?php echo $i === 0 ? ' is-active' : ''; ?>"
+                    role="tab"
+                    aria-selected="<?php echo $i === 0 ? 'true' : 'false'; ?>"
+                    aria-label="Slide <?php echo $i + 1; ?>"
+                    data-slide="<?php echo $i; ?>"></button>
+        <?php endfor; ?>
     </div>
-</section>
+
+    <!-- ══ Arrows — bottom right ══ -->
+    <div class="slider-arrows">
+        <button class="slider-prev" aria-label="Previous slide">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5"/><path d="m12 5-7 7 7 7"/>
+            </svg>
+        </button>
+        <button class="slider-next" aria-label="Next slide">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+            </svg>
+        </button>
+    </div>
+
+    <?php endif; ?>
+
+</section><!-- .hero-slider -->

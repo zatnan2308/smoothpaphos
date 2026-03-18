@@ -57,34 +57,59 @@ acf_add_local_field_group( array(
 
 
 /* =========================================================================
-   FRONT PAGE — Hero Section
+   FRONT PAGE — Hero Slider
    ========================================================================= */
 acf_add_local_field_group( array(
     'key'    => 'group_hero',
-    'title'  => 'Hero секция',
+    'title'  => 'Hero слайдер',
     'fields' => array(
-        array( 'key' => 'field_hero_badge',    'label' => 'Бейдж (маленький текст)', 'name' => 'hero_badge',    'type' => 'text', 'default_value' => 'Paphos, Cyprus' ),
-        array( 'key' => 'field_hero_title_1',  'label' => 'Заголовок — строка 1',    'name' => 'hero_title_1',  'type' => 'text', 'default_value' => 'Smooth' ),
-        array( 'key' => 'field_hero_title_2',  'label' => 'Заголовок — строка 2 (курсив)', 'name' => 'hero_title_2', 'type' => 'text', 'default_value' => 'Experience' ),
 
-        smooth_wysiwyg_field( 'field_hero_description', 'Описание (поддерживает жирный/курсив)', 'hero_description', 'basic',
-            '<p>Individually tailored massage — for relaxation, recovery and ease of your body.</p>'
+        /* ── Слайды ── */
+        array(
+            'key'          => 'field_hero_slides',
+            'label'        => 'Слайды',
+            'name'         => 'hero_slides',
+            'type'         => 'repeater',
+            'layout'       => 'block',
+            'min'          => 0,
+            'max'          => 5,
+            'button_label' => 'Добавить слайд',
+            'instructions' => 'Каждый слайд занимает весь экран. Оставьте пустым — будет использоваться тестовый контент.',
+            'sub_fields'   => array(
+
+                array( 'key' => 'field_slide_image',       'label' => 'Фоновое фото',            'name' => 'slide_image',       'type' => 'image',   'return_format' => 'array', 'preview_size' => 'medium' ),
+                array( 'key' => 'field_slide_label',       'label' => 'Метка (uppercase, мелко)', 'name' => 'slide_label',       'type' => 'text',    'default_value' => 'Smooth Experience' ),
+                array( 'key' => 'field_slide_title_1',     'label' => 'Заголовок — строка 1',     'name' => 'slide_title_1',     'type' => 'text',    'default_value' => 'Your Body,' ),
+                array( 'key' => 'field_slide_title_2',     'label' => 'Заголовок — строка 2 (курсив)', 'name' => 'slide_title_2', 'type' => 'text',  'default_value' => 'Your Balance' ),
+
+                smooth_wysiwyg_field(
+                    'field_slide_description',
+                    'Описание',
+                    'slide_description',
+                    'basic',
+                    '<p>Individually tailored massage — for relaxation, recovery and ease of your body.</p>'
+                ),
+
+                array( 'key' => 'field_slide_btn_text', 'label' => 'Кнопка — текст',  'name' => 'slide_btn_text', 'type' => 'text', 'default_value' => 'Book a Session' ),
+                array( 'key' => 'field_slide_btn_link', 'label' => 'Кнопка — ссылка', 'name' => 'slide_btn_link', 'type' => 'url' ),
+            ),
         ),
 
-        array( 'key' => 'field_hero_button_1_text', 'label' => 'Кнопка 1 — текст',  'name' => 'hero_button_1_text', 'type' => 'text', 'default_value' => 'Book via Direct' ),
-        array( 'key' => 'field_hero_button_1_link', 'label' => 'Кнопка 1 — ссылка', 'name' => 'hero_button_1_link', 'type' => 'url' ),
-        array( 'key' => 'field_hero_button_2_text', 'label' => 'Кнопка 2 — текст',  'name' => 'hero_button_2_text', 'type' => 'text', 'default_value' => 'Our Instagram' ),
-        array( 'key' => 'field_hero_button_2_link', 'label' => 'Кнопка 2 — ссылка', 'name' => 'hero_button_2_link', 'type' => 'url' ),
-
-        array( 'key' => 'field_hero_image', 'label' => 'Фото (Hero)', 'name' => 'hero_image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium' ),
-
-        array( 'key' => 'field_hero_card_title', 'label' => 'Карточка — заголовок', 'name' => 'hero_card_title', 'type' => 'text', 'default_value' => 'About the master' ),
-
-        smooth_wysiwyg_field( 'field_hero_card_text', 'Карточка — текст', 'hero_card_text', 'basic',
-            '<p>Diana — expert with over 5 years of experience.</p>'
-        ),
+        /* ── Устаревшие поля (legacy, скрыты но сохранены для совместимости) ── */
+        array( 'key' => 'field_hero_badge',          'label' => 'Legacy: Badge',        'name' => 'hero_badge',          'type' => 'text' ),
+        array( 'key' => 'field_hero_title_1',        'label' => 'Legacy: Title 1',      'name' => 'hero_title_1',        'type' => 'text' ),
+        array( 'key' => 'field_hero_title_2',        'label' => 'Legacy: Title 2',      'name' => 'hero_title_2',        'type' => 'text' ),
+        smooth_wysiwyg_field( 'field_hero_description', 'Legacy: Description', 'hero_description', 'basic', '' ),
+        array( 'key' => 'field_hero_button_1_text',  'label' => 'Legacy: Btn 1 text',   'name' => 'hero_button_1_text',  'type' => 'text' ),
+        array( 'key' => 'field_hero_button_1_link',  'label' => 'Legacy: Btn 1 link',   'name' => 'hero_button_1_link',  'type' => 'url' ),
+        array( 'key' => 'field_hero_image',          'label' => 'Legacy: Image',        'name' => 'hero_image',          'type' => 'image', 'return_format' => 'array' ),
+        array( 'key' => 'field_hero_card_title',     'label' => 'Legacy: Card title',   'name' => 'hero_card_title',     'type' => 'text' ),
+        smooth_wysiwyg_field( 'field_hero_card_text', 'Legacy: Card text', 'hero_card_text', 'basic', '' ),
     ),
-    'location'   => array( array( array( 'param' => 'page_type', 'operator' => '==', 'value' => 'front_page' ) ) ),
+    'location'   => array(
+        array( array( 'param' => 'page_type',     'operator' => '==', 'value' => 'front_page' ) ),
+        array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-home.php' ) ),
+    ),
     'menu_order' => 0,
 ) );
 
