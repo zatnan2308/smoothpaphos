@@ -1,113 +1,104 @@
 <?php
 /**
- * Template Part: Contacts — Full Contact Section with Map
+ * Template Part: Contacts Page Content
  */
-if ( ! defined( 'ABSPATH' ) ) {
+if ( \! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$intro_title   = get_field( 'contacts_intro_title' ) ?: 'Get in Touch';
-$intro_content = get_field( 'contacts_intro_content' ) ?: '';
-$map_url       = get_field( 'contacts_map_url' ) ?: '';
-$hours         = get_field( 'contacts_hours' );
+$label     = get_field( 'contacts_label' ) ?: 'Contacts';
+$title     = get_field( 'contacts_title' ) ?: 'Find us in Paphos';
+$desc      = get_field( 'contacts_desc' ) ?: '<p>Smooth Studio is located in the heart of Paphos, Cyprus. We are open seven days a week. Book via Instagram Direct or WhatsApp.</p>';
+$map_embed = get_field( 'map_embed' );
 
-// Global options
-$address        = get_field( 'address', 'option' ) ?: '';
-$instagram      = get_field( 'instagram_handle', 'option' ) ?: '';
-$instagram_url  = get_field( 'instagram_url', 'option' ) ?: '#';
-$whatsapp_link  = get_field( 'whatsapp_link', 'option' ) ?: '#';
-$whatsapp_text  = get_field( 'whatsapp_button_text', 'option' ) ?: 'Message on WhatsApp';
+$address   = get_field( 'address',   'option' );
+$instagram = get_field( 'instagram', 'option' );
+$whatsapp  = get_field( 'whatsapp',  'option' );
+$phone     = get_field( 'phone',     'option' );
+
+$hours = get_field( 'working_hours' );
+if ( empty( $hours ) ) {
+    $hours = array(
+        array( 'days' => 'Monday – Friday', 'time' => '10:00 – 20:00' ),
+        array( 'days' => 'Saturday',        'time' => '10:00 – 18:00' ),
+        array( 'days' => 'Sunday',          'time' => 'By appointment' ),
+    );
+}
+
+$btn_text = get_field( 'contacts_btn_text' ) ?: 'Book via WhatsApp';
+$btn_link = get_field( 'contacts_btn_link' ) ?: $whatsapp ?: '#';
 ?>
-
-<section class="contacts-full" id="contacts">
+<div class="contacts-content">
     <div class="container">
+        <div class="contacts-grid">
 
-        <div class="contacts-full-grid">
-
-            <!-- Left: Info -->
             <div class="contacts-info">
-
-                <h2 class="contacts-info-title font-serif">
-                    <?php echo smooth_heading( $intro_title ); ?>
-                </h2>
-
-                <?php if ( $intro_content ) : ?>
-                    <div class="contacts-intro-text wysiwyg-content">
-                        <?php echo smooth_wysiwyg( $intro_content ); ?>
+                <span class="section-label"><?php echo esc_html( $label ); ?></span>
+                <?php if ( $title ) : ?>
+                    <h2 class="contacts-title font-serif">
+                        <?php echo smooth_heading( $title ); ?>
+                    </h2>
+                <?php endif; ?>
+                <?php if ( $desc ) : ?>
+                    <div class="contacts-desc wysiwyg-content">
+                        <?php echo smooth_wysiwyg( $desc ); ?>
                     </div>
                 <?php endif; ?>
 
-                <!-- Contact Details -->
-                <div class="contacts-details">
-
+                <ul class="contacts-list">
                     <?php if ( $address ) : ?>
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <?php echo smooth_icon( 'map-pin', 20 ); ?>
-                            </div>
-                            <div>
-                                <p class="contact-label"><?php esc_html_e( 'Address', 'smooth-theme' ); ?></p>
-                                <p class="contact-value"><?php echo esc_html( $address ); ?></p>
-                            </div>
-                        </div>
+                        <li class="contacts-item">
+                            <?php echo smooth_icon( 'map-pin', 18 ); ?>
+                            <span><?php echo esc_html( $address ); ?></span>
+                        </li>
                     <?php endif; ?>
-
+                    <?php if ( $phone ) : ?>
+                        <li class="contacts-item">
+                            <?php echo smooth_icon( 'phone', 18 ); ?>
+                            <a href="tel:<?php echo esc_attr( preg_replace( '/\s+/', '', $phone ) ); ?>"><?php echo esc_html( $phone ); ?></a>
+                        </li>
+                    <?php endif; ?>
                     <?php if ( $instagram ) : ?>
-                        <a href="<?php echo esc_url( $instagram_url ); ?>" class="contact-item" target="_blank" rel="noopener noreferrer">
-                            <div class="contact-icon">
-                                <?php echo smooth_icon( 'instagram', 20 ); ?>
-                            </div>
-                            <div>
-                                <p class="contact-label">Instagram</p>
-                                <p class="contact-value"><?php echo esc_html( $instagram ); ?></p>
-                            </div>
-                        </a>
+                        <li class="contacts-item">
+                            <?php echo smooth_icon( 'instagram', 18 ); ?>
+                            <a href="<?php echo esc_url( $instagram ); ?>" target="_blank" rel="noopener noreferrer">@smoothstudio.paphos</a>
+                        </li>
                     <?php endif; ?>
+                    <?php if ( $whatsapp ) : ?>
+                        <li class="contacts-item">
+                            <?php echo smooth_icon( 'message-circle', 18 ); ?>
+                            <a href="<?php echo esc_url( $whatsapp ); ?>" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
 
-                </div>
-
-                <!-- Working Hours -->
                 <?php if ( is_array( $hours ) && ! empty( $hours ) ) : ?>
                     <div class="contacts-hours">
-                        <p class="contacts-hours-label">
-                            <?php esc_html_e( 'Working Hours', 'smooth-theme' ); ?>
-                        </p>
-                        <ul class="contacts-hours-list">
+                        <h3 class="contacts-hours-title"><?php esc_html_e( 'Working hours', 'smooth' ); ?></h3>
+                        <table class="hours-table">
                             <?php foreach ( $hours as $row ) : ?>
-                                <li class="contacts-hours-item">
-                                    <span class="hours-day"><?php echo esc_html( $row['day'] ?? '' ); ?></span>
-                                    <span class="hours-time"><?php echo esc_html( $row['time'] ?? '' ); ?></span>
-                                </li>
+                                <tr>
+                                    <td class="hours-days"><?php echo esc_html( $row['days'] ?? '' ); ?></td>
+                                    <td class="hours-time"><?php echo esc_html( $row['time'] ?? '' ); ?></td>
+                                </tr>
                             <?php endforeach; ?>
-                        </ul>
+                        </table>
                     </div>
                 <?php endif; ?>
 
-                <!-- WhatsApp CTA -->
-                <a href="<?php echo esc_url( $whatsapp_link ); ?>" class="btn-whatsapp" target="_blank" rel="noopener noreferrer">
-                    <?php echo smooth_icon( 'phone', 14 ); ?>
-                    <?php echo esc_html( $whatsapp_text ); ?>
-                </a>
-
+                <?php if ( $btn_text ) : ?>
+                    <a href="<?php echo esc_url( $btn_link ); ?>" class="btn-primary contacts-btn" target="_blank" rel="noopener noreferrer">
+                        <?php echo esc_html( $btn_text ); ?>
+                    </a>
+                <?php endif; ?>
             </div>
 
-            <!-- Right: Map -->
-            <?php if ( $map_url ) : ?>
+            <?php if ( $map_embed ) : ?>
                 <div class="contacts-map">
-                    <iframe
-                        src="<?php echo esc_url( $map_url ); ?>"
-                        width="100%"
-                        height="100%"
-                        style="border: 0;"
-                        allowfullscreen=""
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"
-                        title="<?php esc_attr_e( 'Studio location on map', 'smooth-theme' ); ?>"
-                    ></iframe>
+                    <?php echo wp_kses( $map_embed, array( 'iframe' => array( 'src' => true, 'width' => true, 'height' => true, 'style' => true, 'allowfullscreen' => true, 'loading' => true, 'referrerpolicy' => true ) ) ); ?>
                 </div>
             <?php endif; ?>
 
         </div>
-
     </div>
-</section>
+</div>

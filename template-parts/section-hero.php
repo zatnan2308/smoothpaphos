@@ -9,37 +9,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 $badge      = get_field( 'hero_badge' ) ?: 'Paphos, Cyprus';
 $title_1    = get_field( 'hero_title_1' ) ?: 'Smooth';
 $title_2    = get_field( 'hero_title_2' ) ?: 'Experience';
-$desc       = get_field( 'hero_description' ) ?: '';
-$btn1_text  = get_field( 'hero_button_1_text' ) ?: '';
-$btn1_link  = get_field( 'hero_button_1_link' ) ?: '#';
-$btn2_text  = get_field( 'hero_button_2_text' ) ?: '';
-$btn2_link  = get_field( 'hero_button_2_link' ) ?: '#';
+$desc       = get_field( 'hero_description' ) ?: '<p>At Smooth Studio, each massage is individually tailored — for relaxation, recovery and lightness. We offer over ten techniques to help your body feel free and your mind — at peace.</p>';
+$btn1_text  = get_field( 'hero_button_1_text' ) ?: 'Book via Direct';
+$btn1_link  = get_field( 'hero_button_1_link' ) ?: 'https://instagram.com/smoothstudio.paphos';
+$btn2_text  = get_field( 'hero_button_2_text' ) ?: 'Our Services';
+$btn2_link  = get_field( 'hero_button_2_link' ) ?: '#prices';
 $image      = get_field( 'hero_image' );
-$card_title = get_field( 'hero_card_title' ) ?: '';
-$card_text  = get_field( 'hero_card_text' ) ?: '';
+$card_title = get_field( 'hero_card_title' ) ?: 'Your Master';
+$card_text  = get_field( 'hero_card_text' ) ?: '<p>Diana — massage therapist with 5+ years of experience.</p>';
 ?>
 
 <section class="hero" id="hero">
     <div class="container">
         <div class="hero-grid">
-
-            <!-- Content -->
             <div class="hero-content">
                 <?php if ( $badge ) : ?>
                     <div class="hero-badge"><?php echo esc_html( $badge ); ?></div>
                 <?php endif; ?>
-
                 <h1 class="hero-title">
                     <?php echo esc_html( $title_1 ); ?> <br>
                     <span><?php echo esc_html( $title_2 ); ?></span>
                 </h1>
-
-                <?php if ( $desc ) : ?>
-                    <div class="hero-desc wysiwyg-content">
-                        <?php echo smooth_wysiwyg( $desc ); ?>
-                    </div>
-                <?php endif; ?>
-
+                <div class="hero-desc wysiwyg-content">
+                    <?php echo smooth_wysiwyg( $desc ); ?>
+                </div>
                 <div class="hero-buttons">
                     <?php if ( $btn1_text ) : ?>
                         <a href="<?php echo esc_url( $btn1_link ); ?>" class="btn-primary"><?php echo esc_html( $btn1_text ); ?></a>
@@ -49,8 +42,6 @@ $card_text  = get_field( 'hero_card_text' ) ?: '';
                     <?php endif; ?>
                 </div>
             </div>
-
-            <!-- Image -->
             <div class="hero-image-wrap">
                 <?php if ( $image ) : ?>
                     <div class="hero-image">
@@ -63,7 +54,6 @@ $card_text  = get_field( 'hero_card_text' ) ?: '';
                              decoding="async">
                     </div>
                 <?php endif; ?>
-
                 <?php if ( $card_title || $card_text ) : ?>
                     <div class="hero-card">
                         <?php if ( $card_title ) : ?>
@@ -77,7 +67,6 @@ $card_text  = get_field( 'hero_card_text' ) ?: '';
                     </div>
                 <?php endif; ?>
             </div>
-
         </div>
     </div>
 </section>

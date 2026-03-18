@@ -1,41 +1,38 @@
 <?php
 /**
- * Template Part: Page Hero — общий hero для внутренних страниц
+ * Template Part: Inner Page Hero (shared)
  */
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 $title    = get_field( 'page_hero_title' ) ?: get_the_title();
-$subtitle = get_field( 'page_hero_subtitle' ) ?: '';
-$image    = get_field( 'page_hero_image' );
+$subtitle = get_field( 'page_hero_subtitle' );
+
+// Smart subtitle fallback based on page template
+if ( empty( $subtitle ) ) {
+    $template = get_page_template_slug();
+    if ( 'page-about.php' === $template ) {
+        $subtitle = 'Our story, values and the hands behind every session';
+    } elseif ( 'page-services.php' === $template ) {
+        $subtitle = 'Massage, sugaring, nails and hair — all under one roof';
+    } elseif ( 'page-contacts.php' === $template ) {
+        $subtitle = 'Located in the heart of Paphos, Cyprus';
+    }
+}
 ?>
 
 <section class="page-hero">
     <div class="container">
         <div class="page-hero-inner">
-
-            <div class="page-hero-content">
-                <?php if ( $subtitle ) : ?>
-                    <span class="section-label"><?php echo esc_html( $subtitle ); ?></span>
-                <?php endif; ?>
-
+            <?php if ( $title ) : ?>
                 <h1 class="page-hero-title font-serif">
                     <?php echo smooth_heading( $title ); ?>
                 </h1>
-            </div>
-
-            <?php if ( $image ) : ?>
-                <div class="page-hero-image">
-                    <img src="<?php echo esc_url( $image['url'] ); ?>"
-                         alt="<?php echo esc_attr( $image['alt'] ?: get_the_title() ); ?>"
-                         width="<?php echo esc_attr( $image['width'] ?? '' ); ?>"
-                         height="<?php echo esc_attr( $image['height'] ?? '' ); ?>"
-                         fetchpriority="high"
-                         decoding="async">
-                </div>
             <?php endif; ?>
-
+            <?php if ( $subtitle ) : ?>
+                <p class="page-hero-subtitle"><?php echo esc_html( $subtitle ); ?></p>
+            <?php endif; ?>
         </div>
     </div>
 </section>

@@ -6,57 +6,67 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$label = get_field( 'master_label' ) ?: 'Your Master';
-$name  = get_field( 'master_name' ) ?: '';
-$quote = get_field( 'master_quote' ) ?: '';
-$image = get_field( 'master_image' );
+$label      = get_field( 'master_label' ) ?: 'Your Master';
+$title      = get_field( 'master_title' ) ?: 'Diana';
+$subtitle   = get_field( 'master_subtitle' ) ?: 'Massage therapist & beauty specialist';
+$bio        = get_field( 'master_bio' ) ?: '<p>Diana has been practising massage therapy for over 5 years, combining classical techniques with a deeply personal approach. Each session is tailored to your needs — whether you seek relaxation, recovery or balance.</p>';
+$image      = get_field( 'master_image' );
+$quote      = get_field( 'master_quote' ) ?: 'I believe the body knows how to heal — my role is to help it remember.';
+
 $stats = get_field( 'master_stats' );
+if ( empty( $stats ) ) {
+    $stats = array(
+        array( 'value' => '5+',   'label' => 'Years of experience' ),
+        array( 'value' => '10+',  'label' => 'Massage techniques' ),
+        array( 'value' => '500+', 'label' => 'Happy clients' ),
+    );
+}
 ?>
 
 <section class="master" id="master">
     <div class="container">
         <div class="master-grid">
-
-            <!-- Image -->
             <div class="master-image-wrap">
                 <?php if ( $image ) : ?>
                     <div class="master-image">
                         <img src="<?php echo esc_url( $image['url'] ); ?>"
-                             alt="<?php echo esc_attr( $image['alt'] ?: $name ); ?>"
+                             alt="<?php echo esc_attr( $image['alt'] ?: $title ); ?>"
                              width="<?php echo esc_attr( $image['width'] ?? '' ); ?>"
                              height="<?php echo esc_attr( $image['height'] ?? '' ); ?>"
                              loading="lazy"
                              decoding="async">
                     </div>
                 <?php endif; ?>
-            </div>
-
-            <!-- Content -->
-            <div class="master-content">
-                <span class="section-label"><?php echo esc_html( $label ); ?></span>
-
-                <?php if ( $name ) : ?>
-                    <h2 class="master-name"><?php echo esc_html( $name ); ?></h2>
-                <?php endif; ?>
-
-                <?php if ( $quote ) : ?>
-                    <div class="master-quote wysiwyg-content">
-                        <?php echo smooth_wysiwyg( $quote ); ?>
-                    </div>
-                <?php endif; ?>
-
-                <?php if ( is_array( $stats ) && ! empty( $stats ) ) : ?>
+                <?php if ( $stats ) : ?>
                     <div class="master-stats">
                         <?php foreach ( $stats as $stat ) : ?>
                             <div class="stat-item">
-                                <span class="stat-number font-serif"><?php echo esc_html( $stat['number'] ?? '' ); ?></span>
-                                <p class="stat-label"><?php echo esc_html( $stat['label'] ?? '' ); ?></p>
+                                <span class="stat-value"><?php echo esc_html( $stat['value'] ?? '' ); ?></span>
+                                <span class="stat-label"><?php echo esc_html( $stat['label'] ?? '' ); ?></span>
                             </div>
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
             </div>
-
+            <div class="master-content">
+                <span class="section-label"><?php echo esc_html( $label ); ?></span>
+                <?php if ( $title ) : ?>
+                    <h2 class="master-name font-serif"><?php echo esc_html( $title ); ?></h2>
+                <?php endif; ?>
+                <?php if ( $subtitle ) : ?>
+                    <p class="master-subtitle"><?php echo esc_html( $subtitle ); ?></p>
+                <?php endif; ?>
+                <?php if ( $bio ) : ?>
+                    <div class="master-bio wysiwyg-content">
+                        <?php echo smooth_wysiwyg( $bio ); ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ( $quote ) : ?>
+                    <blockquote class="master-quote">
+                        <?php echo esc_html( $quote ); ?>
+                    </blockquote>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 </section>
