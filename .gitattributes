@@ -1,0 +1,22 @@
+# Всегда использовать LF на сервере (Linux хостинг)
+* text=auto eol=lf
+
+# Явно задаём текстовые файлы
+*.php text eol=lf
+*.css text eol=lf
+*.js  text eol=lf
+*.html text eol=lf
+*.txt text eol=lf
+*.md  text eol=lf
+*.json text eol=lf
+
+# Бинарные файлы — без конвертации
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary

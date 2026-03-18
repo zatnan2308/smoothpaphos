@@ -1,0 +1,22 @@
+# WordPress
+*.log
+.htaccess
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Node
+node_modules/
+npm-debug.log
+
+# Build artifacts
+*.min.css.map
+*.min.js.map
