@@ -72,6 +72,18 @@
   }
 
   /* ══════════════════════════════════════════
+     NAVBAR SCROLL — toggle .scrolled class
+  ══════════════════════════════════════════ */
+  var navbar = document.querySelector('.navbar');
+  if (navbar) {
+    function onScroll() {
+      navbar.classList.toggle('scrolled', window.scrollY > 50);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll(); // apply on load in case page is already scrolled
+  }
+
+  /* ══════════════════════════════════════════
      MOBILE MENU
   ══════════════════════════════════════════ */
   var overlay   = document.querySelector('.mobile-overlay');
