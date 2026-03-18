@@ -25,6 +25,8 @@
     overlay.classList.add('active');
     overlay.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    // Анимация гамбургера
+    if (menuOpen) menuOpen.classList.add('open');
     // Перемещаем фокус на первую ссылку меню
     var firstLink = overlay.querySelector('.mobile-nav a');
     if (firstLink) firstLink.focus();
@@ -35,6 +37,8 @@
     overlay.classList.remove('active');
     overlay.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    // Анимация гамбургера
+    if (menuOpen) menuOpen.classList.remove('open');
     // Возвращаем фокус на кнопку открытия меню
     if (menuOpen) menuOpen.focus();
   }

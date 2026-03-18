@@ -147,22 +147,49 @@ acf_add_local_field_group( array(
     'title'  => 'Цены / Price List',
     'fields' => array(
         array( 'key' => 'field_prices_title', 'label' => 'Заголовок', 'name' => 'prices_title', 'type' => 'text', 'default_value' => 'Price List' ),
+
+        // Nested repeater: категории → позиции
         array(
-            'key'        => 'field_price_list',
-            'label'      => 'Прайс-лист',
-            'name'       => 'price_list',
+            'key'        => 'field_price_categories',
+            'label'      => 'Категории прайса',
+            'name'       => 'price_categories',
             'type'       => 'repeater',
-            'layout'     => 'table',
+            'layout'     => 'block',
             'min'        => 0,
-            'max'        => 30,
+            'max'        => 20,
+            'button_label' => 'Добавить категорию',
             'sub_fields' => array(
-                array( 'key' => 'field_price_name',  'label' => 'Название', 'name' => 'name',  'type' => 'text' ),
-                array( 'key' => 'field_price_time',  'label' => 'Время',    'name' => 'time',  'type' => 'text' ),
-                array( 'key' => 'field_price_value', 'label' => 'Цена',     'name' => 'price', 'type' => 'text' ),
-                array( 'key' => 'field_price_desc',  'label' => 'Описание (необязат.)', 'name' => 'description', 'type' => 'text' ),
+
+                array(
+                    'key'           => 'field_cat_name',
+                    'label'         => 'Название категории',
+                    'name'          => 'cat_name',
+                    'type'          => 'text',
+                    'placeholder'   => 'Massage / Sugaring & Waxing / Nails / Hair…',
+                    'instructions'  => 'Отображается как заголовок блока (золотой фон)',
+                ),
+
+                array(
+                    'key'          => 'field_cat_items',
+                    'label'        => 'Позиции в категории',
+                    'name'         => 'cat_items',
+                    'type'         => 'repeater',
+                    'layout'       => 'table',
+                    'min'          => 0,
+                    'max'          => 40,
+                    'button_label' => 'Добавить позицию',
+                    'sub_fields'   => array(
+                        array( 'key' => 'field_item_name',  'label' => 'Услуга',           'name' => 'name',        'type' => 'text', 'placeholder' => 'Relax Massage' ),
+                        array( 'key' => 'field_item_time',  'label' => 'Время (опц.)',      'name' => 'time',        'type' => 'text', 'placeholder' => '60 min' ),
+                        array( 'key' => 'field_item_price', 'label' => 'Цена',              'name' => 'price',       'type' => 'text', 'placeholder' => '€50' ),
+                        array( 'key' => 'field_item_desc',  'label' => 'Подпись (опц.)',    'name' => 'description', 'type' => 'text', 'placeholder' => '90 min €70' ),
+                    ),
+                ),
+
             ),
         ),
-        array( 'key' => 'field_prices_bottom_text', 'label' => 'Текст внизу', 'name' => 'prices_bottom_text', 'type' => 'text', 'default_value' => 'Scroll for more' ),
+
+        array( 'key' => 'field_prices_bottom_text', 'label' => 'Примечание внизу', 'name' => 'prices_bottom_text', 'type' => 'text', 'placeholder' => 'All prices include materials' ),
     ),
     'location'   => array(
         array( array( 'param' => 'page_type',     'operator' => '==', 'value' => 'front_page' ) ),
