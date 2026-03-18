@@ -2,7 +2,7 @@
 /**
  * Template Part: About Page Content
  */
-if ( \! defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 

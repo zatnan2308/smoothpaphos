@@ -2,7 +2,7 @@
 /**
  * Template Part: Prices Section
  */
-if ( \! defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 

@@ -2,7 +2,7 @@
 /**
  * Template Part: FAQ + Contacts Section
  */
-if ( \! defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
