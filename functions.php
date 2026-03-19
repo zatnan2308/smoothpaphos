@@ -75,6 +75,12 @@ add_action( 'wp_head', 'smooth_head_resources', 1 );
 
 
 /* =========================================================================
+   Customizer — Header / Navbar settings
+   ========================================================================= */
+require_once SMOOTH_DIR . '/inc/customizer.php';
+
+
+/* =========================================================================
    ACF — Options Page & Fields
    ========================================================================= */
 require_once SMOOTH_DIR . '/inc/acf-options.php';

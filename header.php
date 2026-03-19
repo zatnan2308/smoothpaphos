@@ -12,7 +12,7 @@
 // Global Options
 $logo_text     = get_field( 'logo_text', 'option' ) ?: 'Smooth';
 $logo_sub      = get_field( 'logo_subtitle', 'option' ) ?: 'Studio';
-$booking_text  = get_field( 'booking_button_text', 'option' ) ?: 'Book Now';
+$booking_text  = get_theme_mod( 'smooth_book_text', '' ) ?: get_field( 'booking_button_text', 'option' ) ?: 'Book Now';
 $booking_link  = get_field( 'booking_link', 'option' ) ?: '#';
 
 // Fallback nav links — используются если меню не создано в WP Admin
