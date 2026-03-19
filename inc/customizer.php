@@ -35,7 +35,7 @@ function smooth_customizer_register( $wp_customize ) {
         $wp_customize->add_setting( $id, array(
             'default'           => $default,
             'sanitize_callback' => 'absint',
-            'transport'         => 'postMessage',
+            'transport'         => 'refresh',
         ) );
         $wp_customize->add_control( $id, array(
             'label'       => $label,
@@ -49,7 +49,7 @@ function smooth_customizer_register( $wp_customize ) {
         $wp_customize->add_setting( $id, array(
             'default'           => $default,
             'sanitize_callback' => 'sanitize_hex_color',
-            'transport'         => 'postMessage',
+            'transport'         => 'refresh',
         ) );
         $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, $id, array(
             'label'   => $label,
@@ -61,7 +61,7 @@ function smooth_customizer_register( $wp_customize ) {
         $wp_customize->add_setting( $id, array(
             'default'           => $default,
             'sanitize_callback' => 'sanitize_text_field',
-            'transport'         => 'postMessage',
+            'transport'         => 'refresh',
         ) );
         $wp_customize->add_control( $id, array(
             'label'       => $label,
@@ -75,7 +75,7 @@ function smooth_customizer_register( $wp_customize ) {
         $wp_customize->add_setting( $id, array(
             'default'           => $default,
             'sanitize_callback' => 'sanitize_text_field',
-            'transport'         => 'postMessage',
+            'transport'         => 'refresh',
         ) );
         $wp_customize->add_control( $id, array(
             'label'   => $label,
@@ -224,7 +224,7 @@ function smooth_customizer_preview_js() {
     wp_enqueue_script(
         'smooth-customizer-preview',
         SMOOTH_URI . '/assets/js/customizer-preview.js',
-        array( 'customize-preview' ),
+        array( 'customize-preview', 'jquery' ),
         SMOOTH_VERSION,
         true
     );
