@@ -95,7 +95,89 @@ acf_add_local_field_group( array(
             ),
         ),
 
+        /* ── Настройки отображения слайдера ── */
+        array( 'key' => 'field_hero_settings_tab', 'label' => 'Настройки отображения', 'name' => '', 'type' => 'tab' ),
+
+        array(
+            'key'           => 'field_hero_content_width',
+            'label'         => 'Ширина блока контента',
+            'name'          => 'hero_content_width',
+            'type'          => 'select',
+            'instructions'  => 'Максимальная ширина текстового блока на слайде',
+            'choices'       => array(
+                ''     => 'По умолчанию (640px)',
+                '480'  => 'Узкий — 480px',
+                '560'  => 'Чуть уже — 560px',
+                '720'  => 'Широкий — 720px',
+                '800'  => 'Очень широкий — 800px',
+                'full' => 'На всю ширину',
+            ),
+            'default_value' => '',
+            'allow_null'    => 1,
+        ),
+
+        array(
+            'key'           => 'field_hero_title_font',
+            'label'         => 'Шрифт заголовка',
+            'name'          => 'hero_title_font',
+            'type'          => 'select',
+            'choices'       => array(
+                ''     => 'Cormorant Garant (serif, по умолчанию)',
+                'sans' => 'Inter (sans-serif)',
+            ),
+            'default_value' => '',
+            'allow_null'    => 1,
+        ),
+
+        array(
+            'key'           => 'field_hero_title_size',
+            'label'         => 'Размер заголовка',
+            'name'          => 'hero_title_size',
+            'type'          => 'select',
+            'instructions'  => 'Размер основного заголовка слайда',
+            'choices'       => array(
+                ''   => 'Средний (по умолчанию, ~6.5rem)',
+                'sm' => 'Маленький (~4.5rem)',
+                'lg' => 'Большой (~8rem)',
+            ),
+            'default_value' => '',
+            'allow_null'    => 1,
+        ),
+
+        array(
+            'key'           => 'field_hero_desc_size',
+            'label'         => 'Размер описания',
+            'name'          => 'hero_desc_size',
+            'type'          => 'select',
+            'instructions'  => 'Размер шрифта текста-описания под заголовком',
+            'choices'       => array(
+                ''   => 'Обычный (по умолчанию, ~15px)',
+                'sm' => 'Маленький (~13px)',
+                'lg' => 'Большой (~17px)',
+            ),
+            'default_value' => '',
+            'allow_null'    => 1,
+        ),
+
+        array(
+            'key'           => 'field_hero_btn_style',
+            'label'         => 'Стиль кнопки',
+            'name'          => 'hero_btn_style',
+            'type'          => 'select',
+            'instructions'  => 'Цвет и стиль кнопки на слайде',
+            'choices'       => array(
+                ''              => 'Белая заливка (по умолчанию)',
+                'gold'          => 'Золотая заливка',
+                'outline-white' => 'Обводка белая',
+                'outline-gold'  => 'Обводка золотая',
+            ),
+            'default_value' => '',
+            'allow_null'    => 1,
+        ),
+
         /* ── Устаревшие поля (legacy, скрыты но сохранены для совместимости) ── */
+        array( 'key' => 'field_hero_settings_legacy_tab', 'label' => 'Legacy поля', 'name' => '', 'type' => 'tab' ),
+
         array( 'key' => 'field_hero_badge',          'label' => 'Legacy: Badge',        'name' => 'hero_badge',          'type' => 'text' ),
         array( 'key' => 'field_hero_title_1',        'label' => 'Legacy: Title 1',      'name' => 'hero_title_1',        'type' => 'text' ),
         array( 'key' => 'field_hero_title_2',        'label' => 'Legacy: Title 2',      'name' => 'hero_title_2',        'type' => 'text' ),

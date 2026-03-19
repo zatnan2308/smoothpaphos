@@ -7,6 +7,63 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+/* ── ACF display settings ── */
+$hero_content_width = get_field( 'hero_content_width' );
+$hero_title_font    = get_field( 'hero_title_font' );
+$hero_title_size    = get_field( 'hero_title_size' );
+$hero_desc_size     = get_field( 'hero_desc_size' );
+$hero_btn_style     = get_field( 'hero_btn_style' );
+
+$css_vars = array();
+
+if ( $hero_content_width ) {
+    if ( $hero_content_width === 'full' ) {
+        $css_vars[] = '--hero-content-width: calc(100vw - 4rem)';
+    } else {
+        $css_vars[] = '--hero-content-width: min(' . intval( $hero_content_width ) . 'px, 90vw)';
+    }
+}
+
+if ( $hero_title_font === 'sans' ) {
+    $css_vars[] = '--hero-title-font: var(--font-sans)';
+}
+
+if ( $hero_title_size === 'sm' ) {
+    $css_vars[] = '--hero-title-size: clamp(2.25rem, 6vw, 4.5rem)';
+} elseif ( $hero_title_size === 'lg' ) {
+    $css_vars[] = '--hero-title-size: clamp(4rem, 11vw, 8rem)';
+}
+
+if ( $hero_desc_size === 'sm' ) {
+    $css_vars[] = '--hero-desc-size: 0.8125rem';
+} elseif ( $hero_desc_size === 'lg' ) {
+    $css_vars[] = '--hero-desc-size: 1.0625rem';
+}
+
+switch ( $hero_btn_style ) {
+    case 'gold':
+        $css_vars[] = '--hero-btn-bg: var(--gold)';
+        $css_vars[] = '--hero-btn-color: #fff';
+        $css_vars[] = '--hero-btn-border: none';
+        $css_vars[] = '--hero-btn-hover-bg: var(--gold-light)';
+        $css_vars[] = '--hero-btn-hover-color: #1a0a00';
+        break;
+    case 'outline-white':
+        $css_vars[] = '--hero-btn-bg: transparent';
+        $css_vars[] = '--hero-btn-color: #fff';
+        $css_vars[] = '--hero-btn-border: 2px solid rgba(255,255,255,0.75)';
+        $css_vars[] = '--hero-btn-hover-bg: #fff';
+        $css_vars[] = '--hero-btn-hover-color: #1a0a00';
+        break;
+    case 'outline-gold':
+        $css_vars[] = '--hero-btn-bg: transparent';
+        $css_vars[] = '--hero-btn-color: var(--gold)';
+        $css_vars[] = '--hero-btn-border: 2px solid var(--gold)';
+        $css_vars[] = '--hero-btn-hover-bg: var(--gold)';
+        $css_vars[] = '--hero-btn-hover-color: #fff';
+        break;
+}
+
 /* ── ACF slides repeater (primary source) ── */
 $slides_acf = get_field( 'hero_slides' );
 
@@ -48,6 +105,9 @@ $slides = ! empty( $slides_acf ) ? $slides_acf : $fallback_slides;
 $total  = count( $slides );
 ?>
 
+<?php if ( ! empty( $css_vars ) ) : ?>
+<style>.hero-slider{<?php echo implode( ';', $css_vars ); ?>}</style>
+<?php endif; ?>
 <section class="hero-slider" id="hero" aria-label="Hero slider">
 
     <!-- ══ Slides ══ -->
