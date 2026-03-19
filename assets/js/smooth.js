@@ -182,4 +182,60 @@
     });
   });
 
+  /* ══════════════════════════════════════════
+     MEGA MENU — hover + touch/click
+  ══════════════════════════════════════════ */
+  var megaWrappers = document.querySelectorAll('.mega-wrapper');
+
+  megaWrappers.forEach(function (wrapper) {
+    var closeTimer;
+
+    function openMega() {
+      clearTimeout(closeTimer);
+      /* Закрываем остальные мегаменю */
+      megaWrappers.forEach(function (w) {
+        if (w !== wrapper) w.classList.remove('is-open');
+      });
+      wrapper.classList.add('is-open');
+    }
+
+    function closeMega() {
+      closeTimer = setTimeout(function () {
+        wrapper.classList.remove('is-open');
+      }, 180);
+    }
+
+    /* Ховер для десктопа */
+    wrapper.addEventListener('mouseenter', openMega);
+    wrapper.addEventListener('mouseleave', closeMega);
+
+    /* Тап/клик для тачскрина: первый клик — открыть, второй — перейти */
+    var trigger = wrapper.querySelector('.nav-link');
+    if (trigger) {
+      trigger.addEventListener('click', function (e) {
+        if (!wrapper.classList.contains('is-open')) {
+          e.preventDefault();
+          openMega();
+        }
+        /* если уже открыто — дать браузеру перейти по ссылке */
+      });
+    }
+  });
+
+  /* Закрыть при клике вне мегаменю */
+  document.addEventListener('click', function (e) {
+    megaWrappers.forEach(function (wrapper) {
+      if (!wrapper.contains(e.target)) {
+        wrapper.classList.remove('is-open');
+      }
+    });
+  });
+
+  /* Закрыть по Escape */
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      megaWrappers.forEach(function (w) { w.classList.remove('is-open'); });
+    }
+  });
+
 })();

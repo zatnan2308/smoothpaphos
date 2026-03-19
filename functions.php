@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'SMOOTH_VERSION', '1.3.0' );
+define( 'SMOOTH_VERSION', '1.3.1' );
 define( 'SMOOTH_DIR', get_template_directory() );
 define( 'SMOOTH_URI', get_template_directory_uri() );
 
@@ -89,6 +89,8 @@ add_action( 'acf/init', function () {
     require_once SMOOTH_DIR . '/inc/acf-fields.php';
 } );
 
+require_once SMOOTH_DIR . '/inc/acf-megamenu.php';
+
 
 /* =========================================================================
    Helper: Get SVG icon by name
@@ -131,6 +133,8 @@ function smooth_icon( $name, $size = 20 ) {
         'leaf' => '<svg xmlns="http://www.w3.org/2000/svg" width="' . $size . '" height="' . $size . '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>',
 
         'smile' => '<svg xmlns="http://www.w3.org/2000/svg" width="' . $size . '" height="' . $size . '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 13s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg>',
+
+        'zap' => '<svg xmlns="http://www.w3.org/2000/svg" width="' . $size . '" height="' . $size . '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>',
     );
 
     return isset( $icons[ $name ] ) ? $icons[ $name ] : '';
@@ -141,29 +145,54 @@ function smooth_icon( $name, $size = 20 ) {
    Nav Walker — убирает <li> теги, добавляет класс nav-link к ссылкам
    ========================================================================= */
 class Smooth_Nav_Walker extends Walker_Nav_Menu {
-    /**
-     * @param string   $output
-     * @param WP_Post  $item
-     * @param int      $depth
-     * @param stdClass $args
-     * @param int      $id
-     */
+
+    /** Флаг: текущий пункт имеет мегаменю */
+    private $is_mega = false;
+
     public function start_el( &$output, $item, $depth = 0, $args = null, $id = 0 ) {
         $classes = empty( $item->classes ) ? array() : (array) $item->classes;
-        $classes[] = 'nav-link';
+
+        /* Определяем, нужно ли мегаменю для этого пункта */
+        $this->is_mega = in_array( 'has-mega', $classes, true );
+
+        /* Убираем служебный класс из ссылки, добавляем nav-link */
+        $link_classes = array_diff( $classes, array( 'has-mega' ) );
+        $link_classes[] = 'nav-link';
         if ( in_array( 'current-menu-item', $classes, true ) ) {
-            $classes[] = 'active';
+            $link_classes[] = 'active';
         }
-        $class_str = implode( ' ', array_unique( array_filter( $classes ) ) );
+        $class_str = implode( ' ', array_unique( array_filter( $link_classes ) ) );
+
+        /* Оборачиваем пункт с мегаменю в триггер */
+        if ( $this->is_mega ) {
+            $output .= '<div class="mega-wrapper">';
+        }
 
         $output .= '<a href="' . esc_url( $item->url ) . '" class="' . esc_attr( $class_str ) . '"'
             . ( $item->target ? ' target="' . esc_attr( $item->target ) . '"' : '' )
             . ( $item->xfn ? ' rel="' . esc_attr( $item->xfn ) . '"' : '' )
             . '>'
-            . esc_html( $item->title )
-            . '</a>';
+            . esc_html( $item->title );
+
+        /* Шеврон-индикатор для пунктов с мегаменю */
+        if ( $this->is_mega ) {
+            $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mega-chevron" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>';
+        }
+
+        $output .= '</a>';
     }
-    public function end_el( &$output, $item, $depth = 0, $args = null ) {}
+
+    public function end_el( &$output, $item, $depth = 0, $args = null ) {
+        if ( $this->is_mega ) {
+            /* Вставляем HTML мегаменю и закрываем обёртку */
+            if ( function_exists( 'smooth_mega_menu_html' ) ) {
+                $output .= smooth_mega_menu_html();
+            }
+            $output .= '</div>'; /* .mega-wrapper */
+            $this->is_mega = false;
+        }
+    }
+
     public function start_lvl( &$output, $depth = 0, $args = null ) {}
     public function end_lvl( &$output, $depth = 0, $args = null ) {}
 }
