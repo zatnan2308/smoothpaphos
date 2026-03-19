@@ -127,57 +127,57 @@ function smooth_customizer_register( $wp_customize ) {
     $color( 'smooth_book_scrolled_hover_bg','Кнопка Book — фон при скролле+наведении', '#8b9d83' );
 }
 
-/* ─── Output CSS variables via wp_head (priority 20, after stylesheet) ───── */
-add_action( 'wp_head', 'smooth_customizer_css', 20 );
+/* ─── Вывод CSS-переменных через wp_add_inline_style (после smooth.css) ───── */
+add_action( 'wp_enqueue_scripts', 'smooth_customizer_css', 20 );
 
 function smooth_customizer_css() {
-    $g = function ( $id, $def ) {
-        $v = get_theme_mod( $id );
-        return ( $v !== '' && $v !== false ) ? $v : $def;
-    };
+    // Проверяем что основная таблица стилей темы уже зарегистрирована
+    if ( ! wp_style_is( 'smooth-style', 'enqueued' ) ) {
+        return;
+    }
 
-    /* Pill */
-    $nav_top        = (int) $g( 'smooth_nav_top',         16 );
-    $pill_radius    = (int) $g( 'smooth_nav_pill_radius', 56 );
-    $pill_gap       = (int) $g( 'smooth_nav_pill_gap',    24 );
-    $pill_left      = (int) $g( 'smooth_nav_pill_left',   28 );
+    /* ── Пилюля ── */
+    $nav_top     = absint( get_theme_mod( 'smooth_nav_top',         16 ) );
+    $pill_radius = absint( get_theme_mod( 'smooth_nav_pill_radius', 56 ) );
+    $pill_gap    = absint( get_theme_mod( 'smooth_nav_pill_gap',    24 ) );
+    $pill_left   = absint( get_theme_mod( 'smooth_nav_pill_left',   28 ) );
 
-    /* Glass */
-    $glass_color   = $g( 'smooth_nav_glass_color',   '#ffffff' );
-    $glass_opacity = (float) $g( 'smooth_nav_glass_opacity', '0.18' );
-    $glass_blur    = (int) $g( 'smooth_nav_glass_blur', 24 );
-    $glass_border  = (float) $g( 'smooth_nav_glass_border', '0.20' );
+    /* ── Стекло ── */
+    $glass_color   = sanitize_hex_color( get_theme_mod( 'smooth_nav_glass_color',   '#ffffff' ) ) ?: '#ffffff';
+    $glass_opacity = (float) get_theme_mod( 'smooth_nav_glass_opacity', '0.18' );
+    $glass_blur    = absint( get_theme_mod( 'smooth_nav_glass_blur', 24 ) );
+    $glass_border  = (float) get_theme_mod( 'smooth_nav_glass_border', '0.20' );
 
-    /* Scrolled */
-    $scrolled_color   = $g( 'smooth_nav_scrolled_color',   '#fcf9f6' );
-    $scrolled_opacity = (float) $g( 'smooth_nav_scrolled_opacity', '0.88' );
+    /* ── При скролле ── */
+    $scrolled_color   = sanitize_hex_color( get_theme_mod( 'smooth_nav_scrolled_color',   '#fcf9f6' ) ) ?: '#fcf9f6';
+    $scrolled_opacity = (float) get_theme_mod( 'smooth_nav_scrolled_opacity', '0.88' );
 
-    /* Logo */
-    $logo_size          = (int) $g( 'smooth_logo_size',          20 );
-    $logo_color         = $g( 'smooth_logo_color',         '#ffffff' );
-    $logo_scrolled      = $g( 'smooth_logo_scrolled_color', '#2c2a28' );
-    $logo_hover         = $g( 'smooth_logo_hover_color',    '#8b9d83' );
+    /* ── Логотип ── */
+    $logo_size     = absint( get_theme_mod( 'smooth_logo_size',          20 ) );
+    $logo_color    = sanitize_hex_color( get_theme_mod( 'smooth_logo_color',          '#ffffff' ) ) ?: '#ffffff';
+    $logo_scrolled = sanitize_hex_color( get_theme_mod( 'smooth_logo_scrolled_color', '#2c2a28' ) ) ?: '#2c2a28';
+    $logo_hover    = sanitize_hex_color( get_theme_mod( 'smooth_logo_hover_color',    '#8b9d83' ) ) ?: '#8b9d83';
 
-    /* Nav links */
-    $link_size          = (int) $g( 'smooth_navlink_size',           11 );
-    $link_gap           = (int) $g( 'smooth_navlink_gap',            32 );
-    $link_color         = $g( 'smooth_navlink_color',          '#ffffff' );
-    $link_opacity       = (float) $g( 'smooth_navlink_opacity', '0.80' );
-    $link_scrolled      = $g( 'smooth_navlink_scrolled_color', '#2c2a28' );
-    $link_hover         = $g( 'smooth_navlink_hover_color',    '#8b9d83' );
+    /* ── Ссылки меню ── */
+    $link_size     = absint( get_theme_mod( 'smooth_navlink_size',           11 ) );
+    $link_gap      = absint( get_theme_mod( 'smooth_navlink_gap',            32 ) );
+    $link_color    = sanitize_hex_color( get_theme_mod( 'smooth_navlink_color',          '#ffffff' ) ) ?: '#ffffff';
+    $link_opacity  = (float) get_theme_mod( 'smooth_navlink_opacity', '0.80' );
+    $link_scrolled = sanitize_hex_color( get_theme_mod( 'smooth_navlink_scrolled_color', '#2c2a28' ) ) ?: '#2c2a28';
+    $link_hover    = sanitize_hex_color( get_theme_mod( 'smooth_navlink_hover_color',    '#8b9d83' ) ) ?: '#8b9d83';
 
-    /* Book button */
-    $book_size          = (int) $g( 'smooth_book_size',            10 );
-    $book_color         = $g( 'smooth_book_color',         '#ffffff' );
-    $book_hover_color   = $g( 'smooth_book_hover_color',   '#ffffff' );
-    $book_bg            = $g( 'smooth_book_bg',            '#ffffff' );
-    $book_bg_opacity    = (float) $g( 'smooth_book_bg_opacity',       '0.20' );
-    $book_hover_bg      = $g( 'smooth_book_hover_bg',      '#ffffff' );
-    $book_hover_opacity = (float) $g( 'smooth_book_hover_bg_opacity', '0.32' );
-    $book_scrolled_bg   = $g( 'smooth_book_scrolled_bg',       '#2c2a28' );
-    $book_scrolled_h    = $g( 'smooth_book_scrolled_hover_bg', '#8b9d83' );
+    /* ── Кнопка Book ── */
+    $book_size          = absint( get_theme_mod( 'smooth_book_size',            10 ) );
+    $book_color         = sanitize_hex_color( get_theme_mod( 'smooth_book_color',         '#ffffff' ) ) ?: '#ffffff';
+    $book_hover_color   = sanitize_hex_color( get_theme_mod( 'smooth_book_hover_color',   '#ffffff' ) ) ?: '#ffffff';
+    $book_bg            = sanitize_hex_color( get_theme_mod( 'smooth_book_bg',            '#ffffff' ) ) ?: '#ffffff';
+    $book_bg_opacity    = (float) get_theme_mod( 'smooth_book_bg_opacity',       '0.20' );
+    $book_hover_bg      = sanitize_hex_color( get_theme_mod( 'smooth_book_hover_bg',      '#ffffff' ) ) ?: '#ffffff';
+    $book_hover_opacity = (float) get_theme_mod( 'smooth_book_hover_bg_opacity', '0.32' );
+    $book_scrolled_bg   = sanitize_hex_color( get_theme_mod( 'smooth_book_scrolled_bg',       '#2c2a28' ) ) ?: '#2c2a28';
+    $book_scrolled_h    = sanitize_hex_color( get_theme_mod( 'smooth_book_scrolled_hover_bg', '#8b9d83' ) ) ?: '#8b9d83';
 
-    /* Computed rgba values */
+    /* ── Вычисленные rgba ── */
     $glass_bg_rgba     = smooth_hex_to_rgba( $glass_color,   $glass_opacity );
     $glass_border_rgba = smooth_hex_to_rgba( '#ffffff',       $glass_border );
     $scrolled_bg_rgba  = smooth_hex_to_rgba( $scrolled_color, $scrolled_opacity );
@@ -185,36 +185,36 @@ function smooth_customizer_css() {
     $book_bg_rgba      = smooth_hex_to_rgba( $book_bg,        $book_bg_opacity );
     $book_hover_rgba   = smooth_hex_to_rgba( $book_hover_bg,  $book_hover_opacity );
 
-    ?>
-    <style id="smooth-nav-vars">
-    :root {
-        --nav-top:                <?php echo $nav_top; ?>px;
-        --nav-pill-radius:        <?php echo $pill_radius; ?>px;
-        --nav-pill-gap:           <?php echo $pill_gap; ?>px;
-        --nav-pill-left:          <?php echo $pill_left; ?>px;
-        --nav-glass-bg:           <?php echo esc_attr( $glass_bg_rgba ); ?>;
-        --nav-glass-blur:         <?php echo $glass_blur; ?>px;
-        --nav-glass-border:       <?php echo esc_attr( $glass_border_rgba ); ?>;
-        --nav-scrolled-bg:        <?php echo esc_attr( $scrolled_bg_rgba ); ?>;
-        --logo-size:              <?php echo $logo_size; ?>px;
-        --logo-color:             <?php echo esc_attr( $logo_color ); ?>;
-        --logo-scrolled-color:    <?php echo esc_attr( $logo_scrolled ); ?>;
-        --logo-hover-color:       <?php echo esc_attr( $logo_hover ); ?>;
-        --navlink-size:           <?php echo $link_size; ?>px;
-        --navlink-gap:            <?php echo $link_gap; ?>px;
-        --navlink-color:          <?php echo esc_attr( $link_color_rgba ); ?>;
-        --navlink-scrolled-color: <?php echo esc_attr( $link_scrolled ); ?>;
-        --navlink-hover-color:    <?php echo esc_attr( $link_hover ); ?>;
-        --book-size:              <?php echo $book_size; ?>px;
-        --book-color:             <?php echo esc_attr( $book_color ); ?>;
-        --book-hover-color:       <?php echo esc_attr( $book_hover_color ); ?>;
-        --book-bg:                <?php echo esc_attr( $book_bg_rgba ); ?>;
-        --book-hover-bg:          <?php echo esc_attr( $book_hover_rgba ); ?>;
-        --book-scrolled-bg:       <?php echo esc_attr( $book_scrolled_bg ); ?>;
-        --book-scrolled-hover-bg: <?php echo esc_attr( $book_scrolled_h ); ?>;
-    }
-    </style>
-    <?php
+    /* ── Строим CSS и вставляем inline сразу после smooth.css ── */
+    $css = "
+:root {
+    --nav-top:                {$nav_top}px;
+    --nav-pill-radius:        {$pill_radius}px;
+    --nav-pill-gap:           {$pill_gap}px;
+    --nav-pill-left:          {$pill_left}px;
+    --nav-glass-bg:           {$glass_bg_rgba};
+    --nav-glass-blur:         {$glass_blur}px;
+    --nav-glass-border:       {$glass_border_rgba};
+    --nav-scrolled-bg:        {$scrolled_bg_rgba};
+    --logo-size:              {$logo_size}px;
+    --logo-color:             {$logo_color};
+    --logo-scrolled-color:    {$logo_scrolled};
+    --logo-hover-color:       {$logo_hover};
+    --navlink-size:           {$link_size}px;
+    --navlink-gap:            {$link_gap}px;
+    --navlink-color:          {$link_color_rgba};
+    --navlink-scrolled-color: {$link_scrolled};
+    --navlink-hover-color:    {$link_hover};
+    --book-size:              {$book_size}px;
+    --book-color:             {$book_color};
+    --book-hover-color:       {$book_hover_color};
+    --book-bg:                {$book_bg_rgba};
+    --book-hover-bg:          {$book_hover_rgba};
+    --book-scrolled-bg:       {$book_scrolled_bg};
+    --book-scrolled-hover-bg: {$book_scrolled_h};
+}";
+
+    wp_add_inline_style( 'smooth-style', $css );
 }
 
 /* ─── Enqueue live-preview script in Customizer ──────────────────────────── */
