@@ -366,11 +366,13 @@ h1, h2, h3, h4, h5 {
   flex-direction: column;
   padding: 6rem 2rem 3rem;
   opacity: 0;
+  visibility: hidden;        /* скрываем от screen readers в закрытом состоянии */
   pointer-events: none;
-  transition: opacity 0.35s ease;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
 }
 .mobile-overlay.active {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
 }
 .mobile-nav {
@@ -393,6 +395,18 @@ h1, h2, h3, h4, h5 {
   color: var(--text);
   padding-left: 0.75rem;
 }
+/* Walker навешивает класс nav-link на все пункты меню, в том числе мобильные.
+   В оверлее underline-анимация выглядит неуместно — сбрасываем */
+.mobile-nav .nav-link {
+  position: static;
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: inherit;
+}
+.mobile-nav .nav-link::after {
+  display: none;
+}
+
 .mobile-close {
   position: absolute;
   top: 1.5rem;
@@ -412,10 +426,14 @@ h1, h2, h3, h4, h5 {
    MEGA MENU
 ───────────────────────────────────────── */
 
-/* Триггер — inline-элемент в flex-ряду ссылок */
+/* Триггер — flex-элемент в ряду ссылок.
+   ВАЖНО: display:contents ломает mouseenter/mouseleave в Chrome,
+   поэтому используем inline-flex + position:static, чтобы
+   mega-menu по-прежнему позиционировался относительно .navbar-pill */
 .mega-wrapper {
-  position: static;
-  display: contents; /* ← занимает место как обычная ссылка */
+  display: inline-flex;
+  align-items: center;
+  position: static; /* позиционирование mega-menu — относительно .navbar-pill */
 }
 
 /* Шеврон рядом с текстом ссылки */
@@ -547,9 +565,9 @@ h1, h2, h3, h4, h5 {
   gap: 10px;
 }
 
-/* Не показываем мегаменю на мобильных */
+/* Не показываем мегаменю на мобильных.
+   .mega-wrapper не нужно скрывать — .navbar-links уже display:none < 1024px */
 @media (max-width: 1023px) {
-  .mega-wrapper { display: contents; }
   .mega-menu    { display: none; }
   .mega-chevron { display: none; }
 }
@@ -1744,6 +1762,8 @@ h1, h2, h3, h4, h5 {
   padding: 60px 60px 52px;
   max-width: var(--wrap);
   margin: 0 auto;
+  background: transparent; /* сбрасываем старый bg-2 из предыдущей версии футера */
+  border-top: none;         /* убираем старый border-top — divider уже есть выше */
 }
 .footer-grid {
   display: grid;
@@ -1842,18 +1862,20 @@ h1, h2, h3, h4, h5 {
   border-bottom: 1px solid rgba(200, 146, 74, 0.09);
 }
 .footer-hours li:first-child { border-top: 1px solid rgba(200, 146, 74, 0.09); }
-.hours-day {
+/* Используем родительский селектор .footer-hours, чтобы не перебивать
+   стили .hours-day / .hours-time на странице контактов */
+.footer-hours .hours-day {
   font-family: var(--font-sans);
   font-size: 0.8125rem;
   color: var(--gold);
 }
-.hours-time {
+.footer-hours .hours-time {
   font-family: var(--font-sans);
   font-size: 0.9375rem;
   font-weight: 500;
   color: var(--text);
 }
-.hours-time--closed {
+.footer-hours .hours-time--closed {
   font-style: italic;
   font-weight: 300;
   color: var(--text-3);

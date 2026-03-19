@@ -68,7 +68,7 @@ $fallback_links = array(
 </nav><!-- .navbar -->
 
 <!-- ══ Mobile Menu Overlay ══ -->
-<div class="mobile-overlay" id="mobile-overlay" aria-hidden="true" role="dialog" aria-label="Mobile navigation">
+<div class="mobile-overlay" id="mobile-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Mobile navigation">
     <div class="mobile-menu">
         <button class="mobile-close" aria-label="Close menu">
             <?php echo smooth_icon( 'x', 24 ); ?>
@@ -78,6 +78,7 @@ $fallback_links = array(
                 'theme_location' => 'mobile',
                 'container'      => 'nav',
                 'container_class'=> 'mobile-nav',
+                'items_wrap'     => '%3$s', /* убираем <ul> — ссылки идут прямо в .mobile-nav flex */
                 'depth'          => 1,
                 'walker'         => new Smooth_Nav_Walker(),
                 'fallback_cb'    => false,
