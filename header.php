@@ -39,6 +39,7 @@ $fallback_links = array(
                 'theme_location'  => 'primary',
                 'container'       => 'div',
                 'container_class' => 'navbar-links',
+                'items_wrap'      => '%3$s',
                 'depth'           => 1,
                 'walker'          => new Smooth_Nav_Walker(),
                 'fallback_cb'     => false,

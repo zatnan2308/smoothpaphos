@@ -274,6 +274,11 @@ h1, h2, h3, h4, h5 {
 }
 @media (min-width: 1024px) { .navbar-links { display: flex; } }
 
+/* Если wp_nav_menu добавит <ul> — делаем его прозрачным для flex-gap */
+.navbar-links > ul {
+  display: contents;
+}
+
 .nav-link {
   font-size: var(--navlink-size);
   font-weight: 700;
