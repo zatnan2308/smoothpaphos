@@ -43,10 +43,10 @@ $contact_label    = get_field( 'contact_label' ) ?: 'Contact';
 $contact_title    = get_field( 'contact_title' ) ?: 'Get in touch';
 $contact_desc     = get_field( 'contact_desc' ) ?: '<p>Ready to book or have a question? Reach out via Instagram or WhatsApp — we reply quickly.</p>';
 $contact_btn_text = get_field( 'contact_btn_text' ) ?: 'Write on WhatsApp';
-$contact_btn_link = get_field( 'contact_btn_link' ) ?: get_field( 'whatsapp', 'option' ) ?: '#';
+$contact_btn_link = get_field( 'contact_btn_link' ) ?: get_field( 'whatsapp_link', 'option' ) ?: '#';
 $address          = get_field( 'address', 'option' );
-$instagram        = get_field( 'instagram', 'option' );
-$whatsapp         = get_field( 'whatsapp', 'option' );
+$instagram        = get_field( 'instagram_url', 'option' );
+$whatsapp         = get_field( 'whatsapp_link', 'option' );
 ?>
 
 <section class="faq-contacts" id="faq">

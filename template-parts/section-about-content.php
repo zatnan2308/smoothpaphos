@@ -7,15 +7,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // --- Story section ---
-$story_label   = get_field( 'story_label' ) ?: 'Our Story';
-$story_title   = get_field( 'story_title' ) ?: 'Born from a love of touch and healing';
-$story_content = get_field( 'story_content' ) ?: '<p>Smooth Studio was founded in Paphos, Cyprus, with one simple belief: every person deserves a massage that is truly their own. Diana — the heart and hands behind the studio — brings over five years of professional experience and a genuine passion for wellbeing.</p><p>From the first conversation to the last breath of the session, every detail is considered. The ambience, the technique, the pressure — all shaped around you.</p>';
-$story_image   = get_field( 'story_image' );
+$story_label   = get_field( 'about_story_label' ) ?: 'Our Story';
+$story_title   = get_field( 'about_story_title' ) ?: 'Born from a love of touch and healing';
+$story_content = get_field( 'about_story_content' ) ?: '<p>Smooth Studio was founded in Paphos, Cyprus, with one simple belief: every person deserves a massage that is truly their own. Diana — the heart and hands behind the studio — brings over five years of professional experience and a genuine passion for wellbeing.</p><p>From the first conversation to the last breath of the session, every detail is considered. The ambience, the technique, the pressure — all shaped around you.</p>';
+$story_image   = get_field( 'about_story_image' );
 
 // --- Values section ---
-$values_label = get_field( 'values_label' ) ?: 'What We Stand For';
-$values_title = get_field( 'values_title' ) ?: 'Our values';
-$values       = get_field( 'values_items' );
+$values_label = 'What We Stand For';
+$values_title = get_field( 'about_values_title' ) ?: 'Our values';
+$values       = get_field( 'about_values' );
 
 if ( empty( $values ) ) {
     $values = array(
@@ -29,10 +29,10 @@ if ( empty( $values ) ) {
 }
 
 // --- CTA section ---
-$cta_title    = get_field( 'about_cta_title' ) ?: 'Ready to experience the difference?';
-$cta_desc     = get_field( 'about_cta_desc' ) ?: '<p>Book your first session today and discover what a truly personalised massage feels like.</p>';
-$cta_btn_text = get_field( 'about_cta_btn_text' ) ?: 'Book via Instagram';
-$cta_btn_link = get_field( 'about_cta_btn_link' ) ?: get_field( 'instagram', 'option' ) ?: 'https://instagram.com/smoothstudio.paphos';
+$cta_title    = 'Ready to experience the difference?';
+$cta_desc     = get_field( 'about_cta_text' ) ?: '<p>Book your first session today and discover what a truly personalised massage feels like.</p>';
+$cta_btn_text = get_field( 'about_cta_button_text' ) ?: 'Book via Instagram';
+$cta_btn_link = get_field( 'about_cta_button_link' ) ?: get_field( 'instagram_url', 'option' ) ?: 'https://instagram.com/smoothstudio.paphos';
 ?>
 <div class="about-content">
 

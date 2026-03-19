@@ -6,22 +6,22 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$label     = get_field( 'contacts_label' ) ?: 'Contacts';
-$title     = get_field( 'contacts_title' ) ?: 'Find us in Paphos';
-$desc      = get_field( 'contacts_desc' ) ?: '<p>Smooth Studio is located in the heart of Paphos, Cyprus. We are open seven days a week. Book via Instagram Direct or WhatsApp.</p>';
-$map_embed = get_field( 'map_embed' );
+$label     = 'Contacts';
+$title     = get_field( 'contacts_intro_title' ) ?: 'Find us in Paphos';
+$desc      = get_field( 'contacts_intro_content' ) ?: '<p>Smooth Studio is located in the heart of Paphos, Cyprus. We are open seven days a week. Book via Instagram Direct or WhatsApp.</p>';
+$map_url   = get_field( 'contacts_map_url' );
 
-$address   = get_field( 'address',   'option' );
-$instagram = get_field( 'instagram', 'option' );
-$whatsapp  = get_field( 'whatsapp',  'option' );
-$phone     = get_field( 'phone',     'option' );
+$address   = get_field( 'address',        'option' );
+$instagram = get_field( 'instagram_url',  'option' );
+$whatsapp  = get_field( 'whatsapp_link',  'option' );
+$phone     = get_field( 'phone_number',   'option' );
 
-$hours = get_field( 'working_hours' );
+$hours = get_field( 'contacts_hours' );
 if ( empty( $hours ) ) {
     $hours = array(
-        array( 'days' => 'Monday – Friday', 'time' => '10:00 – 20:00' ),
-        array( 'days' => 'Saturday',        'time' => '10:00 – 18:00' ),
-        array( 'days' => 'Sunday',          'time' => 'By appointment' ),
+        array( 'day' => 'Monday – Friday', 'time' => '10:00 – 20:00' ),
+        array( 'day' => 'Saturday',        'time' => '10:00 – 18:00' ),
+        array( 'day' => 'Sunday',          'time' => 'By appointment' ),
     );
 }
 
@@ -78,7 +78,7 @@ $btn_link = get_field( 'contacts_btn_link' ) ?: $whatsapp ?: '#';
                         <table class="hours-table">
                             <?php foreach ( $hours as $row ) : ?>
                                 <tr>
-                                    <td class="hours-days"><?php echo esc_html( $row['days'] ?? '' ); ?></td>
+                                    <td class="hours-days"><?php echo esc_html( $row['day'] ?? '' ); ?></td>
                                     <td class="hours-time"><?php echo esc_html( $row['time'] ?? '' ); ?></td>
                                 </tr>
                             <?php endforeach; ?>
@@ -93,9 +93,9 @@ $btn_link = get_field( 'contacts_btn_link' ) ?: $whatsapp ?: '#';
                 <?php endif; ?>
             </div>
 
-            <?php if ( $map_embed ) : ?>
+            <?php if ( $map_url ) : ?>
                 <div class="contacts-map">
-                    <?php echo wp_kses( $map_embed, array( 'iframe' => array( 'src' => true, 'width' => true, 'height' => true, 'style' => true, 'allowfullscreen' => true, 'loading' => true, 'referrerpolicy' => true ) ) ); ?>
+                    <iframe src="<?php echo esc_url( $map_url ); ?>" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             <?php endif; ?>
 

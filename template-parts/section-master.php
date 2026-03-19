@@ -6,19 +6,19 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-$label      = get_field( 'master_label' ) ?: 'Your Master';
-$title      = get_field( 'master_title' ) ?: 'Diana';
-$subtitle   = get_field( 'master_subtitle' ) ?: 'Massage therapist & beauty specialist';
-$bio        = get_field( 'master_bio' ) ?: '<p>Diana has been practising massage therapy for over 5 years, combining classical techniques with a deeply personal approach. Each session is tailored to your needs — whether you seek relaxation, recovery or balance.</p>';
-$image      = get_field( 'master_image' );
-$quote      = get_field( 'master_quote' ) ?: 'I believe the body knows how to heal — my role is to help it remember.';
+$label    = get_field( 'master_label' ) ?: 'Your Master';
+$title    = get_field( 'master_name' ) ?: 'Diana';
+$subtitle = 'Massage therapist & beauty specialist';
+$bio      = '<p>Diana has been practising massage therapy for over 5 years, combining classical techniques with a deeply personal approach. Each session is tailored to your needs — whether you seek relaxation, recovery or balance.</p>';
+$image    = get_field( 'master_image' );
+$quote    = get_field( 'master_quote' ) ?: 'I believe the body knows how to heal — my role is to help it remember.';
 
 $stats = get_field( 'master_stats' );
 if ( empty( $stats ) ) {
     $stats = array(
-        array( 'value' => '5+',   'label' => 'Years of experience' ),
-        array( 'value' => '10+',  'label' => 'Massage techniques' ),
-        array( 'value' => '500+', 'label' => 'Happy clients' ),
+        array( 'number' => '5+',   'label' => 'Years of experience' ),
+        array( 'number' => '10+',  'label' => 'Massage techniques' ),
+        array( 'number' => '500+', 'label' => 'Happy clients' ),
     );
 }
 ?>
@@ -41,7 +41,7 @@ if ( empty( $stats ) ) {
                     <div class="master-stats">
                         <?php foreach ( $stats as $stat ) : ?>
                             <div class="stat-item">
-                                <span class="stat-value"><?php echo esc_html( $stat['value'] ?? '' ); ?></span>
+                                <span class="stat-value"><?php echo esc_html( $stat['number'] ?? '' ); ?></span>
                                 <span class="stat-label"><?php echo esc_html( $stat['label'] ?? '' ); ?></span>
                             </div>
                         <?php endforeach; ?>
