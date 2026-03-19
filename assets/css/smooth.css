@@ -356,17 +356,19 @@ h1, h2, h3, h4, h5 {
 }
 @media (min-width: 1024px) { .navbar-burger { display: none; } }
 
-/* Mobile overlay */
+/* ─────────────────────────────────────────
+   MOBILE MENU
+───────────────────────────────────────── */
+
+/* Оверлей: полноэкранный, прокручиваемый */
 .mobile-overlay {
   position: fixed;
   inset: 0;
   z-index: 200;
   background: var(--bg);
-  display: flex;
-  flex-direction: column;
-  padding: 6rem 2rem 3rem;
+  overflow-y: auto;
   opacity: 0;
-  visibility: hidden;        /* скрываем от screen readers в закрытом состоянии */
+  visibility: hidden;
   pointer-events: none;
   transition: opacity 0.35s ease, visibility 0.35s ease;
 }
@@ -375,52 +377,168 @@ h1, h2, h3, h4, h5 {
   visibility: visible;
   pointer-events: auto;
 }
-.mobile-nav {
+
+/* Внутренний flex-контейнер: header + nav + footer */
+.mobile-inner {
+  min-height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0;
-  flex: 1;
-}
-.mobile-nav a {
-  font-family: var(--font-serif);
-  font-size: clamp(2.25rem, 8vw, 3.25rem);
-  font-weight: 300;
-  color: var(--text-3);
-  padding: 0.75rem 0;
-  border-bottom: 1px solid var(--border);
-  transition: color var(--ease), padding-left var(--ease);
-}
-.mobile-nav a:hover,
-.mobile-nav a.active {
-  color: var(--text);
-  padding-left: 0.75rem;
-}
-/* Walker навешивает класс nav-link на все пункты меню, в том числе мобильные.
-   В оверлее underline-анимация выглядит неуместно — сбрасываем */
-.mobile-nav .nav-link {
-  position: static;
-  letter-spacing: 0;
-  text-transform: none;
-  font-size: inherit;
-}
-.mobile-nav .nav-link::after {
-  display: none;
+  padding: 5rem 1.75rem 2.5rem;
 }
 
+/* ── Кнопка закрытия — чёрный круг ── */
 .mobile-close {
   position: absolute;
   top: 1.5rem;
   right: 1.5rem;
-  width: 40px; height: 40px;
+  width: 44px; height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--border);
+  background: var(--text);
+  color: var(--bg);
+  border: none;
   border-radius: 50%;
-  color: var(--text-2);
-  transition: border-color var(--ease), color var(--ease);
+  cursor: pointer;
+  z-index: 10;
+  transition: background var(--ease), transform var(--ease);
 }
-.mobile-close:hover { border-color: var(--gold); color: var(--gold); }
+.mobile-close:hover {
+  background: var(--gold);
+  transform: rotate(90deg);
+}
+
+/* ── Шапка оверлея ── */
+.mobile-header { margin-bottom: 2.25rem; }
+
+.mobile-label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.5625rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.75rem;
+}
+.mobile-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.875rem, 7vw, 2.5rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.1;
+}
+
+/* ── Пункты меню ── */
+.mobile-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.mobile-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 5.5vw, 2rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-3);
+  text-decoration: none;
+  transition: color var(--ease), padding-left var(--ease);
+}
+.mobile-nav-item:first-child { border-top: 1px solid var(--border); }
+.mobile-nav-item:hover,
+.mobile-nav-item.active { color: var(--text); padding-left: 0.375rem; }
+
+/* Иконка (задаётся CSS-классом has-icon-ICONNAME в настройках меню) */
+.mobile-item-icon {
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  background: rgba(200, 146, 74, 0.07);
+  border: 1px solid rgba(200, 146, 74, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  flex-shrink: 0;
+  font-style: normal;
+}
+.mobile-item-text { flex: 1; }
+.mobile-item-arrow {
+  color: var(--text-3);
+  opacity: 0.4;
+  flex-shrink: 0;
+  transition: opacity var(--ease), transform var(--ease);
+}
+.mobile-nav-item:hover .mobile-item-arrow {
+  opacity: 0.75;
+  transform: translateX(3px);
+}
+
+/* ── Подвал оверлея: контакты + соцсети ── */
+.mobile-footer {
+  margin-top: auto;
+  padding-top: 2.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.mobile-contacts { display: flex; flex-direction: column; gap: 0.625rem; }
+.mobile-contact-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  font-size: 0.8125rem;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+.mobile-contact-row svg { flex-shrink: 0; margin-top: 1px; }
+.mobile-contact-row a { color: var(--text-3); transition: color 0.2s ease; }
+.mobile-contact-row a:hover { color: var(--text-2); }
+
+.mobile-socials {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.mobile-social-icons { display: flex; gap: 8px; }
+.mobile-social-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-3);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.mobile-social-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+.mobile-social-text {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.mobile-social-label {
+  font-family: var(--font-sans);
+  font-size: 0.5625rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.mobile-social-handle {
+  font-family: var(--font-serif);
+  font-size: 0.9375rem;
+  font-style: italic;
+  color: var(--text-2);
+}
 
 /* ─────────────────────────────────────────
    MEGA MENU

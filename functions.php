@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'SMOOTH_VERSION', '1.3.3' );
+define( 'SMOOTH_VERSION', '1.3.4' );
 define( 'SMOOTH_DIR', get_template_directory() );
 define( 'SMOOTH_URI', get_template_directory_uri() );
 
@@ -140,6 +140,8 @@ function smooth_icon( $name, $size = 20 ) {
         'mail' => '<svg xmlns="http://www.w3.org/2000/svg" width="' . $size . '" height="' . $size . '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>',
 
         'arrow-up-right' => '<svg xmlns="http://www.w3.org/2000/svg" width="' . $size . '" height="' . $size . '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>',
+
+        'chevron-right' => '<svg xmlns="http://www.w3.org/2000/svg" width="' . $size . '" height="' . $size . '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>',
     );
 
     return isset( $icons[ $name ] ) ? $icons[ $name ] : '';
@@ -155,9 +157,38 @@ class Smooth_Nav_Walker extends Walker_Nav_Menu {
     private $is_mega = false;
 
     public function start_el( &$output, $item, $depth = 0, $args = null, $id = 0 ) {
-        $classes = empty( $item->classes ) ? array() : (array) $item->classes;
+        $classes    = empty( $item->classes ) ? array() : (array) $item->classes;
+        $is_mobile  = isset( $args->theme_location ) && $args->theme_location === 'mobile';
 
-        /* Определяем, нужно ли мегаменю для этого пункта */
+        /* ── Мобильный рендеринг ─────────────────────────────────────────── */
+        if ( $is_mobile ) {
+            /* Ищем иконку по паттерну has-icon-ICONNAME (задаётся в WP Admin → Меню → CSS-классы) */
+            $icon_name = null;
+            foreach ( $classes as $cls ) {
+                if ( strpos( $cls, 'has-icon-' ) === 0 ) {
+                    $icon_name = sanitize_key( substr( $cls, 9 ) );
+                    break;
+                }
+            }
+
+            $is_active = in_array( 'current-menu-item',     $classes, true )
+                      || in_array( 'current-menu-ancestor', $classes, true );
+
+            $output .= '<a href="' . esc_url( $item->url ) . '" class="mobile-nav-item'
+                . ( $is_active ? ' active' : '' ) . '"'
+                . ( $item->target ? ' target="' . esc_attr( $item->target ) . '"' : '' ) . '>';
+
+            if ( $icon_name ) {
+                $output .= '<span class="mobile-item-icon">' . smooth_icon( $icon_name, 18 ) . '</span>';
+            }
+
+            $output .= '<span class="mobile-item-text">' . esc_html( $item->title ) . '</span>';
+            $output .= '<span class="mobile-item-arrow">' . smooth_icon( 'chevron-right', 16 ) . '</span>';
+            $output .= '</a>';
+            return; /* пропускаем desktop-рендеринг */
+        }
+
+        /* ── Desktop рендеринг ───────────────────────────────────────────── */
         $this->is_mega = in_array( 'has-mega', $classes, true );
 
         /* Убираем служебный класс из ссылки, добавляем nav-link */
@@ -188,6 +219,11 @@ class Smooth_Nav_Walker extends Walker_Nav_Menu {
     }
 
     public function end_el( &$output, $item, $depth = 0, $args = null ) {
+        $is_mobile = isset( $args->theme_location ) && $args->theme_location === 'mobile';
+        if ( $is_mobile ) {
+            return; /* тег <a> уже закрыт в start_el */
+        }
+
         if ( $this->is_mega ) {
             /* Вставляем HTML мегаменю и закрываем обёртку */
             if ( function_exists( 'smooth_mega_menu_html' ) ) {
