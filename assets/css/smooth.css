@@ -367,6 +367,8 @@ h1, h2, h3, h4, h5 {
   z-index: 200;
   background: var(--bg);
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* скролл на старых iOS (< v14) */
+  overscroll-behavior: contain;      /* не передаёт скролл фоновой странице */
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -386,9 +388,9 @@ h1, h2, h3, h4, h5 {
   padding: 5rem 1.75rem 2.5rem;
 }
 
-/* ── Кнопка закрытия — чёрный круг ── */
+/* ── Кнопка закрытия — чёрный круг, всегда видна ── */
 .mobile-close {
-  position: absolute;
+  position: fixed;      /* fixed, а не absolute: не скроллится вместе с контентом */
   top: 1.5rem;
   right: 1.5rem;
   width: 44px; height: 44px;
@@ -400,7 +402,7 @@ h1, h2, h3, h4, h5 {
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  z-index: 10;
+  z-index: 210;         /* выше z-index оверлея (200), чтобы быть поверх */
   transition: background var(--ease), transform var(--ease);
 }
 .mobile-close:hover {

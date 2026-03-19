@@ -129,7 +129,9 @@
   window.addEventListener('resize', function () {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(function () {
-      if (window.innerWidth >= 768 && overlay && overlay.classList.contains('active')) closeMenu();
+      /* Бургер скрывается при ≥ 1024px — закрываем меню именно при этом breakpoint,
+         а не при 768px (планшет), иначе меню оставалось открытым при невидимом бургере */
+      if (window.innerWidth >= 1024 && overlay && overlay.classList.contains('active')) closeMenu();
     }, 300);
   });
 
