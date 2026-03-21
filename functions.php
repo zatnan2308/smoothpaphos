@@ -7,9 +7,21 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'SMOOTH_VERSION', '1.4.1' );
+define( 'SMOOTH_VERSION', '1.5.0' );
 define( 'SMOOTH_DIR', get_template_directory() );
 define( 'SMOOTH_URI', get_template_directory_uri() );
+
+/**
+ * Возвращает inline style с цветом фона секции из ACF.
+ * Использование: <section<?php echo smooth_section_bg('field_name'); ?>>
+ */
+function smooth_section_bg( string $field_name ): string {
+    if ( ! function_exists( 'get_field' ) ) {
+        return '';
+    }
+    $color = get_field( $field_name );
+    return $color ? ' style="background-color:' . esc_attr( $color ) . ';"' : '';
+}
 
 /* =========================================================================
    Theme Setup

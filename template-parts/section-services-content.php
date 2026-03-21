@@ -47,7 +47,7 @@ if ( empty( $categories ) ) {
 
 <div class="services-content">
 
-    <section class="services-intro">
+    <section class="services-intro"<?php echo smooth_section_bg( 'services_intro_section_bg' ); ?>>
         <div class="container">
             <div class="services-intro-inner">
                 <span class="section-label"><?php echo esc_html( $intro_label ); ?></span>
@@ -65,7 +65,7 @@ if ( empty( $categories ) ) {
         </div>
     </section>
 
-    <section class="services-categories">
+    <section class="services-categories"<?php echo smooth_section_bg( 'services_cats_section_bg' ); ?>>
         <div class="container">
             <div class="services-categories-header">
                 <span class="section-label"><?php echo esc_html( $categories_label ); ?></span>

@@ -49,7 +49,7 @@ $instagram        = get_field( 'instagram_url', 'option' );
 $whatsapp         = get_field( 'whatsapp_link', 'option' );
 ?>
 
-<section class="faq-contacts" id="faq">
+<section class="faq-contacts" id="faq"<?php echo smooth_section_bg( 'faq_section_bg' ); ?>>
     <div class="container">
         <div class="faq-contacts-grid">
 

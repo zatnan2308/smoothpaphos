@@ -28,7 +28,7 @@ if ( empty( $hours ) ) {
 $btn_text = get_field( 'contacts_btn_text' ) ?: 'Book via WhatsApp';
 $btn_link = get_field( 'contacts_btn_link' ) ?: $whatsapp ?: '#';
 ?>
-<div class="contacts-content">
+<div class="contacts-content"<?php echo smooth_section_bg( 'contacts_section_bg' ); ?>>
     <div class="container">
         <div class="contacts-grid">
 

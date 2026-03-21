@@ -71,7 +71,7 @@ if ( empty( $categories ) ) {
 }
 ?>
 
-<section class="prices" id="prices">
+<section class="prices" id="prices"<?php echo smooth_section_bg( 'prices_section_bg' ); ?>>
     <div class="container">
         <div class="prices-header">
             <span class="section-label"><?php echo esc_html( $label ); ?></span>

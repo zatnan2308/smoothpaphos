@@ -28,7 +28,7 @@ if ( empty( $stats ) ) {
 }
 ?>
 
-<section class="master" id="master">
+<section class="master" id="master"<?php echo smooth_section_bg( 'master_section_bg' ); ?>>
     <div class="container">
         <div class="master-grid">
 

@@ -23,7 +23,7 @@ if ( empty( $features ) ) {
 }
 ?>
 
-<section class="philosophy" id="about">
+<section class="philosophy" id="about"<?php echo smooth_section_bg( 'philosophy_section_bg' ); ?>>
     <div class="container">
         <div class="philosophy-header">
             <span class="section-label"><?php echo esc_html( $label ); ?></span>

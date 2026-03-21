@@ -237,6 +237,7 @@ acf_add_local_field_group( array(
                 array( 'key' => 'field_feature_text', 'label' => 'Текст', 'name' => 'text', 'type' => 'text' ),
             ),
         ),
+        array( 'key' => 'field_philosophy_section_bg', 'label' => '🎨 Фон секции «Философия»', 'name' => 'philosophy_section_bg', 'type' => 'color_picker', 'default_value' => '', 'instructions' => 'Цвет фона блока. Пусто = стандартный (#FFFEFD).', 'wrapper' => array( 'width' => '40' ) ),
     ),
     'location'   => array(
         array( array( 'param' => 'page_type',     'operator' => '==', 'value' => 'front_page' ) ),
@@ -305,6 +306,7 @@ acf_add_local_field_group( array(
                 ),
             ),
         ),
+        array( 'key' => 'field_svc_menu_section_bg', 'label' => '🎨 Фон секции «Меню услуг»', 'name' => 'svc_menu_section_bg', 'type' => 'color_picker', 'default_value' => '', 'instructions' => 'Цвет фона блока. Пусто = стандартный (#FFFEFD).', 'wrapper' => array( 'width' => '40' ) ),
     ),
     'location'   => array(
         array( array( 'param' => 'page_type',     'operator' => '==', 'value' => 'front_page' ) ),
@@ -365,6 +367,7 @@ acf_add_local_field_group( array(
         ),
 
         array( 'key' => 'field_prices_bottom_text', 'label' => 'Примечание внизу', 'name' => 'prices_bottom_text', 'type' => 'text', 'placeholder' => 'All prices include materials' ),
+        array( 'key' => 'field_prices_section_bg', 'label' => '🎨 Фон секции «Прайс-лист»', 'name' => 'prices_section_bg', 'type' => 'color_picker', 'default_value' => '', 'instructions' => 'Цвет фона блока. Пусто = стандартный (#FFFEFD).', 'wrapper' => array( 'width' => '40' ) ),
     ),
     'location'   => array(
         array( array( 'param' => 'page_type',     'operator' => '==', 'value' => 'front_page' ) ),
@@ -402,6 +405,7 @@ acf_add_local_field_group( array(
                 array( 'key' => 'field_stat_label',  'label' => 'Подпись', 'name' => 'label',  'type' => 'text' ),
             ),
         ),
+        array( 'key' => 'field_master_section_bg', 'label' => '🎨 Фон секции «Мастер»', 'name' => 'master_section_bg', 'type' => 'color_picker', 'default_value' => '', 'instructions' => 'Цвет фона блока. Пусто = стандартный (#FFFEFD).', 'wrapper' => array( 'width' => '40' ) ),
     ),
     'location'   => array(
         array( array( 'param' => 'page_type',     'operator' => '==', 'value' => 'front_page' ) ),
@@ -433,6 +437,7 @@ acf_add_local_field_group( array(
             ),
         ),
         array( 'key' => 'field_contact_title', 'label' => 'Заголовок блока контактов', 'name' => 'contact_title', 'type' => 'text', 'default_value' => 'Get in Touch' ),
+        array( 'key' => 'field_faq_section_bg', 'label' => '🎨 Фон секции «FAQ + Контакты»', 'name' => 'faq_section_bg', 'type' => 'color_picker', 'default_value' => '', 'instructions' => 'Цвет фона блока. Пусто = стандартный (#FFFEFD).', 'wrapper' => array( 'width' => '40' ) ),
     ),
     'location'   => array(
         array( array( 'param' => 'page_type',     'operator' => '==', 'value' => 'front_page' ) ),
@@ -452,6 +457,7 @@ acf_add_local_field_group( array(
         array( 'key' => 'field_page_hero_subtitle', 'label' => 'Подзаголовок (маленький текст)', 'name' => 'page_hero_subtitle', 'type' => 'text' ),
         array( 'key' => 'field_page_hero_title',    'label' => 'Заголовок страницы (поддерживает <em> и <strong>)', 'name' => 'page_hero_title', 'type' => 'text' ),
         array( 'key' => 'field_page_hero_image',    'label' => 'Фоновое изображение', 'name' => 'page_hero_image', 'type' => 'image', 'return_format' => 'array', 'preview_size' => 'medium' ),
+        array( 'key' => 'field_page_hero_section_bg', 'label' => '🎨 Фон Page Hero', 'name' => 'page_hero_section_bg', 'type' => 'color_picker', 'default_value' => '', 'instructions' => 'Цвет фона шапки страницы. Пусто = стандартный (#FFFEFD).', 'wrapper' => array( 'width' => '40' ) ),
     ),
     'location'   => array(
         array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-about.php' ) ),
@@ -517,6 +523,10 @@ acf_add_local_field_group( array(
         ),
         array( 'key' => 'field_about_cta_button_text', 'label' => 'CTA — текст кнопки', 'name' => 'about_cta_button_text', 'type' => 'text', 'default_value' => 'Book a Session' ),
         array( 'key' => 'field_about_cta_button_link', 'label' => 'CTA — ссылка кнопки', 'name' => 'about_cta_button_link', 'type' => 'url' ),
+        /* ── Фон секций About ── */
+        array( 'key' => 'field_about_story_section_bg',  'label' => '🎨 Фон «История»',  'name' => 'about_story_section_bg',  'type' => 'color_picker', 'default_value' => '', 'instructions' => 'Фон блока «Our Story». Пусто = #FFFEFD.', 'wrapper' => array( 'width' => '33' ) ),
+        array( 'key' => 'field_about_values_section_bg', 'label' => '🎨 Фон «Ценности»', 'name' => 'about_values_section_bg', 'type' => 'color_picker', 'default_value' => '', 'instructions' => 'Фон блока «Our Values». Пусто = #FFFEFD.', 'wrapper' => array( 'width' => '33' ) ),
+        array( 'key' => 'field_about_cta_section_bg',   'label' => '🎨 Фон «CTA»',       'name' => 'about_cta_section_bg',   'type' => 'color_picker', 'default_value' => '', 'instructions' => 'Фон CTA-блока. Пусто = #FFFEFD.', 'wrapper' => array( 'width' => '33' ) ),
     ),
     'location'   => array( array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-about.php' ) ) ),
     'menu_order' => 1,
@@ -566,6 +576,9 @@ acf_add_local_field_group( array(
                 smooth_wysiwyg_field( 'field_service_cat_desc', 'Описание категории', 'description', 'basic' ),
             ),
         ),
+        /* ── Фон секций Services ── */
+        array( 'key' => 'field_services_intro_section_bg',      'label' => '🎨 Фон «Введение»',  'name' => 'services_intro_section_bg',      'type' => 'color_picker', 'default_value' => '', 'instructions' => 'Фон блока «Введение». Пусто = #FFFEFD.', 'wrapper' => array( 'width' => '50' ) ),
+        array( 'key' => 'field_services_cats_section_bg',       'label' => '🎨 Фон «Категории»', 'name' => 'services_cats_section_bg',       'type' => 'color_picker', 'default_value' => '', 'instructions' => 'Фон блока «Категории услуг». Пусто = #FFFEFD.', 'wrapper' => array( 'width' => '50' ) ),
     ),
     'location'   => array( array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-services.php' ) ) ),
     'menu_order' => 1,
@@ -601,6 +614,7 @@ acf_add_local_field_group( array(
                 array( 'key' => 'field_hours_time', 'label' => 'Время', 'name' => 'time', 'type' => 'text', 'placeholder' => '10:00 – 20:00' ),
             ),
         ),
+        array( 'key' => 'field_contacts_section_bg', 'label' => '🎨 Фон страницы контактов', 'name' => 'contacts_section_bg', 'type' => 'color_picker', 'default_value' => '', 'instructions' => 'Цвет фона блока контактов. Пусто = стандартный (#FFFEFD).', 'wrapper' => array( 'width' => '40' ) ),
     ),
     'location'   => array( array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-contacts.php' ) ) ),
     'menu_order' => 1,

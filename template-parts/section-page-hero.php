@@ -22,7 +22,7 @@ if ( empty( $subtitle ) ) {
 }
 ?>
 
-<section class="page-hero">
+<section class="page-hero"<?php echo smooth_section_bg( 'page_hero_section_bg' ); ?>>
     <div class="container">
         <div class="page-hero-inner">
             <?php if ( $title ) : ?>

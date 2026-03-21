@@ -36,7 +36,7 @@ $cta_btn_link = get_field( 'about_cta_button_link' ) ?: get_field( 'instagram_ur
 ?>
 <div class="about-content">
 
-    <section class="about-story">
+    <section class="about-story"<?php echo smooth_section_bg( 'about_story_section_bg' ); ?>>
         <div class="container">
             <div class="about-story-grid">
                 <div class="about-story-text">
@@ -66,7 +66,7 @@ $cta_btn_link = get_field( 'about_cta_button_link' ) ?: get_field( 'instagram_ur
         </div>
     </section>
 
-    <section class="about-values">
+    <section class="about-values"<?php echo smooth_section_bg( 'about_values_section_bg' ); ?>>
         <div class="container">
             <div class="about-values-header">
                 <span class="section-label"><?php echo esc_html( $values_label ); ?></span>
@@ -96,7 +96,7 @@ $cta_btn_link = get_field( 'about_cta_button_link' ) ?: get_field( 'instagram_ur
         </div>
     </section>
 
-    <section class="about-cta">
+    <section class="about-cta"<?php echo smooth_section_bg( 'about_cta_section_bg' ); ?>>
         <div class="container">
             <div class="about-cta-inner">
                 <?php if ( $cta_title ) : ?>

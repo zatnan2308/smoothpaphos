@@ -67,7 +67,7 @@ function smooth_parse_svc_item( $raw ) {
 }
 ?>
 
-<section class="svc-menu" id="services-menu">
+<section class="svc-menu" id="services-menu"<?php echo smooth_section_bg( 'svc_menu_section_bg' ); ?>>
     <div class="container">
 
         <!-- ── Шапка ── -->
