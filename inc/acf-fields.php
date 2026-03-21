@@ -247,6 +247,57 @@ acf_add_local_field_group( array(
 
 
 /* =========================================================================
+   FRONT PAGE — Services Menu Section (заменяет Price List на главной)
+   ========================================================================= */
+acf_add_local_field_group( array(
+    'key'    => 'group_svc_menu',
+    'title'  => 'Меню услуг (главная страница)',
+    'fields' => array(
+
+        /* ── Шапка секции ── */
+        array( 'key' => 'field_svc_menu_label',       'label' => 'Метка (маленький текст)',        'name' => 'svc_menu_label',       'type' => 'text', 'default_value' => 'SERVICE MENU' ),
+        array( 'key' => 'field_svc_menu_title_1',     'label' => 'Заголовок — строка 1',           'name' => 'svc_menu_title_1',     'type' => 'text', 'default_value' => 'Wide range of' ),
+        array( 'key' => 'field_svc_menu_title_2',     'label' => 'Заголовок — строка 2 (курсив)',  'name' => 'svc_menu_title_2',     'type' => 'text', 'default_value' => 'procedures' ),
+        array( 'key' => 'field_svc_menu_description', 'label' => 'Описание (справа от заголовка)', 'name' => 'svc_menu_description', 'type' => 'textarea', 'rows' => 3, 'default_value' => 'We have gathered the best care techniques so you can find everything you need in one place. The art of caring for your body.' ),
+        array( 'key' => 'field_svc_menu_link_text',   'label' => 'Ссылка — текст',                 'name' => 'svc_menu_link_text',   'type' => 'text', 'default_value' => 'FULL PRICE LIST' ),
+        array( 'key' => 'field_svc_menu_link_url',    'label' => 'Ссылка — URL',                   'name' => 'svc_menu_link_url',    'type' => 'url' ),
+
+        /* ── Категории (repeater) ── */
+        array(
+            'key'          => 'field_svc_menu_categories',
+            'label'        => 'Категории услуг',
+            'name'         => 'svc_menu_categories',
+            'type'         => 'repeater',
+            'layout'       => 'block',
+            'min'          => 0,
+            'max'          => 8,
+            'button_label' => 'Добавить категорию',
+            'instructions' => 'Четные категории — фото слева, нечётные — фото справа.',
+            'sub_fields'   => array(
+                array( 'key' => 'field_svc_cat_icon',     'label' => 'Иконка (emoji)',          'name' => 'cat_icon',     'type' => 'text',     'default_value' => '🧘', 'instructions' => 'Вставьте emoji: 🧘 💅 🪒 💆' ),
+                array( 'key' => 'field_svc_cat_name',     'label' => 'Название категории',      'name' => 'cat_name',     'type' => 'text',     'placeholder' => 'Massage' ),
+                array( 'key' => 'field_svc_cat_image',    'label' => 'Фото категории',          'name' => 'cat_image',    'type' => 'image',    'return_format' => 'array', 'preview_size' => 'medium' ),
+                array(
+                    'key'          => 'field_svc_cat_services',
+                    'label'        => 'Список услуг (каждая с новой строки)',
+                    'name'         => 'cat_services',
+                    'type'         => 'textarea',
+                    'rows'         => 8,
+                    'instructions' => 'Каждая услуга — отдельная строка. Делятся на 2 колонки автоматически.',
+                    'placeholder'  => "Relax Massage\nDeep Tissue Massage\nSports Massage",
+                ),
+            ),
+        ),
+    ),
+    'location'   => array(
+        array( array( 'param' => 'page_type',     'operator' => '==', 'value' => 'front_page' ) ),
+        array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-home.php' ) ),
+    ),
+    'menu_order' => 2,
+) );
+
+
+/* =========================================================================
    FRONT PAGE + SERVICES PAGE — Prices Section
    ========================================================================= */
 acf_add_local_field_group( array(
