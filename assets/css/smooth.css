@@ -2181,8 +2181,9 @@ h1, h2, h3, h4, h5 {
   .svc-cat--img-right .svc-cat-content { order: 2; }
 }
 
-/* ── Фото ── */
+/* ── Фото + бейдж ── */
 .svc-cat-photo {
+  position: relative;
   aspect-ratio: 4/3;
   border-radius: 1.5rem;
   overflow: hidden;
@@ -2201,32 +2202,56 @@ h1, h2, h3, h4, h5 {
   border: 1px dashed var(--border);
 }
 
-/* ── Шапка категории: иконка + название ── */
-.svc-cat-head {
+/* Круговой бейдж «AUTHENTIC CARE SINCE 2024» */
+.svc-cat-badge {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  width: 86px;
+  height: 86px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 50%;
   display: flex;
   align-items: center;
-  gap: 0.875rem;
-  margin-bottom: 2rem;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.46rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  line-height: 1.55;
+  padding: 0.75rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
+  pointer-events: none;
 }
-.svc-cat-icon {
-  font-size: 2rem;
-  line-height: 1;
-  flex-shrink: 0;
-}
+
+/* ── Название категории ── */
 .svc-cat-name {
   font-family: var(--font-serif);
-  font-size: clamp(1.875rem, 3vw, 2.75rem);
+  font-size: clamp(2.75rem, 4.5vw, 4rem);
   font-weight: 400;
   color: var(--text);
   line-height: 1;
-  margin: 0;
+  margin: 0 0 0.875rem;
+}
+
+/* ── Описание категории (курсив) ── */
+.svc-cat-desc {
+  font-size: 0.875rem;
+  font-style: italic;
+  color: var(--text-3);
+  line-height: 1.7;
+  margin: 0 0 2rem;
+  max-width: 400px;
 }
 
 /* ── Список услуг — 2 колонки ── */
 .svc-cat-services {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0 2.5rem;
+  gap: 0 3rem;
+  margin-bottom: 2rem;
 }
 .svc-cat-col {
   list-style: none;
@@ -2234,15 +2259,44 @@ h1, h2, h3, h4, h5 {
   margin: 0;
 }
 .svc-cat-col li {
-  font-size: 0.8125rem;
-  color: var(--text-3);
-  padding: 0.5rem 0;
+  font-size: 0.875rem;
+  padding: 0.75rem 0;
   border-bottom: 1px solid var(--border);
   line-height: 1.4;
   transition: color var(--ease);
 }
+/* Левая колонка — тёплый тёмный */
+.svc-cat-col--left li  { color: var(--text-2); }
+/* Правая колонка — золотой акцент */
+.svc-cat-col--right li { color: var(--gold); }
 .svc-cat-col li:last-child { border-bottom: none; }
-.svc-cat-col li:hover { color: var(--text-2); }
+.svc-cat-col li:hover { color: var(--text); }
+
+/* Особая позиция (пакет/комплекс) — жирный курсив */
+.svc-item--special { font-weight: 700; font-style: italic; }
+
+/* ── Кнопка «Записаться на процедуру» ── */
+.svc-cat-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 2.25rem;
+  border: 1.5px solid var(--text);
+  border-radius: 999px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text);
+  background: transparent;
+  text-decoration: none;
+  transition: background var(--ease), color var(--ease), border-color var(--ease);
+}
+.svc-cat-btn:hover {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
 
 /* ─────────────────────────────────────────
    REDUCED MOTION

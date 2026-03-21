@@ -21,30 +21,49 @@ $categories = get_field( 'svc_menu_categories' );
 if ( empty( $categories ) ) {
     $categories = array(
         array(
-            'cat_icon'     => '🧘',
-            'cat_name'     => 'Massage',
-            'cat_image'    => null,
-            'cat_services' => "Relax Massage\nSports Massage\nBack Massage\nAnti-cellulite Package\nFacial Massage\nFacial Mask\nDeep Tissue Massage\nAroma Massage\nAnti-cellulite Massage\nAphrodite's Touch\nLymphatic Massage",
+            'cat_icon'        => '🧘',
+            'cat_name'        => 'Massage',
+            'cat_description' => 'The art of touch for complete restoration of strength and inner harmony.',
+            'cat_link_url'    => '#booking',
+            'cat_image'       => null,
+            'cat_services'    => "Relax Massage\nSports Massage\nBack Massage\n**Anti-cellulite Package**\nFacial Massage\nFacial Mask\nDeep Tissue Massage\nAroma Massage\nAnti-cellulite Massage\nAphrodite's Touch\nLymphatic Massage",
         ),
         array(
-            'cat_icon'     => '🪒',
-            'cat_name'     => 'Hair Removal',
-            'cat_image'    => null,
-            'cat_services' => "Legs up to the knee\nClassic bikini\nArmpits\nFull hands\nComplex (hands + legs + bikini)\nFull legs\nFull bikini\nHands up to the elbow\nBelly / loin",
+            'cat_icon'        => '🪒',
+            'cat_name'        => 'Hair Removal',
+            'cat_description' => 'Impeccable skin smoothness and gentle care for your comfort.',
+            'cat_link_url'    => '#booking',
+            'cat_image'       => null,
+            'cat_services'    => "Legs up to the knee\nClassic bikini\nArmpits\nFull hands\nFull legs\nFull bikini\nHands up to the elbow\n**Complex (hands + legs + bikini)**",
         ),
         array(
-            'cat_icon'     => '💅',
-            'cat_name'     => 'Nails',
-            'cat_image'    => null,
-            'cat_services' => "Nail Extensions\nNail Strengthening (Base)\nClassic Manicure\nPedicure\nFrench Sculpting\nNail Strengthening (Gel)",
+            'cat_icon'        => '💅',
+            'cat_name'        => 'Nails',
+            'cat_description' => 'Sophisticated nail art and premium manicure for radiant, elegant hands.',
+            'cat_link_url'    => '#booking',
+            'cat_image'       => null,
+            'cat_services'    => "Nail Extensions\nNail Strengthening (Base)\nClassic Manicure\nPedicure\nFrench Sculpting\nNail Strengthening (Gel)",
         ),
         array(
-            'cat_icon'     => '💆',
-            'cat_name'     => 'Hair',
-            'cat_image'    => null,
-            'cat_services' => "Scalp Peeling\nFull Hair Reconstruction\nFlat Iron Styling\nCold Hair Restoration\nPre-keratin Base Mask\nHair Wash\nBlow Dry\nKeratin Botox",
+            'cat_icon'        => '💆',
+            'cat_name'        => 'Hair',
+            'cat_description' => 'Professional hair care rituals for healthy, lustrous and vibrant locks.',
+            'cat_link_url'    => '#booking',
+            'cat_image'       => null,
+            'cat_services'    => "Scalp Peeling\nFlat Iron Styling\nCold Hair Restoration\nHair Wash & Blow Dry\nFull Hair Reconstruction\nPre-keratin Base Mask\n**Keratin Botox**",
         ),
     );
+}
+
+/**
+ * Парсит строку: **текст** → ['text' => ..., 'special' => true]
+ */
+function smooth_parse_svc_item( $raw ) {
+    $raw = trim( $raw );
+    if ( preg_match( '/^\*\*(.+)\*\*$/', $raw, $m ) ) {
+        return array( 'text' => trim( $m[1] ), 'special' => true );
+    }
+    return array( 'text' => $raw, 'special' => false );
 }
 ?>
 
@@ -90,8 +109,9 @@ if ( empty( $categories ) ) {
                         $img_url = wp_get_attachment_image_url( $img, 'large' );
                     }
 
-                    $icon     = $cat['cat_icon']     ?? '';
-                    $name     = $cat['cat_name']     ?? '';
+                    $name     = $cat['cat_name']        ?? '';
+                    $cat_desc = $cat['cat_description'] ?? '';
+                    $cat_link = $cat['cat_link_url']    ?? '#booking';
                     $raw      = trim( $cat['cat_services'] ?? '' );
                     $services = $raw
                         ? array_values( array_filter( array_map( 'trim', explode( "\n", $raw ) ) ) )
@@ -105,38 +125,54 @@ if ( empty( $categories ) ) {
                 ?>
                 <div class="svc-cat <?php echo esc_attr( $mod_class ); ?>">
 
-                    <!-- Фото -->
+                    <!-- Фото с бейджем -->
                     <div class="svc-cat-photo<?php echo $img_url ? '' : ' svc-cat-photo--empty'; ?>">
                         <?php if ( $img_url ) : ?>
                             <img src="<?php echo esc_url( $img_url ); ?>"
                                  alt="<?php echo esc_attr( $name ); ?>"
                                  loading="lazy">
                         <?php endif; ?>
+                        <div class="svc-cat-badge" aria-hidden="true">
+                            AUTHENTIC<br>CARE<br>SINCE 2024
+                        </div>
                     </div>
 
                     <!-- Контент -->
                     <div class="svc-cat-content">
-                        <div class="svc-cat-head">
-                            <?php if ( $icon ) : ?>
-                                <span class="svc-cat-icon" aria-hidden="true"><?php echo esc_html( $icon ); ?></span>
-                            <?php endif; ?>
-                            <h3 class="svc-cat-name"><?php echo esc_html( $name ); ?></h3>
-                        </div>
+
+                        <h3 class="svc-cat-name"><?php echo esc_html( $name ); ?></h3>
+
+                        <?php if ( $cat_desc ) : ?>
+                            <p class="svc-cat-desc"><?php echo esc_html( $cat_desc ); ?></p>
+                        <?php endif; ?>
 
                         <?php if ( ! empty( $services ) ) : ?>
                             <div class="svc-cat-services">
-                                <ul class="svc-cat-col">
-                                    <?php foreach ( $col_left as $svc ) : ?>
-                                        <li><?php echo esc_html( $svc ); ?></li>
+                                <ul class="svc-cat-col svc-cat-col--left">
+                                    <?php foreach ( $col_left as $svc ) :
+                                        $item = smooth_parse_svc_item( $svc );
+                                    ?>
+                                        <li class="<?php echo $item['special'] ? 'svc-item--special' : ''; ?>">
+                                            <?php echo esc_html( $item['text'] ); ?>
+                                        </li>
                                     <?php endforeach; ?>
                                 </ul>
-                                <ul class="svc-cat-col">
-                                    <?php foreach ( $col_right as $svc ) : ?>
-                                        <li><?php echo esc_html( $svc ); ?></li>
+                                <ul class="svc-cat-col svc-cat-col--right">
+                                    <?php foreach ( $col_right as $svc ) :
+                                        $item = smooth_parse_svc_item( $svc );
+                                    ?>
+                                        <li class="<?php echo $item['special'] ? 'svc-item--special' : ''; ?>">
+                                            <?php echo esc_html( $item['text'] ); ?>
+                                        </li>
                                     <?php endforeach; ?>
                                 </ul>
                             </div>
                         <?php endif; ?>
+
+                        <a href="<?php echo esc_url( $cat_link ); ?>" class="svc-cat-btn">
+                            ЗАПИСАТЬСЯ НА ПРОЦЕДУРУ
+                        </a>
+
                     </div>
 
                 </div>
