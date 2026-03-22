@@ -276,6 +276,18 @@ function smooth_heading( $content ) {
 
 
 /* =========================================================================
+   Mail From — override sender name and address for all outgoing emails
+   ========================================================================= */
+add_filter( 'wp_mail_from', function() {
+    return 'send@smoothpaphos.com';
+} );
+
+add_filter( 'wp_mail_from_name', function() {
+    return 'Smooth Studio';
+} );
+
+
+/* =========================================================================
    Disable default WordPress emoji scripts (performance)
    ========================================================================= */
 add_action( 'init', function () {
