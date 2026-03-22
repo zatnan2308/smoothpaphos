@@ -303,15 +303,19 @@
 
       var hint  = bForm.querySelector('.bf-select-hint');
       var s1btn = bForm.querySelector('.bf-next[data-next="2"]');
-      var any   = bCheckedCount() > 0;
+      var total = bCheckedCount();
 
-      if (s1btn)  s1btn.disabled = !any;
-      if (hint)   hint.style.opacity = any ? '0' : '1';
+      if (s1btn) s1btn.disabled = total === 0;
+      if (hint)  hint.textContent = total > 0
+        ? 'Selected: ' + total + ' service' + (total > 1 ? 's' : '')
+        : 'Select services';
     }
 
     /* ── Checkbox changes ── */
     bForm.addEventListener('change', function (e) {
       if (e.target && e.target.type === 'checkbox') {
+        var svcLabel = e.target.closest('.bf-svc');
+        if (svcLabel) svcLabel.classList.toggle('is-checked', e.target.checked);
         bRefreshBadges();
       }
     });
