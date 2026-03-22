@@ -1818,15 +1818,17 @@ h1, h2, h3, h4, h5 {
   padding: 80px 60px 0;
 }
 .footer-cta-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  gap: clamp(2.5rem, 5vw, 5rem);
   padding-bottom: 72px;
   max-width: var(--wrap);
   margin: 0 auto;
 }
-.footer-cta-text { flex: 1; }
+.footer-cta-text {
+  padding-top: 0.5rem;
+}
 .footer-cta-heading {
   font-family: var(--font-serif);
   font-size: clamp(2.25rem, 4.5vw, 3.5rem);
@@ -1846,7 +1848,19 @@ h1, h2, h3, h4, h5 {
   max-width: 360px;
 }
 
-/* Кнопка CTA */
+/* ── Booking form wrapper inside footer CTA ── */
+.footer-cta-form {
+  min-width: 0; /* prevent grid blowout */
+}
+
+/* Remove card-separator decoration — form sits directly on the CTA background */
+.footer-cta-form .booking-form {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+/* Кнопка CTA (kept for potential future use) */
 .footer-cta-btn {
   display: inline-flex;
   align-items: center;
@@ -2047,7 +2061,7 @@ h1, h2, h3, h4, h5 {
   .footer-grid            { grid-template-columns: 1fr; gap: 36px; }
   .footer-cta             { padding: 48px 24px 0; }
   .site-footer            { padding: 40px 24px 36px; }
-  .footer-cta-inner       { flex-direction: column; align-items: flex-start; }
+  .footer-cta-inner       { grid-template-columns: 1fr; }
   .footer-cta-btn         { align-self: flex-start; }
   .footer-cta-heading     { font-size: clamp(2rem, 8vw, 2.75rem); }
 }
