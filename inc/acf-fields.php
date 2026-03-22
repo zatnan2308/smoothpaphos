@@ -345,7 +345,11 @@ acf_add_local_field_group( array(
         /* ── Таб: Позиции ── */
         array( 'key' => 'tab_prices_items', 'label' => '📋 Позиции прайс-листа', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
 
-        array( 'key' => 'field_prices_title', 'label' => 'Заголовок', 'name' => 'prices_title', 'type' => 'text', 'default_value' => 'Price List' ),
+        /* ── Заголовок блока (для главной страницы) ── */
+        array( 'key' => 'field_prices_section_label', 'label' => 'Метка (маленький текст над заголовком)', 'name' => 'prices_section_label', 'type' => 'text', 'default_value' => 'Service Menu', 'wrapper' => array( 'width' => '33' ) ),
+        array( 'key' => 'field_prices_title',         'label' => 'Заголовок — строка 1',                  'name' => 'prices_title',         'type' => 'text', 'default_value' => 'Curated',      'wrapper' => array( 'width' => '33' ) ),
+        array( 'key' => 'field_prices_title_2',       'label' => 'Заголовок — строка 2 (курсив)',          'name' => 'prices_title_2',       'type' => 'text', 'default_value' => 'Wellness',     'wrapper' => array( 'width' => '33' ) ),
+        array( 'key' => 'field_prices_section_desc',  'label' => 'Описание под заголовком',                'name' => 'prices_section_desc',  'type' => 'textarea', 'rows' => 3, 'default_value' => 'A minimalist approach to beauty and relaxation. Discover our precise, result-driven treatments in an atmosphere of absolute serenity.' ),
 
         // Nested repeater: категории → позиции
         array(
@@ -369,6 +373,16 @@ acf_add_local_field_group( array(
                 ),
 
                 array(
+                    'key'          => 'field_cat_description_price',
+                    'label'        => 'Описание категории (боковая колонка)',
+                    'name'         => 'cat_description',
+                    'type'         => 'textarea',
+                    'rows'         => 2,
+                    'placeholder'  => 'Body and face therapies designed to relieve tension…',
+                    'instructions' => 'Краткое описание, отображается под названием категории в блоке Price на главной.',
+                ),
+
+                array(
                     'key'          => 'field_cat_items',
                     'label'        => 'Позиции в категории',
                     'name'         => 'cat_items',
@@ -378,10 +392,17 @@ acf_add_local_field_group( array(
                     'max'          => 40,
                     'button_label' => 'Добавить позицию',
                     'sub_fields'   => array(
-                        array( 'key' => 'field_item_name',  'label' => 'Услуга',           'name' => 'name',        'type' => 'text', 'placeholder' => 'Relax Massage' ),
-                        array( 'key' => 'field_item_time',  'label' => 'Время (опц.)',      'name' => 'time',        'type' => 'text', 'placeholder' => '60 min' ),
-                        array( 'key' => 'field_item_price', 'label' => 'Цена',              'name' => 'price',       'type' => 'text', 'placeholder' => '€50' ),
-                        array( 'key' => 'field_item_desc',  'label' => 'Подпись (опц.)',    'name' => 'description', 'type' => 'text', 'placeholder' => '90 min €70' ),
+                        array( 'key' => 'field_item_name',  'label' => 'Услуга',      'name' => 'name',        'type' => 'text', 'placeholder' => 'Relax Massage' ),
+                        array( 'key' => 'field_item_time',  'label' => 'Время (опц.)', 'name' => 'time',        'type' => 'text', 'placeholder' => '60 min' ),
+                        array( 'key' => 'field_item_price', 'label' => 'Цена',         'name' => 'price',       'type' => 'text', 'placeholder' => '€50' ),
+                        array(
+                            'key'          => 'field_item_desc',
+                            'label'        => 'Тип/маркер (опц.)',
+                            'name'         => 'description',
+                            'type'         => 'text',
+                            'placeholder'  => 'gold / label:Packages & Face / dark:Subtitle',
+                            'instructions' => "Специальные маркеры:\ngold — золотая цена\nlabel:Текст — золотой разделитель-подзаголовок (поле Название = пусто)\ndark:Подзаголовок — тёмный блок-пакет (напр. «Hands + Legs + Bikini»)",
+                        ),
                     ),
                 ),
 
@@ -396,7 +417,7 @@ acf_add_local_field_group( array(
         array( 'key' => 'field_prices_section_bg', 'label' => '🎨 Фон секции «Прайс-лист»', 'name' => 'prices_section_bg', 'type' => 'color_picker', 'default_value' => '', 'instructions' => 'Цвет фона блока. Пусто = стандартный (#FFFEFD).', 'wrapper' => array( 'width' => '40' ) ),
     ),
     'location'   => array(
-        // Убрали front_page — прайс-лист используется только на странице Услуги
+        array( array( 'param' => 'page_type',     'operator' => '==', 'value' => 'front_page' ) ),
         array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-services.php' ) ),
     ),
     'menu_order' => 2,

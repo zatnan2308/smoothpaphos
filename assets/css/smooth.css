@@ -2298,6 +2298,198 @@ h1, h2, h3, h4, h5 {
   border-color: var(--text);
 }
 
+/* ═══════════════════════════════════════════════
+   HOME PRICES — Минималистичный блок цен (главная)
+   ═══════════════════════════════════════════════ */
+
+/* ── Секция ── */
+.home-prices {
+  background: var(--bg);
+  padding-bottom: clamp(4rem, 8vw, 8rem);
+}
+
+/* ── Заголовок ── */
+.home-prices__header {
+  text-align: center;
+  padding: clamp(4rem, 8vw, 8rem) clamp(1.5rem, 5vw, 3rem) clamp(3rem, 5vw, 5rem);
+  max-width: var(--wrap);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.home-prices__label {
+  font-family: var(--font-sans);
+  font-size: 0.625rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+.home-prices__title {
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 7vw, 6rem);
+  line-height: 1.05;
+  font-weight: 400;
+  color: var(--text);
+  margin: 0 0 2rem;
+}
+.home-prices__title em {
+  font-style: italic;
+  color: var(--text-3);
+}
+.home-prices__desc {
+  color: var(--text-3);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 300;
+  line-height: 1.75;
+  max-width: 28rem;
+  text-align: center;
+}
+.home-prices__empty {
+  color: var(--text-3);
+  font-style: italic;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+/* ── Обёртка категорий ── */
+.home-prices__wrap {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 5vw, 3rem);
+}
+
+/* ── Категория: сетка sidebar + list ── */
+.hp-cat {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: clamp(2rem, 4vw, 5rem);
+  margin-bottom: clamp(4rem, 8vw, 8rem);
+}
+@media (max-width: 768px) {
+  .hp-cat {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+}
+
+/* ── Боковая колонка ── */
+.hp-cat__sidebar-inner {
+  position: sticky;
+  top: 5.5rem;
+}
+.hp-cat__name {
+  font-family: var(--font-serif);
+  font-size: clamp(2.25rem, 3.5vw, 3.25rem);
+  font-weight: 400;
+  color: var(--text);
+  margin: 0 0 0.875rem;
+  line-height: 1.1;
+}
+.hp-cat__desc {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 300;
+  color: var(--text-3);
+  line-height: 1.7;
+  max-width: 20rem;
+}
+
+/* ── Строка услуги ── */
+.hp-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+  transition: border-color var(--ease);
+}
+.hp-row:hover {
+  border-bottom-color: var(--text-2);
+}
+.hp-row:hover .hp-row__name {
+  color: var(--gold);
+}
+.hp-row__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.hp-row__name {
+  font-family: var(--font-sans);
+  font-size: clamp(0.875rem, 1.1vw, 1rem);
+  font-weight: 500;
+  color: var(--text);
+  transition: color var(--ease);
+}
+.hp-row__time {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+}
+.hp-row__price {
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 1.4vw, 1.375rem);
+  color: var(--text);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.hp-row--gold .hp-row__price {
+  color: var(--gold);
+}
+
+/* ── Sub-category gold label ── */
+.hp-sublabel {
+  font-family: var(--font-sans);
+  font-size: 0.625rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  margin: 2rem 0 1.25rem;
+}
+
+/* ── Dark banner (Complex Package и т.п.) ── */
+.hp-dark {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  background: var(--text);
+  color: #fff;
+  padding: 1.375rem 1.5rem;
+  border-radius: 3px;
+  margin-top: 0.75rem;
+}
+.hp-dark__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.hp-dark__name {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+.hp-dark__sub {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+.hp-dark__price {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
 /* ─────────────────────────────────────────
    REDUCED MOTION
 ───────────────────────────────────────── */
