@@ -14,6 +14,69 @@ $instagram_url  = get_field( 'instagram_url',  'option' ) ?: '#';
 $whatsapp_link  = get_field( 'whatsapp_link',  'option' ) ?: '#';
 $copyright      = get_field( 'copyright_text', 'option' ) ?: wp_date( 'Y' ) . ' Smooth Studio. All rights reserved.';
 
+/* ── Booking form — Categories & Services (from ACF, with built-in fallback) ── */
+$bk_default_cats = array(
+    array(
+        'cat_name'     => 'Massage',
+        'cat_slug'     => 'massage',
+        'cat_services' => array(
+            array( 'service_name' => 'Relax Massage' ),
+            array( 'service_name' => 'Deep Tissue Massage' ),
+            array( 'service_name' => 'Sports Massage' ),
+            array( 'service_name' => 'Aroma Massage' ),
+            array( 'service_name' => 'Back Massage' ),
+            array( 'service_name' => 'Anti-cellulite Massage' ),
+            array( 'service_name' => "Aphrodite's Touch" ),
+            array( 'service_name' => 'Facial Massage' ),
+            array( 'service_name' => 'Lymphatic Massage' ),
+            array( 'service_name' => 'Facial Mask' ),
+        ),
+    ),
+    array(
+        'cat_name'     => 'Sugaring & Wax',
+        'cat_slug'     => 'depilation',
+        'cat_services' => array(
+            array( 'service_name' => 'Legs up to the knee' ),
+            array( 'service_name' => 'Full legs' ),
+            array( 'service_name' => 'Classic bikini' ),
+            array( 'service_name' => 'Full bikini' ),
+            array( 'service_name' => 'Armpits' ),
+            array( 'service_name' => 'Hands up to the elbow' ),
+            array( 'service_name' => 'Full hands' ),
+            array( 'service_name' => 'Belly / Loin' ),
+            array( 'service_name' => 'Complex Package' ),
+        ),
+    ),
+    array(
+        'cat_name'     => 'Nails',
+        'cat_slug'     => 'nails',
+        'cat_services' => array(
+            array( 'service_name' => 'Classic Manicure' ),
+            array( 'service_name' => 'Pedicure' ),
+            array( 'service_name' => 'Nail Extensions' ),
+            array( 'service_name' => 'French Sculpting' ),
+            array( 'service_name' => 'Nail Strengthening (Base)' ),
+            array( 'service_name' => 'Nail Strengthening (Gel)' ),
+        ),
+    ),
+    array(
+        'cat_name'     => 'Hair',
+        'cat_slug'     => 'hair',
+        'cat_services' => array(
+            array( 'service_name' => 'Blow Dry' ),
+            array( 'service_name' => 'Flat Iron Styling' ),
+            array( 'service_name' => 'Full Hair Reconstruction' ),
+            array( 'service_name' => 'Scalp Peeling' ),
+            array( 'service_name' => 'Pre-keratin Base Mask' ),
+            array( 'service_name' => 'Hair Wash' ),
+            array( 'service_name' => 'Cold Restoration' ),
+            array( 'service_name' => 'Keratin Botox' ),
+        ),
+    ),
+);
+$acf_cats = function_exists( 'get_field' ) ? get_field( 'booking_categories', 'option' ) : null;
+$bk_cats  = ( is_array( $acf_cats ) && ! empty( $acf_cats ) ) ? $acf_cats : $bk_default_cats;
+
 /* ── CTA-секция ── */
 $cta_heading    = get_field( 'footer_cta_heading',    'option' ) ?: 'Ready to feel';
 $cta_heading_em = get_field( 'footer_cta_heading_em', 'option' ) ?: 'completely renewed?';
@@ -65,29 +128,17 @@ $hours_rows  = get_field( 'footer_hours',       'option' ) ?: array();
                                 <p class="bf-cats-label">Categories</p>
                                 <nav class="bf-cats" aria-label="Service categories">
 
-                                    <button class="bf-cat is-active" data-cat="massage" type="button">
+                                    <?php $bk_first_cat = true; foreach ( $bk_cats as $bk_c ) :
+                                        $bk_cn = trim( $bk_c['cat_name'] ?? '' );
+                                        $bk_cs = ! empty( $bk_c['cat_slug'] ) ? sanitize_key( $bk_c['cat_slug'] ) : sanitize_title( $bk_cn );
+                                        if ( ! $bk_cs || ! $bk_cn ) continue;
+                                    ?>
+                                    <button class="bf-cat<?php echo $bk_first_cat ? ' is-active' : ''; ?>" data-cat="<?php echo esc_attr( $bk_cs ); ?>" type="button">
                                         <span class="bf-cat-cb" aria-hidden="true"></span>
-                                        <span class="bf-cat-name-text">Massage</span>
-                                        <span class="bf-badge" data-badge="massage"></span>
+                                        <span class="bf-cat-name-text"><?php echo esc_html( $bk_cn ); ?></span>
+                                        <span class="bf-badge" data-badge="<?php echo esc_attr( $bk_cs ); ?>"></span>
                                     </button>
-
-                                    <button class="bf-cat" data-cat="depilation" type="button">
-                                        <span class="bf-cat-cb" aria-hidden="true"></span>
-                                        <span class="bf-cat-name-text">Sugaring &amp; Wax</span>
-                                        <span class="bf-badge" data-badge="depilation"></span>
-                                    </button>
-
-                                    <button class="bf-cat" data-cat="nails" type="button">
-                                        <span class="bf-cat-cb" aria-hidden="true"></span>
-                                        <span class="bf-cat-name-text">Nails</span>
-                                        <span class="bf-badge" data-badge="nails"></span>
-                                    </button>
-
-                                    <button class="bf-cat" data-cat="hair" type="button">
-                                        <span class="bf-cat-cb" aria-hidden="true"></span>
-                                        <span class="bf-cat-name-text">Hair</span>
-                                        <span class="bf-badge" data-badge="hair"></span>
-                                    </button>
+                                    <?php $bk_first_cat = false; endforeach; ?>
 
                                 </nav>
                             </div><!-- /.bf-cats-wrap -->
@@ -95,62 +146,25 @@ $hours_rows  = get_field( 'footer_hours',       'option' ) ?: array();
                             <!-- Сетка услуг -->
                             <div class="bf-panels">
 
-                                <div class="bf-panel is-active" data-panel="massage">
-                                    <?php foreach ( array(
-                                        'Relax Massage', 'Deep Tissue Massage', 'Sports Massage',
-                                        'Aroma Massage', 'Back Massage', 'Anti-cellulite Massage',
-                                        "Aphrodite's Touch", 'Facial Massage', 'Lymphatic Massage',
-                                        'Facial Mask',
-                                    ) as $svc ) : ?>
+                                <?php $bk_first_panel = true; foreach ( $bk_cats as $bk_c ) :
+                                    $bk_cn   = trim( $bk_c['cat_name'] ?? '' );
+                                    $bk_cs   = ! empty( $bk_c['cat_slug'] ) ? sanitize_key( $bk_c['cat_slug'] ) : sanitize_title( $bk_cn );
+                                    $bk_svcs = $bk_c['cat_services'] ?? array();
+                                    if ( ! $bk_cs ) continue;
+                                ?>
+                                <div class="bf-panel<?php echo $bk_first_panel ? ' is-active' : ''; ?>" data-panel="<?php echo esc_attr( $bk_cs ); ?>">
+                                    <?php foreach ( $bk_svcs as $bk_svc ) :
+                                        $bk_sn = trim( $bk_svc['service_name'] ?? '' );
+                                        if ( ! $bk_sn ) continue;
+                                    ?>
                                     <label class="bf-svc">
-                                        <input type="checkbox" value="<?php echo esc_attr( $svc ); ?>" data-cat="massage">
-                                        <span class="bf-svc-name"><?php echo esc_html( $svc ); ?></span>
+                                        <input type="checkbox" value="<?php echo esc_attr( $bk_sn ); ?>" data-cat="<?php echo esc_attr( $bk_cs ); ?>">
+                                        <span class="bf-svc-name"><?php echo esc_html( $bk_sn ); ?></span>
                                         <span class="bf-svc-check" aria-hidden="true"></span>
                                     </label>
                                     <?php endforeach; ?>
                                 </div>
-
-                                <div class="bf-panel" data-panel="depilation">
-                                    <?php foreach ( array(
-                                        'Legs up to the knee', 'Full legs', 'Classic bikini',
-                                        'Full bikini', 'Armpits', 'Hands up to the elbow',
-                                        'Full hands', 'Belly / Loin', 'Complex Package',
-                                    ) as $svc ) : ?>
-                                    <label class="bf-svc">
-                                        <input type="checkbox" value="<?php echo esc_attr( $svc ); ?>" data-cat="depilation">
-                                        <span class="bf-svc-name"><?php echo esc_html( $svc ); ?></span>
-                                        <span class="bf-svc-check" aria-hidden="true"></span>
-                                    </label>
-                                    <?php endforeach; ?>
-                                </div>
-
-                                <div class="bf-panel" data-panel="nails">
-                                    <?php foreach ( array(
-                                        'Classic Manicure', 'Pedicure', 'Nail Extensions',
-                                        'French Sculpting', 'Nail Strengthening (Base)',
-                                        'Nail Strengthening (Gel)',
-                                    ) as $svc ) : ?>
-                                    <label class="bf-svc">
-                                        <input type="checkbox" value="<?php echo esc_attr( $svc ); ?>" data-cat="nails">
-                                        <span class="bf-svc-name"><?php echo esc_html( $svc ); ?></span>
-                                        <span class="bf-svc-check" aria-hidden="true"></span>
-                                    </label>
-                                    <?php endforeach; ?>
-                                </div>
-
-                                <div class="bf-panel" data-panel="hair">
-                                    <?php foreach ( array(
-                                        'Blow Dry', 'Flat Iron Styling', 'Full Hair Reconstruction',
-                                        'Scalp Peeling', 'Pre-keratin Base Mask', 'Hair Wash',
-                                        'Cold Restoration', 'Keratin Botox',
-                                    ) as $svc ) : ?>
-                                    <label class="bf-svc">
-                                        <input type="checkbox" value="<?php echo esc_attr( $svc ); ?>" data-cat="hair">
-                                        <span class="bf-svc-name"><?php echo esc_html( $svc ); ?></span>
-                                        <span class="bf-svc-check" aria-hidden="true"></span>
-                                    </label>
-                                    <?php endforeach; ?>
-                                </div>
+                                <?php $bk_first_panel = false; endforeach; ?>
 
                             </div><!-- /.bf-panels -->
                         </div><!-- /.bf-s1-layout -->

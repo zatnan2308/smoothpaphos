@@ -291,7 +291,10 @@
 
     /* ── Refresh category badges + step-1 Continue button ── */
     function bRefreshBadges() {
-      var cats = ['massage', 'depilation', 'nails', 'hair'];
+      /* Read slugs dynamically from badge elements — works with any ACF-driven category list */
+      var cats = Array.from( bForm.querySelectorAll('[data-badge]') ).map(function (el) {
+        return el.dataset.badge;
+      });
       cats.forEach(function (cat) {
         var count = bForm.querySelectorAll('input[data-cat="' + cat + '"]:checked').length;
         var badge = bForm.querySelector('[data-badge="' + cat + '"]');

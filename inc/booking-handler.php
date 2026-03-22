@@ -69,9 +69,34 @@ function smooth_booking_handle() {
         wp_send_json_error( array( 'message' => 'Please provide a phone number or email.' ) );
     }
 
-    /* ── 4. Build admin email ── */
-    $to      = get_option( 'admin_email' );
-    $subject = '[Smooth Studio] New Booking Request';
+    /* ── 4. Save to Submissions Log ── */
+    $log_id   = 0;
+    $log_post = wp_insert_post( array(
+        'post_type'   => 'smooth_booking',
+        'post_status' => 'publish',
+        'post_title'  => sanitize_text_field( $name ) . ' — ' . gmdate( 'd.m.Y H:i' ),
+    ) );
+    if ( $log_post && ! is_wp_error( $log_post ) ) {
+        $log_id = $log_post;
+        update_post_meta( $log_id, '_sb_name',     $name );
+        update_post_meta( $log_id, '_sb_phone',    $phone );
+        update_post_meta( $log_id, '_sb_email',    $email );
+        update_post_meta( $log_id, '_sb_date',     $date );
+        update_post_meta( $log_id, '_sb_notes',    $notes );
+        update_post_meta( $log_id, '_sb_services', $services );
+        update_post_meta( $log_id, '_sb_status',   'new' );
+        $client_ip = isset( $_SERVER['REMOTE_ADDR'] )
+            ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) )
+            : '';
+        update_post_meta( $log_id, '_sb_ip', $client_ip );
+    }
+
+    /* ── 5. Build admin email ── */
+    $recipient = function_exists( 'get_field' ) ? get_field( 'booking_recipient_email', 'option' ) : '';
+    $to        = ( $recipient && is_email( $recipient ) ) ? $recipient : get_option( 'admin_email' );
+    $subject   = function_exists( 'get_field' )
+        ? ( get_field( 'booking_email_subject', 'option' ) ?: '[Smooth Studio] New Booking Request' )
+        : '[Smooth Studio] New Booking Request';
 
     $body  = "New booking request received via the website contact form.\n\n";
     $body .= "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
@@ -98,11 +123,12 @@ function smooth_booking_handle() {
         $headers[] = 'Reply-To: ' . $name . ' <' . $email . '>';
     }
 
-    /* ── 5. Send admin email ── */
+    /* ── 6. Send admin email ── */
     $sent = wp_mail( $to, $subject, $body, $headers );
 
-    /* ── 6. Confirmation to client (optional) ── */
-    if ( $sent && $email && is_email( $email ) ) {
+    /* ── 7. Confirmation to client (optional) ── */
+    $notify_client = function_exists( 'get_field' ) ? (bool) get_field( 'booking_notify_client', 'option' ) : true;
+    if ( $notify_client && $email && is_email( $email ) ) {
         $c_subject = 'Booking Request Received — Smooth Studio';
         $c_body    = 'Hi ' . $name . ",\n\n"
                    . "Thank you for reaching out! We received your booking request and will confirm your appointment shortly via phone or email.\n\n"
@@ -113,10 +139,10 @@ function smooth_booking_handle() {
         wp_mail( $email, $c_subject, $c_body );
     }
 
-    /* ── 7. Respond ── */
-    if ( $sent ) {
+    /* ── 8. Respond ── */
+    if ( $log_id || $sent ) {
         wp_send_json_success( array( 'message' => 'Booking request sent!' ) );
     } else {
-        wp_send_json_error( array( 'message' => 'Could not send the email. Please contact us via WhatsApp or Instagram.' ) );
+        wp_send_json_error( array( 'message' => 'Something went wrong. Please try again or contact us via WhatsApp or Instagram.' ) );
     }
 }
