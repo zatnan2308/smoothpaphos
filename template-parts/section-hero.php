@@ -10,11 +10,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 $hero_anchor = sanitize_key( get_field( 'hero_anchor' ) ?: 'hero' );
 
 /* ── ACF display settings ── */
-$hero_content_width = get_field( 'hero_content_width' );
-$hero_title_font    = get_field( 'hero_title_font' );
-$hero_title_size    = get_field( 'hero_title_size' );
-$hero_desc_size     = get_field( 'hero_desc_size' );
-$hero_btn_style     = get_field( 'hero_btn_style' );
+$hero_content_width   = get_field( 'hero_content_width' );
+$hero_title_font      = get_field( 'hero_title_font' );
+$hero_title_size      = get_field( 'hero_title_size' );
+$hero_desc_size       = get_field( 'hero_desc_size' );
+$hero_btn_style       = get_field( 'hero_btn_style' );
+
+/* ── ACF typography / colour overrides ── */
+$hero_label_size     = get_field( 'hero_label_size' );
+$hero_label_color    = get_field( 'hero_label_color' );
+$hero_title_color    = get_field( 'hero_title_color' );
+$hero_desc_color     = get_field( 'hero_desc_color' );
+$hero_btn_font_size  = get_field( 'hero_btn_font_size' );
+$hero_btn_bg_color   = get_field( 'hero_btn_bg_color' );
+$hero_btn_text_color = get_field( 'hero_btn_text_color' );
 
 $css_vars = array();
 
@@ -65,6 +74,15 @@ switch ( $hero_btn_style ) {
         $css_vars[] = '--hero-btn-hover-color: #fff';
         break;
 }
+
+/* ── Typography / colour overrides (applied after presets so they win) ── */
+if ( $hero_label_size )     $css_vars[] = '--hero-label-size: '    . esc_attr( $hero_label_size );
+if ( $hero_label_color )    $css_vars[] = '--hero-label-color: '   . esc_attr( $hero_label_color );
+if ( $hero_title_color )    $css_vars[] = '--hero-title-color: '   . esc_attr( $hero_title_color );
+if ( $hero_desc_color )     $css_vars[] = '--hero-desc-color: '    . esc_attr( $hero_desc_color );
+if ( $hero_btn_font_size )  $css_vars[] = '--hero-btn-font-size: ' . esc_attr( $hero_btn_font_size );
+if ( $hero_btn_bg_color )   $css_vars[] = '--hero-btn-bg: '        . esc_attr( $hero_btn_bg_color );
+if ( $hero_btn_text_color ) $css_vars[] = '--hero-btn-color: '     . esc_attr( $hero_btn_text_color );
 
 /* ── ACF slides repeater (primary source) ── */
 $slides_acf = get_field( 'hero_slides' );

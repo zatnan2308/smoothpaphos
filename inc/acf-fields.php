@@ -179,6 +179,85 @@ acf_add_local_field_group( array(
             'allow_null'    => 1,
         ),
 
+        /* ── Разделитель: Цвета и размеры шрифтов ── */
+        array(
+            'key'       => 'field_hero_typography_msg',
+            'label'     => '',
+            'name'      => '',
+            'type'      => 'message',
+            'message'   => '<strong>🎨 Цвета и размеры шрифтов</strong><br><small>Оставьте поле пустым — будет использовано значение по умолчанию</small>',
+            'new_lines' => 'wpautop',
+            'esc_html'  => 0,
+        ),
+
+        /* Метка (slide-label) */
+        array(
+            'key'          => 'field_hero_label_size',
+            'label'        => 'Метка — размер шрифта',
+            'name'         => 'hero_label_size',
+            'type'         => 'text',
+            'placeholder'  => '0.6rem',
+            'instructions' => 'px или rem, например: 11px или 0.75rem',
+            'wrapper'      => array( 'width' => '50' ),
+        ),
+        array(
+            'key'            => 'field_hero_label_color',
+            'label'          => 'Метка — цвет',
+            'name'           => 'hero_label_color',
+            'type'           => 'color_picker',
+            'enable_opacity' => 1,
+            'wrapper'        => array( 'width' => '50' ),
+        ),
+
+        /* Заголовок (slide-title) */
+        array(
+            'key'            => 'field_hero_title_color',
+            'label'          => 'Заголовок — цвет',
+            'name'           => 'hero_title_color',
+            'type'           => 'color_picker',
+            'enable_opacity' => 1,
+            'wrapper'        => array( 'width' => '50' ),
+        ),
+
+        /* Описание (slide-desc) */
+        array(
+            'key'            => 'field_hero_desc_color',
+            'label'          => 'Описание — цвет',
+            'name'           => 'hero_desc_color',
+            'type'           => 'color_picker',
+            'enable_opacity' => 1,
+            'wrapper'        => array( 'width' => '50' ),
+        ),
+
+        /* Кнопка (slide-btn) */
+        array(
+            'key'          => 'field_hero_btn_font_size',
+            'label'        => 'Кнопка — размер шрифта',
+            'name'         => 'hero_btn_font_size',
+            'type'         => 'text',
+            'placeholder'  => '0.75rem',
+            'instructions' => 'px или rem, например: 13px или 0.875rem',
+            'wrapper'      => array( 'width' => '33' ),
+        ),
+        array(
+            'key'            => 'field_hero_btn_bg_color',
+            'label'          => 'Кнопка — цвет фона',
+            'name'           => 'hero_btn_bg_color',
+            'type'           => 'color_picker',
+            'enable_opacity' => 1,
+            'instructions'   => 'Перекрывает «Стиль кнопки»',
+            'wrapper'        => array( 'width' => '33' ),
+        ),
+        array(
+            'key'            => 'field_hero_btn_text_color',
+            'label'          => 'Кнопка — цвет текста',
+            'name'           => 'hero_btn_text_color',
+            'type'           => 'color_picker',
+            'enable_opacity' => 1,
+            'instructions'   => 'Перекрывает «Стиль кнопки»',
+            'wrapper'        => array( 'width' => '34' ),
+        ),
+
         /* ── Таб: Legacy поля ── */
         array( 'key' => 'field_hero_settings_legacy_tab', 'label' => '📦 Legacy поля', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
 

@@ -783,11 +783,11 @@ h1, h2, h3, h4, h5 {
 .slide-label {
   display: inline-block;
   font-family: var(--font-sans);
-  font-size: 0.6rem;
+  font-size: var(--hero-label-size, 0.6rem);
   font-weight: 500;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--hero-label-color, rgba(255, 255, 255, 0.65));
   margin-bottom: 1.5rem;
 }
 
@@ -802,13 +802,13 @@ h1, h2, h3, h4, h5 {
 .slide-title-line {
   display: block;
   font-size: var(--hero-title-size);
-  color: var(--text);
+  color: var(--hero-title-color, var(--text));
   font-style: normal;
 }
 .slide-title-italic {
   display: block;
   font-size: var(--hero-title-size);
-  color: var(--text);
+  color: var(--hero-title-color, var(--text));
   font-style: italic;
 }
 
@@ -816,11 +816,11 @@ h1, h2, h3, h4, h5 {
 .slide-desc {
   font-size: var(--hero-desc-size);
   line-height: 1.75;
-  color: rgba(240, 235, 227, 0.72);
+  color: var(--hero-desc-color, rgba(240, 235, 227, 0.72));
   max-width: 42ch;
   margin-bottom: 2.5rem;
 }
-.slide-desc.wysiwyg-content p { color: rgba(240, 235, 227, 0.72); margin-bottom: 0; }
+.slide-desc.wysiwyg-content p { color: var(--hero-desc-color, rgba(240, 235, 227, 0.72)); margin-bottom: 0; }
 
 /* CTA button */
 .slide-btn {
@@ -831,7 +831,7 @@ h1, h2, h3, h4, h5 {
   border: var(--hero-btn-border);
   border-radius: 100px;
   font-family: var(--font-sans);
-  font-size: 0.75rem;
+  font-size: var(--hero-btn-font-size, 0.75rem);
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
