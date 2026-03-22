@@ -2385,6 +2385,9 @@ h1, h2, h3, h4, h5 {
     grid-template-columns: 1fr;
     gap: 1.75rem;
   }
+  .hp-cat__sidebar {
+    position: static; /* отключаем sticky — на мобильном однострочный грид, sticky перекрывает список */
+  }
 }
 
 /* ── Боковая колонка ── */
