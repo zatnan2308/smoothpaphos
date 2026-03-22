@@ -2079,7 +2079,8 @@ h1, h2, h3, h4, h5 {
   margin-bottom: 3rem;
 }
 @media (max-width: 767px) {
-  .svc-menu-header { grid-template-columns: 1fr; gap: 1.5rem; }
+  .svc-menu-header { display: none; }
+  .svc-menu-divider { display: none; }
 }
 
 .svc-menu-label {
