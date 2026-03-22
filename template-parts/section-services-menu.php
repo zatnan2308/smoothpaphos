@@ -170,7 +170,7 @@ function smooth_parse_svc_item( $raw ) {
                         <?php endif; ?>
 
                         <a href="<?php echo esc_url( $cat_link ); ?>" class="svc-cat-btn">
-                            ЗАПИСАТЬСЯ НА ПРОЦЕДУРУ
+                            Book Online
                         </a>
 
                     </div>
