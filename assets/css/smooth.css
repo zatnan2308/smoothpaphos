@@ -2377,10 +2377,9 @@ h1, h2, h3, h4, h5 {
 }
 
 /* ── Боковая колонка ── */
+/* sticky должен быть на самой grid-ячейке, не на вложенном div */
 .hp-cat__sidebar {
-  align-self: start; /* обязательно для position:sticky внутри grid */
-}
-.hp-cat__sidebar-inner {
+  align-self: start;
   position: sticky;
   top: 5.5rem;
 }
