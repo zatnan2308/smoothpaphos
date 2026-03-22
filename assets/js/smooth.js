@@ -240,4 +240,204 @@
     }
   });
 
+  /* ══════════════════════════════════════════
+     BOOKING FORM — multi-step (AJAX via wp_mail)
+  ══════════════════════════════════════════ */
+  var bForm = document.getElementById('booking-form');
+
+  if (bForm && typeof smoothBooking !== 'undefined') {
+
+    /* ── DOM refs ── */
+    var bProgressSteps = bForm.querySelectorAll('.bf-progress-step');
+    var bProgressLines = bForm.querySelectorAll('.bf-progress-line');
+    var bSteps         = bForm.querySelectorAll('.bf-step');
+    var bCatBtns       = bForm.querySelectorAll('.bf-cat');
+    var bPanels        = bForm.querySelectorAll('.bf-panel');
+    var bDateInput     = bForm.querySelector('#bf-date-input');
+    var bNameInput     = bForm.querySelector('#bf-name');
+    var bPhoneInput    = bForm.querySelector('#bf-phone');
+    var bEmailInput    = bForm.querySelector('#bf-email');
+    var bNotesInput    = bForm.querySelector('#bf-notes');
+    var bErrorMsg      = bForm.querySelector('#bf-error-msg');
+    var bProgressBar   = bForm.querySelector('.bf-progress');
+    var bSuccessEl     = bForm.querySelector('.bf-success');
+    var bCurrentStep   = 1;
+
+    /* ── Update progress indicator ── */
+    function bUpdateProgress(step) {
+      bProgressSteps.forEach(function (el, i) {
+        var s = i + 1;
+        el.classList.toggle('is-active', s === step);
+        el.classList.toggle('is-done',   s < step);
+      });
+      bProgressLines.forEach(function (el, i) {
+        el.classList.toggle('is-done', (i + 1) < step);
+      });
+    }
+
+    /* ── Show step ── */
+    function bShowStep(step) {
+      bSteps.forEach(function (el) {
+        el.classList.toggle('is-active', parseInt(el.dataset.step, 10) === step);
+      });
+      bUpdateProgress(step);
+      bCurrentStep = step;
+    }
+
+    /* ── Count total checked services ── */
+    function bCheckedCount() {
+      return bForm.querySelectorAll('input[type="checkbox"]:checked').length;
+    }
+
+    /* ── Refresh category badges + step-1 Continue button ── */
+    function bRefreshBadges() {
+      var cats = ['massage', 'depilation', 'nails', 'hair'];
+      cats.forEach(function (cat) {
+        var count = bForm.querySelectorAll('input[data-cat="' + cat + '"]:checked').length;
+        var badge = bForm.querySelector('[data-badge="' + cat + '"]');
+        if (badge) {
+          badge.textContent = count > 0 ? count : '';
+          badge.classList.toggle('has-count', count > 0);
+        }
+      });
+
+      var hint  = bForm.querySelector('.bf-select-hint');
+      var s1btn = bForm.querySelector('.bf-next[data-next="2"]');
+      var any   = bCheckedCount() > 0;
+
+      if (s1btn)  s1btn.disabled = !any;
+      if (hint)   hint.style.opacity = any ? '0' : '1';
+    }
+
+    /* ── Checkbox changes ── */
+    bForm.addEventListener('change', function (e) {
+      if (e.target && e.target.type === 'checkbox') {
+        bRefreshBadges();
+      }
+    });
+
+    /* ── Category tab click ── */
+    bCatBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var cat = this.dataset.cat;
+        bCatBtns.forEach(function (b) { b.classList.remove('is-active'); });
+        bPanels.forEach(function  (p) { p.classList.remove('is-active'); });
+        this.classList.add('is-active');
+        var panel = bForm.querySelector('[data-panel="' + cat + '"]');
+        if (panel) panel.classList.add('is-active');
+      });
+    });
+
+    /* ── Date input → enable step-2 Continue ── */
+    if (bDateInput) {
+      bDateInput.addEventListener('change', function () {
+        var s2btn = bForm.querySelector('.bf-next[data-next="3"]');
+        if (s2btn) s2btn.disabled = !this.value;
+      });
+      bDateInput.addEventListener('input', function () {
+        var s2btn = bForm.querySelector('.bf-next[data-next="3"]');
+        if (s2btn) s2btn.disabled = !this.value;
+      });
+    }
+
+    /* ── Next buttons ── */
+    bForm.querySelectorAll('.bf-next').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (this.disabled) return;
+        bShowStep(parseInt(this.dataset.next, 10));
+      });
+    });
+
+    /* ── Back buttons ── */
+    bForm.querySelectorAll('.bf-back').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        bShowStep(parseInt(this.dataset.back, 10));
+      });
+    });
+
+    /* ── Error helpers ── */
+    function bShowError(msg) {
+      if (bErrorMsg) {
+        bErrorMsg.textContent = msg;
+        bErrorMsg.hidden = false;
+        bErrorMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+    function bHideError() {
+      if (bErrorMsg) bErrorMsg.hidden = true;
+    }
+
+    /* ── Submit ── */
+    var bSubmitBtn = bForm.querySelector('.bf-submit');
+    if (bSubmitBtn) {
+      bSubmitBtn.addEventListener('click', function () {
+
+        var name  = bNameInput  ? bNameInput.value.trim()  : '';
+        var phone = bPhoneInput ? bPhoneInput.value.trim() : '';
+        var email = bEmailInput ? bEmailInput.value.trim() : '';
+        var notes = bNotesInput ? bNotesInput.value.trim() : '';
+        var date  = bDateInput  ? bDateInput.value         : '';
+
+        /* Client-side validation */
+        if (!name) {
+          bShowError('Please enter your name.'); return;
+        }
+        if (!phone && !email) {
+          bShowError('Please enter your phone number or email address.'); return;
+        }
+
+        bHideError();
+        bSubmitBtn.disabled    = true;
+        bSubmitBtn.textContent = 'Sending…';
+
+        /* Collect selected services */
+        var checked  = bForm.querySelectorAll('input[type="checkbox"]:checked');
+        var services = [];
+        checked.forEach(function (cb) { services.push(cb.value); });
+
+        /* Build FormData */
+        var fd = new FormData();
+        fd.append('action', 'smooth_booking');
+        fd.append('nonce',  smoothBooking.nonce);
+        services.forEach(function (s) { fd.append('services[]', s); });
+        fd.append('date',  date);
+        fd.append('name',  name);
+        fd.append('phone', phone);
+        fd.append('email', email);
+        fd.append('notes', notes);
+
+        /* Send via Fetch API */
+        fetch(smoothBooking.ajaxUrl, {
+          method:      'POST',
+          body:        fd,
+          credentials: 'same-origin',
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          if (res.success) {
+            /* Hide progress + all steps, show success screen */
+            if (bProgressBar) bProgressBar.style.display = 'none';
+            bSteps.forEach(function (s) { s.classList.remove('is-active'); });
+            if (bSuccessEl) bSuccessEl.hidden = false;
+          } else {
+            var msg = (res.data && res.data.message)
+              ? res.data.message
+              : 'Something went wrong. Please try again or contact us via WhatsApp.';
+            bShowError(msg);
+            bSubmitBtn.disabled    = false;
+            bSubmitBtn.textContent = 'Confirm Booking';
+          }
+        })
+        .catch(function () {
+          bShowError('Network error. Please check your connection and try again.');
+          bSubmitBtn.disabled    = false;
+          bSubmitBtn.textContent = 'Confirm Booking';
+        });
+      });
+    }
+
+    /* Initialise badge state */
+    bRefreshBadges();
+  }
+
 })();
