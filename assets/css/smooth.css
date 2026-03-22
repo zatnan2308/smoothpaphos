@@ -2377,6 +2377,9 @@ h1, h2, h3, h4, h5 {
 }
 
 /* ── Боковая колонка ── */
+.hp-cat__sidebar {
+  align-self: start; /* обязательно для position:sticky внутри grid */
+}
 .hp-cat__sidebar-inner {
   position: sticky;
   top: 5.5rem;
