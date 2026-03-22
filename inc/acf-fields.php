@@ -57,14 +57,16 @@ acf_add_local_field_group( array(
 
 
 /* =========================================================================
-   FRONT PAGE — Hero Slider
+   FRONT PAGE — 🎬 Блок 1 — Hero Слайдер
    ========================================================================= */
 acf_add_local_field_group( array(
     'key'    => 'group_hero',
-    'title'  => 'Hero слайдер',
+    'title'  => '🎬 Блок 1 — Hero Слайдер',
     'fields' => array(
 
-        /* ── Слайды ── */
+        /* ── Таб: Слайды ── */
+        array( 'key' => 'tab_hero_slides', 'label' => '🎬 Слайды', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
+
         array(
             'key'          => 'field_hero_slides',
             'label'        => 'Слайды',
@@ -95,8 +97,8 @@ acf_add_local_field_group( array(
             ),
         ),
 
-        /* ── Настройки отображения слайдера ── */
-        array( 'key' => 'field_hero_settings_tab', 'label' => 'Настройки отображения', 'name' => '', 'type' => 'tab' ),
+        /* ── Таб: Настройки отображения ── */
+        array( 'key' => 'field_hero_settings_tab', 'label' => '⚙️ Настройки отображения', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
 
         array(
             'key'           => 'field_hero_content_width',
@@ -175,8 +177,8 @@ acf_add_local_field_group( array(
             'allow_null'    => 1,
         ),
 
-        /* ── Устаревшие поля (legacy, скрыты но сохранены для совместимости) ── */
-        array( 'key' => 'field_hero_settings_legacy_tab', 'label' => 'Legacy поля', 'name' => '', 'type' => 'tab' ),
+        /* ── Таб: Legacy поля ── */
+        array( 'key' => 'field_hero_settings_legacy_tab', 'label' => '📦 Legacy поля', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
 
         array( 'key' => 'field_hero_badge',          'label' => 'Legacy: Badge',        'name' => 'hero_badge',          'type' => 'text' ),
         array( 'key' => 'field_hero_title_1',        'label' => 'Legacy: Title 1',      'name' => 'hero_title_1',        'type' => 'text' ),
@@ -197,12 +199,16 @@ acf_add_local_field_group( array(
 
 
 /* =========================================================================
-   FRONT PAGE + ABOUT PAGE — Philosophy Section
+   FRONT PAGE + ABOUT PAGE — ✨ Блок 2 — Философия / About
    ========================================================================= */
 acf_add_local_field_group( array(
     'key'    => 'group_philosophy',
-    'title'  => 'Философия / About секция',
+    'title'  => '✨ Блок 2 — Философия / About',
     'fields' => array(
+
+        /* ── Таб: Контент ── */
+        array( 'key' => 'tab_philosophy_content', 'label' => '📝 Контент', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
+
         array( 'key' => 'field_philosophy_label', 'label' => 'Метка (маленький текст)', 'name' => 'philosophy_label', 'type' => 'text', 'default_value' => 'Philosophy' ),
         array( 'key' => 'field_philosophy_title', 'label' => 'Заголовок (поддерживает <em> и <strong>)', 'name' => 'philosophy_title', 'type' => 'text', 'default_value' => 'More than ten techniques' ),
 
@@ -237,6 +243,10 @@ acf_add_local_field_group( array(
                 array( 'key' => 'field_feature_text', 'label' => 'Текст', 'name' => 'text', 'type' => 'text' ),
             ),
         ),
+
+        /* ── Таб: Оформление ── */
+        array( 'key' => 'tab_philosophy_design', 'label' => '🎨 Оформление', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
+
         array( 'key' => 'field_philosophy_section_bg', 'label' => '🎨 Фон секции «Философия»', 'name' => 'philosophy_section_bg', 'type' => 'color_picker', 'default_value' => '', 'instructions' => 'Цвет фона блока. Пусто = стандартный (#FFFEFD).', 'wrapper' => array( 'width' => '40' ) ),
     ),
     'location'   => array(
@@ -248,14 +258,16 @@ acf_add_local_field_group( array(
 
 
 /* =========================================================================
-   FRONT PAGE — Services Menu Section (заменяет Price List на главной)
+   FRONT PAGE — 💆 Блок 3 — Меню услуг (заменяет Price List на главной)
    ========================================================================= */
 acf_add_local_field_group( array(
     'key'    => 'group_svc_menu',
-    'title'  => 'Меню услуг (главная страница)',
+    'title'  => '💆 Блок 3 — Меню услуг',
     'fields' => array(
 
-        /* ── Шапка секции ── */
+        /* ── Таб: Шапка блока ── */
+        array( 'key' => 'tab_svc_menu_header', 'label' => '📋 Шапка блока', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
+
         array( 'key' => 'field_svc_menu_label',       'label' => 'Метка (маленький текст)',        'name' => 'svc_menu_label',       'type' => 'text', 'default_value' => 'SERVICE MENU' ),
         array( 'key' => 'field_svc_menu_title_1',     'label' => 'Заголовок — строка 1',           'name' => 'svc_menu_title_1',     'type' => 'text', 'default_value' => 'Wide range of' ),
         array( 'key' => 'field_svc_menu_title_2',     'label' => 'Заголовок — строка 2 (курсив)',  'name' => 'svc_menu_title_2',     'type' => 'text', 'default_value' => 'procedures' ),
@@ -263,7 +275,9 @@ acf_add_local_field_group( array(
         array( 'key' => 'field_svc_menu_link_text',   'label' => 'Ссылка — текст',                 'name' => 'svc_menu_link_text',   'type' => 'text', 'default_value' => 'FULL PRICE LIST' ),
         array( 'key' => 'field_svc_menu_link_url',    'label' => 'Ссылка — URL',                   'name' => 'svc_menu_link_url',    'type' => 'url' ),
 
-        /* ── Категории (repeater) ── */
+        /* ── Таб: Категории ── */
+        array( 'key' => 'tab_svc_menu_cats', 'label' => '🗂️ Категории', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
+
         array(
             'key'          => 'field_svc_menu_categories',
             'label'        => 'Категории услуг',
@@ -306,6 +320,10 @@ acf_add_local_field_group( array(
                 ),
             ),
         ),
+
+        /* ── Таб: Оформление ── */
+        array( 'key' => 'tab_svc_menu_design', 'label' => '🎨 Оформление', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
+
         array( 'key' => 'field_svc_menu_section_bg', 'label' => '🎨 Фон секции «Меню услуг»', 'name' => 'svc_menu_section_bg', 'type' => 'color_picker', 'default_value' => '', 'instructions' => 'Цвет фона блока. Пусто = стандартный (#FFFEFD).', 'wrapper' => array( 'width' => '40' ) ),
     ),
     'location'   => array(
@@ -317,12 +335,16 @@ acf_add_local_field_group( array(
 
 
 /* =========================================================================
-   FRONT PAGE + SERVICES PAGE — Prices Section
+   SERVICES PAGE — 💰 Прайс-лист
    ========================================================================= */
 acf_add_local_field_group( array(
     'key'    => 'group_prices',
-    'title'  => 'Цены / Price List',
+    'title'  => '💰 Прайс-лист',
     'fields' => array(
+
+        /* ── Таб: Позиции ── */
+        array( 'key' => 'tab_prices_items', 'label' => '📋 Позиции прайс-листа', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
+
         array( 'key' => 'field_prices_title', 'label' => 'Заголовок', 'name' => 'prices_title', 'type' => 'text', 'default_value' => 'Price List' ),
 
         // Nested repeater: категории → позиции
@@ -367,10 +389,14 @@ acf_add_local_field_group( array(
         ),
 
         array( 'key' => 'field_prices_bottom_text', 'label' => 'Примечание внизу', 'name' => 'prices_bottom_text', 'type' => 'text', 'placeholder' => 'All prices include materials' ),
+
+        /* ── Таб: Оформление ── */
+        array( 'key' => 'tab_prices_design', 'label' => '🎨 Оформление', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
+
         array( 'key' => 'field_prices_section_bg', 'label' => '🎨 Фон секции «Прайс-лист»', 'name' => 'prices_section_bg', 'type' => 'color_picker', 'default_value' => '', 'instructions' => 'Цвет фона блока. Пусто = стандартный (#FFFEFD).', 'wrapper' => array( 'width' => '40' ) ),
     ),
     'location'   => array(
-        array( array( 'param' => 'page_type',     'operator' => '==', 'value' => 'front_page' ) ),
+        // Убрали front_page — прайс-лист используется только на странице Услуги
         array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-services.php' ) ),
     ),
     'menu_order' => 2,
@@ -378,12 +404,16 @@ acf_add_local_field_group( array(
 
 
 /* =========================================================================
-   FRONT PAGE + ABOUT PAGE — Master Section
+   FRONT PAGE + ABOUT PAGE — 👩 Блок 4 — Мастер
    ========================================================================= */
 acf_add_local_field_group( array(
     'key'    => 'group_master',
-    'title'  => 'Мастер секция',
+    'title'  => '👩 Блок 4 — Мастер',
     'fields' => array(
+
+        /* ── Таб: Контент ── */
+        array( 'key' => 'tab_master_content', 'label' => '📝 Контент', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
+
         array( 'key' => 'field_master_label', 'label' => 'Метка (маленький текст)', 'name' => 'master_label', 'type' => 'text', 'default_value' => 'Your Master' ),
         array( 'key' => 'field_master_name',  'label' => 'Имя мастера',             'name' => 'master_name',  'type' => 'text', 'default_value' => 'Diana' ),
 
@@ -405,6 +435,10 @@ acf_add_local_field_group( array(
                 array( 'key' => 'field_stat_label',  'label' => 'Подпись', 'name' => 'label',  'type' => 'text' ),
             ),
         ),
+
+        /* ── Таб: Оформление ── */
+        array( 'key' => 'tab_master_design', 'label' => '🎨 Оформление', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
+
         array( 'key' => 'field_master_section_bg', 'label' => '🎨 Фон секции «Мастер»', 'name' => 'master_section_bg', 'type' => 'color_picker', 'default_value' => '', 'instructions' => 'Цвет фона блока. Пусто = стандартный (#FFFEFD).', 'wrapper' => array( 'width' => '40' ) ),
     ),
     'location'   => array(
@@ -416,12 +450,16 @@ acf_add_local_field_group( array(
 
 
 /* =========================================================================
-   FRONT PAGE + SERVICES PAGE — FAQ Section
+   FRONT PAGE + SERVICES PAGE — ❓ Блок 5 — FAQ + Контакты
    ========================================================================= */
 acf_add_local_field_group( array(
     'key'    => 'group_faq',
-    'title'  => 'FAQ секция',
+    'title'  => '❓ Блок 5 — FAQ + Контакты',
     'fields' => array(
+
+        /* ── Таб: FAQ ── */
+        array( 'key' => 'tab_faq_items', 'label' => '❓ FAQ', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
+
         array( 'key' => 'field_faq_title', 'label' => 'Заголовок FAQ', 'name' => 'faq_title', 'type' => 'text', 'default_value' => 'Good to Know' ),
         array(
             'key'        => 'field_faq_items',
@@ -436,7 +474,15 @@ acf_add_local_field_group( array(
                 smooth_wysiwyg_field( 'field_faq_answer', 'Ответ (поддерживает форматирование)', 'answer', 'basic' ),
             ),
         ),
+
+        /* ── Таб: Блок контактов ── */
+        array( 'key' => 'tab_faq_contacts', 'label' => '📞 Блок контактов', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
+
         array( 'key' => 'field_contact_title', 'label' => 'Заголовок блока контактов', 'name' => 'contact_title', 'type' => 'text', 'default_value' => 'Get in Touch' ),
+
+        /* ── Таб: Оформление ── */
+        array( 'key' => 'tab_faq_design', 'label' => '🎨 Оформление', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
+
         array( 'key' => 'field_faq_section_bg', 'label' => '🎨 Фон секции «FAQ + Контакты»', 'name' => 'faq_section_bg', 'type' => 'color_picker', 'default_value' => '', 'instructions' => 'Цвет фона блока. Пусто = стандартный (#FFFEFD).', 'wrapper' => array( 'width' => '40' ) ),
     ),
     'location'   => array(
