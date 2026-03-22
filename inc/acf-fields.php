@@ -64,6 +64,8 @@ acf_add_local_field_group( array(
     'title'  => '🎬 Блок 1 — Hero Слайдер',
     'fields' => array(
 
+        array( 'key' => 'field_hero_anchor', 'label' => '⚓ Якорь секции (id)', 'name' => 'hero_anchor', 'type' => 'text', 'default_value' => 'hero', 'placeholder' => 'hero', 'instructions' => 'ID для якорных ссылок в меню. Только латиница, цифры, дефисы. Пример: hero → ссылка #hero', 'wrapper' => array( 'width' => '33' ) ),
+
         /* ── Таб: Слайды ── */
         array( 'key' => 'tab_hero_slides', 'label' => '🎬 Слайды', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
 
@@ -206,6 +208,8 @@ acf_add_local_field_group( array(
     'title'  => '✨ Блок 2 — Философия / About',
     'fields' => array(
 
+        array( 'key' => 'field_philosophy_anchor', 'label' => '⚓ Якорь секции (id)', 'name' => 'philosophy_anchor', 'type' => 'text', 'default_value' => 'about', 'placeholder' => 'about', 'instructions' => 'ID для якорных ссылок в меню. Только латиница, цифры, дефисы. Пример: about → ссылка #about', 'wrapper' => array( 'width' => '33' ) ),
+
         /* ── Таб: Контент ── */
         array( 'key' => 'tab_philosophy_content', 'label' => '📝 Контент', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
 
@@ -264,6 +268,8 @@ acf_add_local_field_group( array(
     'key'    => 'group_svc_menu',
     'title'  => '💆 Блок 3 — Меню услуг',
     'fields' => array(
+
+        array( 'key' => 'field_svc_menu_anchor', 'label' => '⚓ Якорь секции (id)', 'name' => 'svc_menu_anchor', 'type' => 'text', 'default_value' => 'services', 'placeholder' => 'services', 'instructions' => 'ID для якорных ссылок в меню. Только латиница, цифры, дефисы. Пример: services → ссылка #services', 'wrapper' => array( 'width' => '33' ) ),
 
         /* ── Таб: Шапка блока ── */
         array( 'key' => 'tab_svc_menu_header', 'label' => '📋 Шапка блока', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
@@ -341,6 +347,8 @@ acf_add_local_field_group( array(
     'key'    => 'group_prices',
     'title'  => '💰 Прайс-лист',
     'fields' => array(
+
+        array( 'key' => 'field_prices_anchor', 'label' => '⚓ Якорь секции (id)', 'name' => 'prices_anchor', 'type' => 'text', 'default_value' => 'prices', 'placeholder' => 'prices', 'instructions' => 'ID для якорных ссылок в меню. Только латиница, цифры, дефисы. Пример: prices → ссылка #prices', 'wrapper' => array( 'width' => '33' ) ),
 
         /* ── Таб: Позиции ── */
         array( 'key' => 'tab_prices_items', 'label' => '📋 Позиции прайс-листа', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
@@ -432,6 +440,8 @@ acf_add_local_field_group( array(
     'title'  => '👩 Блок 4 — Мастер',
     'fields' => array(
 
+        array( 'key' => 'field_master_anchor', 'label' => '⚓ Якорь секции (id)', 'name' => 'master_anchor', 'type' => 'text', 'default_value' => 'master', 'placeholder' => 'master', 'instructions' => 'ID для якорных ссылок в меню. Только латиница, цифры, дефисы. Пример: master → ссылка #master', 'wrapper' => array( 'width' => '33' ) ),
+
         /* ── Таб: Контент ── */
         array( 'key' => 'tab_master_content', 'label' => '📝 Контент', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
 
@@ -477,6 +487,8 @@ acf_add_local_field_group( array(
     'key'    => 'group_faq',
     'title'  => '❓ Блок 5 — FAQ + Контакты',
     'fields' => array(
+
+        array( 'key' => 'field_faq_anchor', 'label' => '⚓ Якорь секции (id)', 'name' => 'faq_anchor', 'type' => 'text', 'default_value' => 'faq', 'placeholder' => 'faq', 'instructions' => 'ID для якорных ссылок в меню. Только латиница, цифры, дефисы. Пример: faq → ссылка #faq', 'wrapper' => array( 'width' => '33' ) ),
 
         /* ── Таб: FAQ ── */
         array( 'key' => 'tab_faq_items', 'label' => '❓ FAQ', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),

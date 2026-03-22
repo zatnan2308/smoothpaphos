@@ -6,6 +6,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+$section_anchor = sanitize_key( get_field( 'faq_anchor' ) ?: 'faq' );
+
 $faq_label = get_field( 'faq_label' ) ?: 'FAQ';
 $faq_title = get_field( 'faq_title' ) ?: 'Common questions';
 $faq_items = get_field( 'faq_items' );
@@ -49,7 +51,7 @@ $instagram        = get_field( 'instagram_url', 'option' );
 $whatsapp         = get_field( 'whatsapp_link', 'option' );
 ?>
 
-<section class="faq-contacts" id="faq"<?php echo smooth_section_bg( 'faq_section_bg' ); ?>>
+<section class="faq-contacts" id="<?php echo esc_attr( $section_anchor ); ?>"<?php echo smooth_section_bg( 'faq_section_bg' ); ?>>
     <div class="container">
         <div class="faq-contacts-grid">
 

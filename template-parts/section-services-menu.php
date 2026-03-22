@@ -7,6 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+$section_anchor = sanitize_key( get_field( 'svc_menu_anchor' ) ?: 'services' );
+
 /* ── Шапка секции ── */
 $label       = get_field( 'svc_menu_label' )       ?: 'SERVICE MENU';
 $title_1     = get_field( 'svc_menu_title_1' )     ?: 'Wide range of';
@@ -67,7 +69,7 @@ function smooth_parse_svc_item( $raw ) {
 }
 ?>
 
-<section class="svc-menu" id="services-menu"<?php echo smooth_section_bg( 'svc_menu_section_bg' ); ?>>
+<section class="svc-menu" id="<?php echo esc_attr( $section_anchor ); ?>"<?php echo smooth_section_bg( 'svc_menu_section_bg' ); ?>>
     <div class="container">
 
         <!-- ── Шапка ── -->

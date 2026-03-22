@@ -7,6 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+$hero_anchor = sanitize_key( get_field( 'hero_anchor' ) ?: 'hero' );
+
 /* ── ACF display settings ── */
 $hero_content_width = get_field( 'hero_content_width' );
 $hero_title_font    = get_field( 'hero_title_font' );
@@ -108,7 +110,7 @@ $total  = count( $slides );
 <?php if ( ! empty( $css_vars ) ) : ?>
 <style>.hero-slider{<?php echo implode( ';', $css_vars ); ?>}</style>
 <?php endif; ?>
-<section class="hero-slider" id="hero" aria-label="Hero slider">
+<section class="hero-slider" id="<?php echo esc_attr( $hero_anchor ); ?>" aria-label="Hero slider">
 
     <!-- ══ Slides ══ -->
     <div class="slider-track">

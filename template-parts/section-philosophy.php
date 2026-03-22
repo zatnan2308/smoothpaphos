@@ -6,6 +6,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+$section_anchor = sanitize_key( get_field( 'philosophy_anchor' ) ?: 'about' );
+
 $label    = get_field( 'philosophy_label' ) ?: 'Philosophy';
 $title    = get_field( 'philosophy_title' ) ?: 'More than ten techniques';
 $desc     = get_field( 'philosophy_description' ) ?: '<p>At Smooth Studio we believe that every massage should be unique. We individually select each technique — for your mood, condition and goals. Every session is a step towards feeling light, restored and balanced.</p>';
@@ -23,7 +25,7 @@ if ( empty( $features ) ) {
 }
 ?>
 
-<section class="philosophy" id="about"<?php echo smooth_section_bg( 'philosophy_section_bg' ); ?>>
+<section class="philosophy" id="<?php echo esc_attr( $section_anchor ); ?>"<?php echo smooth_section_bg( 'philosophy_section_bg' ); ?>>
     <div class="container">
         <div class="philosophy-header">
             <span class="section-label"><?php echo esc_html( $label ); ?></span>

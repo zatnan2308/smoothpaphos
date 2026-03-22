@@ -6,6 +6,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+$section_anchor = sanitize_key( get_field( 'prices_anchor' ) ?: 'prices' );
+
 $label    = 'Prices';
 $title    = get_field( 'prices_title' ) ?: 'Services & Prices';
 
@@ -71,7 +73,7 @@ if ( empty( $categories ) ) {
 }
 ?>
 
-<section class="prices" id="prices"<?php echo smooth_section_bg( 'prices_section_bg' ); ?>>
+<section class="prices" id="<?php echo esc_attr( $section_anchor ); ?>"<?php echo smooth_section_bg( 'prices_section_bg' ); ?>>
     <div class="container">
         <div class="prices-header">
             <span class="section-label"><?php echo esc_html( $label ); ?></span>

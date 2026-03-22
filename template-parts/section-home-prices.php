@@ -9,6 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+$section_anchor = sanitize_key( get_field( 'prices_anchor' ) ?: 'prices' );
+
 $hp_label      = get_field( 'prices_section_label' ) ?: 'Service Menu';
 $hp_title_1    = get_field( 'prices_title' )          ?: 'Curated';
 $hp_title_2    = get_field( 'prices_title_2' )        ?: 'Wellness';
@@ -16,7 +18,7 @@ $hp_desc       = get_field( 'prices_section_desc' )   ?: 'A minimalist approach 
 $hp_categories = get_field( 'price_categories' );
 
 ?>
-<section class="home-prices"<?php echo smooth_section_bg( 'prices_section_bg' ); ?>>
+<section class="home-prices" id="<?php echo esc_attr( $section_anchor ); ?>"<?php echo smooth_section_bg( 'prices_section_bg' ); ?>>
 
     <!-- ── Заголовок блока ── -->
     <header class="home-prices__header">

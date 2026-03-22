@@ -18,6 +18,8 @@ add_action( 'acf/init', function () {
         'title'  => 'Футер',
         'fields' => array(
 
+            array( 'key' => 'field_footer_cta_anchor', 'label' => '⚓ Якорь CTA-секции (id)', 'name' => 'footer_cta_anchor', 'type' => 'text', 'default_value' => 'booking', 'placeholder' => 'booking', 'instructions' => 'ID для якорных ссылок в меню. Пример: booking → ссылка #booking', 'wrapper' => array( 'width' => '33' ) ),
+
             /* ── Таб 1: CTA-секция ── */
             array( 'key' => 'field_footer_tab_cta', 'label' => '📣 CTA-секция', 'name' => '', 'type' => 'tab', 'placement' => 'top' ),
 

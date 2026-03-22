@@ -78,6 +78,7 @@ $acf_cats = function_exists( 'get_field' ) ? get_field( 'booking_categories', 'o
 $bk_cats  = ( is_array( $acf_cats ) && ! empty( $acf_cats ) ) ? $acf_cats : $bk_default_cats;
 
 /* ── CTA-секция ── */
+$cta_anchor     = sanitize_key( get_field( 'footer_cta_anchor', 'option' ) ?: 'booking' );
 $cta_heading    = get_field( 'footer_cta_heading',    'option' ) ?: 'Ready to feel';
 $cta_heading_em = get_field( 'footer_cta_heading_em', 'option' ) ?: 'completely renewed?';
 $cta_desc       = get_field( 'footer_cta_desc',       'option' ) ?: 'Join our community of beauty and wellness lovers. We\'re here to help you shine.';
@@ -98,7 +99,7 @@ $hours_rows  = get_field( 'footer_hours',       'option' ) ?: array();
 <div class="footer-wrap">
 
     <!-- ══ Pre-footer CTA ══ -->
-    <div class="footer-cta">
+    <div class="footer-cta" id="<?php echo esc_attr( $cta_anchor ); ?>">
         <div class="footer-cta-inner">
 
             <!-- Текст — сверху по всей ширине -->

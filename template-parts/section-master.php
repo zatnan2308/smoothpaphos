@@ -6,6 +6,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+$section_anchor = sanitize_key( get_field( 'master_anchor' ) ?: 'master' );
+
 $label    = get_field( 'master_label' ) ?: 'Your Master';
 $title    = get_field( 'master_name' )  ?: 'Diana';
 $subtitle = 'Massage therapist & beauty specialist';
@@ -28,7 +30,7 @@ if ( empty( $stats ) ) {
 }
 ?>
 
-<section class="master" id="master"<?php echo smooth_section_bg( 'master_section_bg' ); ?>>
+<section class="master" id="<?php echo esc_attr( $section_anchor ); ?>"<?php echo smooth_section_bg( 'master_section_bg' ); ?>>
     <div class="container">
         <div class="master-grid">
 
