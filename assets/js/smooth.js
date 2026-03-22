@@ -448,3 +448,22 @@
   }
 
 })();
+
+/* =========================================================================
+   Scroll to Top
+   ========================================================================= */
+(function () {
+  var btn = document.getElementById('js-scroll-top');
+  if (!btn) return;
+
+  function toggleBtn() {
+    btn.classList.toggle('is-visible', window.scrollY > 400);
+  }
+
+  window.addEventListener('scroll', toggleBtn, { passive: true });
+  toggleBtn(); /* run once on load */
+
+  btn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
