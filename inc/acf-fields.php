@@ -560,6 +560,71 @@ acf_add_local_field_group( array(
 
 
 /* =========================================================================
+   FRONT PAGE — ⭐ Блок — Отзывы
+   ========================================================================= */
+acf_add_local_field_group( array(
+    'key'    => 'group_reviews',
+    'title'  => '⭐ Блок — Отзывы',
+    'fields' => array(
+
+        array(
+            'key'          => 'field_reviews_anchor',
+            'label'        => '⚓ Якорь секции (id)',
+            'name'         => 'reviews_anchor',
+            'type'         => 'text',
+            'default_value'=> 'reviews',
+            'placeholder'  => 'reviews',
+            'instructions' => 'ID для якорных ссылок. Пример: reviews → ссылка #reviews',
+            'wrapper'      => array( 'width' => '33' ),
+        ),
+
+        /* ── Таб: Контент ── */
+        array( 'key' => 'tab_reviews_content', 'label' => '📝 Контент', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
+
+        array(
+            'key'           => 'field_reviews_label',
+            'label'         => 'Метка (uppercase)',
+            'name'          => 'reviews_label',
+            'type'          => 'text',
+            'default_value' => 'Reviews',
+            'wrapper'       => array( 'width' => '50' ),
+        ),
+        array(
+            'key'           => 'field_reviews_title_1',
+            'label'         => 'Заголовок — строка 1',
+            'name'          => 'reviews_title_1',
+            'type'          => 'text',
+            'default_value' => 'What our',
+            'wrapper'       => array( 'width' => '50' ),
+        ),
+        array(
+            'key'           => 'field_reviews_title_2',
+            'label'         => 'Заголовок — строка 2 (курсив)',
+            'name'          => 'reviews_title_2',
+            'type'          => 'text',
+            'default_value' => 'clients say',
+            'wrapper'       => array( 'width' => '50' ),
+        ),
+        array(
+            'key'           => 'field_reviews_shortcode',
+            'label'         => 'Шорткод виджета отзывов',
+            'name'          => 'reviews_shortcode',
+            'type'          => 'text',
+            'default_value' => '[trustindex no-registration=google]',
+            'instructions'  => 'Шорткод плагина отзывов (Trustindex, Elfsight и др.)',
+            'wrapper'       => array( 'width' => '100' ),
+        ),
+
+    ),
+    'location'   => array(
+        array( array( 'param' => 'page_type',     'operator' => '==', 'value' => 'front_page' ) ),
+        array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-home.php' ) ),
+    ),
+    'menu_order' => 5,
+) );
+
+
+/* =========================================================================
    FRONT PAGE + SERVICES PAGE — ❓ Блок 5 — FAQ + Контакты
    ========================================================================= */
 acf_add_local_field_group( array(
