@@ -15,8 +15,9 @@ $shortcode = get_field( 'reviews_shortcode' ) ?: '[trustindex no-registration=go
 ?>
 
 <section class="reviews-section" id="<?php echo esc_attr( $anchor ); ?>">
-    <div class="container">
 
+    <!-- Заголовок внутри контейнера -->
+    <div class="container">
         <div class="reviews-header">
             <?php if ( $label ) : ?>
             <p class="reviews-label">
@@ -30,10 +31,11 @@ $shortcode = get_field( 'reviews_shortcode' ) ?: '[trustindex no-registration=go
                 <em><?php echo smooth_heading( $title_2 ); ?></em>
             </h2>
         </div>
-
-        <div class="reviews-widget">
-            <?php echo do_shortcode( $shortcode ); ?>
-        </div>
-
     </div>
+
+    <!-- Виджет на полную ширину страницы -->
+    <div class="reviews-widget">
+        <?php echo do_shortcode( $shortcode ); ?>
+    </div>
+
 </section>
