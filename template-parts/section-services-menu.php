@@ -123,6 +123,7 @@ function smooth_parse_svc_item( $raw ) {
                     $col_left  = array_slice( $services, 0, $half );
                     $col_right = array_slice( $services, $half );
 
+                    $cat_works = $cat['cat_works'] ?? array();
                     $mod_class = $is_even ? 'svc-cat--img-left' : 'svc-cat--img-right';
                 ?>
                 <div class="svc-cat <?php echo esc_attr( $mod_class ); ?>">
@@ -171,9 +172,18 @@ function smooth_parse_svc_item( $raw ) {
                             </div>
                         <?php endif; ?>
 
-                        <a href="<?php echo esc_url( $cat_link ); ?>" class="svc-cat-btn">
-                            Book Online
-                        </a>
+                        <div class="svc-cat-btns">
+                            <a href="<?php echo esc_url( $cat_link ); ?>" class="svc-cat-btn">
+                                Book Online
+                            </a>
+                            <?php if ( ! empty( $cat_works ) ) : ?>
+                            <button class="svc-work-btn" type="button"
+                                    data-cat="<?php echo $idx; ?>"
+                                    aria-haspopup="dialog">
+                                Our Work
+                            </button>
+                            <?php endif; ?>
+                        </div>
 
                     </div>
 
@@ -184,3 +194,97 @@ function smooth_parse_svc_item( $raw ) {
 
     </div>
 </section>
+
+<?php
+/* ═══════════════════════════════════════════════════════
+   OUR WORK — Hidden data pools (one per category)
+   ═══════════════════════════════════════════════════════ */
+if ( ! empty( $categories ) ) :
+    foreach ( $categories as $idx => $cat ) :
+        $works = $cat['cat_works'] ?? array();
+        if ( empty( $works ) ) continue;
+        $cat_title = esc_attr( $cat['cat_name'] ?? 'Our Work' );
+?>
+<div class="works-pool" data-cat="<?php echo $idx; ?>" data-title="<?php echo $cat_title; ?>" hidden aria-hidden="true">
+    <?php foreach ( $works as $work ) :
+        $type    = $work['work_type']    ?? 'photo';
+        $caption = esc_html( $work['work_caption'] ?? '' );
+
+        if ( $type === 'photo' ) :
+            $img   = $work['work_image'] ?? null;
+            if ( ! $img ) continue;
+            $thumb = is_array( $img ) ? ( $img['sizes']['medium_large'] ?? $img['sizes']['medium'] ?? $img['url'] ?? '' ) : wp_get_attachment_image_url( (int) $img, 'medium_large' );
+            $full  = is_array( $img ) ? ( $img['url'] ?? '' ) : wp_get_attachment_image_url( (int) $img, 'full' );
+    ?>
+    <div class="works-item" data-type="photo" data-full="<?php echo esc_url( $full ); ?>">
+        <img src="<?php echo esc_url( $thumb ); ?>"
+             alt="<?php echo $caption ? $caption : $cat_title; ?>"
+             loading="lazy">
+        <?php if ( $caption ) : ?><span class="works-item-cap"><?php echo $caption; ?></span><?php endif; ?>
+    </div>
+
+    <?php elseif ( $type === 'video' ) :
+        $vid = $work['work_video'] ?? null;
+        if ( ! $vid ) continue;
+        $vid_url = is_array( $vid ) ? ( $vid['url'] ?? '' ) : wp_get_attachment_url( (int) $vid );
+    ?>
+    <div class="works-item" data-type="video">
+        <video src="<?php echo esc_url( $vid_url ); ?>"
+               preload="none" playsinline loop muted></video>
+        <?php if ( $caption ) : ?><span class="works-item-cap"><?php echo $caption; ?></span><?php endif; ?>
+    </div>
+    <?php endif; ?>
+
+    <?php endforeach; ?>
+</div>
+<?php
+    endforeach;
+endif;
+?>
+
+<!-- ══════════════════════════════════════════
+     OUR WORK — Modal
+══════════════════════════════════════════ -->
+<div class="works-modal-overlay" id="works-modal"
+     role="dialog" aria-modal="true" aria-labelledby="works-modal-title" hidden>
+    <div class="works-modal">
+        <div class="works-modal-head">
+            <h3 class="works-modal-title" id="works-modal-title">Our Work</h3>
+            <button class="works-modal-close" type="button" aria-label="Close">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <path d="M18 6 6 18M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <div class="works-grid" id="works-grid">
+            <!-- Populated by JS from the hidden pool -->
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     OUR WORK — Lightbox
+══════════════════════════════════════════ -->
+<div class="works-lb" id="works-lb"
+     role="dialog" aria-modal="true" aria-label="Photo lightbox" hidden>
+    <button class="works-lb-close" type="button" aria-label="Close lightbox">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+    </button>
+    <button class="works-lb-prev" type="button" aria-label="Previous photo">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <path d="M19 12H5"/><path d="m12 5-7 7 7 7"/>
+        </svg>
+    </button>
+    <button class="works-lb-next" type="button" aria-label="Next photo">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+        </svg>
+    </button>
+    <div class="works-lb-media" id="works-lb-media"></div>
+</div>

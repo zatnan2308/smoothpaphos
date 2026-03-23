@@ -2309,6 +2309,238 @@ h1, h2, h3, h4, h5 {
   border-color: var(--text);
 }
 
+/* ── Группа кнопок категории ── */
+.svc-cat-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+/* ── Кнопка «Our Work» ── */
+.svc-work-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 2.25rem;
+  border: 1.5px solid var(--gold);
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: transparent;
+  cursor: pointer;
+  transition: background var(--ease), color var(--ease), border-color var(--ease);
+}
+.svc-work-btn:hover {
+  background: var(--gold);
+  color: #fff;
+}
+
+/* ══════════════════════════════════════════════
+   OUR WORK — Modal overlay + box
+   ══════════════════════════════════════════════ */
+
+.works-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(10, 5, 0, 0.6);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  overflow-y: auto;
+}
+.works-modal-overlay[hidden] { display: none; }
+
+.works-modal {
+  background: var(--bg);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 960px;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.35);
+}
+
+.works-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.works-modal-title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: var(--text);
+}
+
+.works-modal-close {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--text-muted, #888);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background var(--ease), color var(--ease);
+  flex-shrink: 0;
+}
+.works-modal-close:hover {
+  background: var(--border);
+  color: var(--text);
+}
+
+/* ── Works grid — Desktop 3 columns ── */
+.works-grid {
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  overflow-y: auto;
+}
+
+.works-item {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg-card, var(--bg-2));
+  aspect-ratio: 3 / 4;
+  cursor: pointer;
+}
+.works-item[data-type="video"] { cursor: default; }
+
+.works-item img,
+.works-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.works-item:hover img  { transform: scale(1.04); }
+.works-item:hover video { transform: scale(1.04); }
+
+.works-item-cap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  color: #fff;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.62));
+}
+
+/* ── Works grid — Mobile carousel (scroll-snap) ── */
+@media (max-width: 767px) {
+  .works-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 0.75rem;
+    padding: 1.25rem;
+    scrollbar-width: none;
+  }
+  .works-grid::-webkit-scrollbar { display: none; }
+  .works-item {
+    flex: 0 0 80%;
+    scroll-snap-align: start;
+    max-width: 80%;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   OUR WORK — Lightbox
+   ══════════════════════════════════════════════ */
+
+.works-lb {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.93);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.works-lb[hidden] { display: none; }
+
+.works-lb-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.works-lb-close:hover { background: rgba(255, 255, 255, 0.22); }
+
+.works-lb-prev,
+.works-lb-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.works-lb-prev:hover,
+.works-lb-next:hover  { background: rgba(255, 255, 255, 0.22); }
+.works-lb-prev { left:  1rem; }
+.works-lb-next { right: 1rem; }
+
+.works-lb-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 92vw;
+  max-height: 92vh;
+}
+.works-lb-media img {
+  max-width: 92vw;
+  max-height: 92vh;
+  object-fit: contain;
+  border-radius: 6px;
+  display: block;
+}
+
 /* ═══════════════════════════════════════════════
    HOME PRICES — Минималистичный блок цен (главная)
    ═══════════════════════════════════════════════ */
