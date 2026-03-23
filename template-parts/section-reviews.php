@@ -22,7 +22,6 @@ $shortcode = get_field( 'reviews_shortcode' ) ?: '[trustindex no-registration=go
             <p class="reviews-label">
                 <span class="reviews-label-line" aria-hidden="true"></span>
                 <?php echo esc_html( $label ); ?>
-                <span class="reviews-label-line" aria-hidden="true"></span>
             </p>
             <?php endif; ?>
 
