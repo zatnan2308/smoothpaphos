@@ -154,12 +154,18 @@ function smooth_parse_svc_item( $raw ) {
                             <!-- Новый формат: вертикальный список с описанием -->
                             <ul class="svc-cat-list">
                                 <?php foreach ( $service_items as $si ) :
-                                    $si_name = trim( $si['item_name'] ?? '' );
-                                    $si_desc = trim( $si['item_desc'] ?? '' );
+                                    $si_name  = trim( $si['item_name']  ?? '' );
+                                    $si_desc  = trim( $si['item_desc']  ?? '' );
+                                    $si_price = trim( $si['item_price'] ?? '' );
                                     if ( ! $si_name ) continue;
                                 ?>
                                 <li class="svc-cat-list-item">
-                                    <span class="svc-cat-list-name"><?php echo esc_html( $si_name ); ?></span>
+                                    <div class="svc-cat-list-row">
+                                        <span class="svc-cat-list-name"><?php echo esc_html( $si_name ); ?></span>
+                                        <?php if ( $si_price ) : ?>
+                                            <span class="svc-cat-list-price"><?php echo esc_html( $si_price ); ?></span>
+                                        <?php endif; ?>
+                                    </div>
                                     <?php if ( $si_desc ) : ?>
                                         <span class="svc-cat-list-desc"><?php echo esc_html( $si_desc ); ?></span>
                                     <?php endif; ?>
