@@ -2180,13 +2180,6 @@ h1, h2, h3, h4, h5 {
 @media (max-width: 900px) {
   .svc-cat { grid-template-columns: 1fr; gap: 2.5rem; }
 }
-@media (min-width: 901px) {
-  .svc-cat-photo {
-    position: sticky;
-    top: 6rem;
-  }
-}
-
 .svc-cat--img-left  .svc-cat-photo   { order: 1; }
 .svc-cat--img-left  .svc-cat-content { order: 2; }
 .svc-cat--img-right .svc-cat-photo   { order: 2; }
@@ -2205,6 +2198,12 @@ h1, h2, h3, h4, h5 {
   border-radius: 1.5rem;
   overflow: hidden;
   background: var(--bg-card);
+}
+@media (min-width: 901px) {
+  .svc-cat-photo {
+    position: sticky;
+    top: 6rem;
+  }
 }
 .svc-cat-photo img {
   width: 100%;
