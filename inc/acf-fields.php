@@ -394,13 +394,46 @@ acf_add_local_field_group( array(
                     'placeholder'  => '#booking',
                     'instructions' => 'URL для кнопки «ЗАПИСАТЬСЯ НА ПРОЦЕДУРУ». По умолчанию — #booking.',
                 ),
+                /* Новый формат: услуги с описанием */
+                array(
+                    'key'          => 'field_svc_cat_service_items',
+                    'label'        => '📋 Услуги (с описанием)',
+                    'name'         => 'cat_service_items',
+                    'type'         => 'repeater',
+                    'layout'       => 'block',
+                    'min'          => 0,
+                    'max'          => 20,
+                    'button_label' => '+ Добавить услугу',
+                    'instructions' => 'Список услуг для этой категории. Описание — необязательно. Если заполнено — используется вместо поля «Строки» ниже.',
+                    'sub_fields'   => array(
+                        array(
+                            'key'         => 'field_svc_item_name',
+                            'label'       => 'Название услуги',
+                            'name'        => 'item_name',
+                            'type'        => 'text',
+                            'placeholder' => 'Classic Manicure',
+                            'required'    => 1,
+                            'wrapper'     => array( 'width' => '35' ),
+                        ),
+                        array(
+                            'key'         => 'field_svc_item_desc',
+                            'label'       => 'Описание (необязательно)',
+                            'name'        => 'item_desc',
+                            'type'        => 'text',
+                            'placeholder' => 'Краткое описание процедуры...',
+                            'wrapper'     => array( 'width' => '65' ),
+                        ),
+                    ),
+                ),
+
+                /* Старый формат — оставлен для совместимости */
                 array(
                     'key'          => 'field_svc_cat_services',
-                    'label'        => 'Список услуг (каждая с новой строки)',
+                    'label'        => 'Услуги строками (старый формат)',
                     'name'         => 'cat_services',
                     'type'         => 'textarea',
-                    'rows'         => 8,
-                    'instructions' => "Каждая услуга — отдельная строка. Делятся на 2 колонки автоматически.\nОберните в **двойные звёздочки** для выделения жирным курсивом: **Anti-cellulite Package**",
+                    'rows'         => 5,
+                    'instructions' => "Используется если поле «Услуги (с описанием)» выше пустое.\nКаждая услуга — с новой строки. **двойные звёздочки** = жирный курсив.",
                     'placeholder'  => "Relax Massage\nDeep Tissue Massage\n**Anti-cellulite Package**",
                 ),
 

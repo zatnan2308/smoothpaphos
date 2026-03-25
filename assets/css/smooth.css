@@ -2195,7 +2195,7 @@ h1, h2, h3, h4, h5 {
 /* ── Фото + бейдж ── */
 .svc-cat-photo {
   position: relative;
-  aspect-ratio: 4/3;
+  aspect-ratio: 1 / 1;
   border-radius: 1.5rem;
   overflow: hidden;
   background: var(--bg-card);
@@ -2285,6 +2285,38 @@ h1, h2, h3, h4, h5 {
 
 /* Особая позиция (пакет/комплекс) — жирный курсив */
 .svc-item--special { font-weight: 700; font-style: italic; }
+
+/* ── Список услуг — новый формат (вертикальный с описанием) ── */
+.svc-cat-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem;
+  display: flex;
+  flex-direction: column;
+}
+.svc-cat-list-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.svc-cat-list-item:first-child { padding-top: 0; }
+.svc-cat-list-item:last-child  { border-bottom: none; padding-bottom: 0; }
+
+.svc-cat-list-name {
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.01em;
+  margin-bottom: 0.3rem;
+}
+
+.svc-cat-list-desc {
+  display: block;
+  font-size: 0.8125rem;
+  font-style: italic;
+  color: var(--text-3, rgba(60, 50, 30, 0.55));
+  line-height: 1.55;
+}
 
 /* ── Кнопка «Записаться на процедуру» ── */
 .svc-cat-btn {

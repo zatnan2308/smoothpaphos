@@ -119,11 +119,12 @@ function smooth_parse_svc_item( $raw ) {
                         ? array_values( array_filter( array_map( 'trim', explode( "\n", $raw ) ) ) )
                         : array();
 
-                    $half      = (int) ceil( count( $services ) / 2 );
-                    $col_left  = array_slice( $services, 0, $half );
-                    $col_right = array_slice( $services, $half );
+                    $half          = (int) ceil( count( $services ) / 2 );
+                    $col_left      = array_slice( $services, 0, $half );
+                    $col_right     = array_slice( $services, $half );
 
-                    $cat_works = $cat['cat_works'] ?? array();
+                    $service_items = $cat['cat_service_items'] ?? array();
+                    $cat_works     = $cat['cat_works'] ?? array();
                     $mod_class = $is_even ? 'svc-cat--img-left' : 'svc-cat--img-right';
                 ?>
                 <div class="svc-cat <?php echo esc_attr( $mod_class ); ?>">
@@ -149,7 +150,25 @@ function smooth_parse_svc_item( $raw ) {
                             <p class="svc-cat-desc"><?php echo esc_html( $cat_desc ); ?></p>
                         <?php endif; ?>
 
-                        <?php if ( ! empty( $services ) ) : ?>
+                        <?php if ( ! empty( $service_items ) ) : ?>
+                            <!-- Новый формат: вертикальный список с описанием -->
+                            <ul class="svc-cat-list">
+                                <?php foreach ( $service_items as $si ) :
+                                    $si_name = trim( $si['item_name'] ?? '' );
+                                    $si_desc = trim( $si['item_desc'] ?? '' );
+                                    if ( ! $si_name ) continue;
+                                ?>
+                                <li class="svc-cat-list-item">
+                                    <span class="svc-cat-list-name"><?php echo esc_html( $si_name ); ?></span>
+                                    <?php if ( $si_desc ) : ?>
+                                        <span class="svc-cat-list-desc"><?php echo esc_html( $si_desc ); ?></span>
+                                    <?php endif; ?>
+                                </li>
+                                <?php endforeach; ?>
+                            </ul>
+
+                        <?php elseif ( ! empty( $services ) ) : ?>
+                            <!-- Старый формат: 2 колонки -->
                             <div class="svc-cat-services">
                                 <ul class="svc-cat-col svc-cat-col--left">
                                     <?php foreach ( $col_left as $svc ) :
