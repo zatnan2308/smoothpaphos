@@ -2394,12 +2394,12 @@ h1, h2, h3, h4, h5 {
   align-content: start;
   gap: 0.75rem;
   overflow-y: auto;
-  /* Canonical scrollable-flex-child pattern:
-     flex:1 1 auto fills the remaining column space inside .works-modal;
-     min-height:0 lets flex shrink the grid below its content height
-     so overflow-y:auto can scroll rows that don't fit. */
-  flex: 1 1 auto;
-  min-height: 0;
+  /* Explicit height (not max-height) so overflow-y:auto actually triggers.
+     .works-modal uses max-height which doesn't give flex children a
+     definite height — the grid stays full content-height and the modal
+     just clips it visually, producing the "overlap" effect.
+     Setting height directly solves this. */
+  height: calc(88vh - 80px);
 }
 
 .works-item {
@@ -2477,8 +2477,8 @@ h1, h2, h3, h4, h5 {
 /* ── Works grid — Mobile carousel (scroll-snap) ── */
 @media (max-width: 767px) {
   .works-grid {
-    /* override desktop flex-grow so the carousel has a fixed height */
-    flex: 0 0 auto;
+    /* override desktop explicit height for horizontal carousel */
+    height: auto;
     min-height: 220px;
     max-height: calc(88vh - 80px);
     display: flex;
