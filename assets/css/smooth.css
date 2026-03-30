@@ -704,6 +704,12 @@ h1, h2, h3, h4, h5 {
   background: var(--bg);
   user-select: none;
 }
+@media (max-width: 767px) {
+  .hero-slider {
+    height: 100svh;
+    max-height: 100svh;
+  }
+}
 
 /* Track holds all slides */
 .slider-track {
