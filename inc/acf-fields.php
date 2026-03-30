@@ -445,67 +445,20 @@ acf_add_local_field_group( array(
                     'placeholder'  => "Relax Massage\nDeep Tissue Massage\n**Anti-cellulite Package**",
                 ),
 
-                /* ── Наши работы (фото + видео) ── */
+                /* ── Наши работы — галерея (фото + видео вместе) ── */
                 array(
-                    'key'          => 'field_svc_cat_works',
-                    'label'        => '📸 Наши работы (фото / видео)',
-                    'name'         => 'cat_works',
-                    'type'         => 'repeater',
-                    'layout'       => 'block',
-                    'min'          => 0,
-                    'max'          => 30,
-                    'button_label' => '+ Добавить работу',
-                    'instructions' => 'Добавляйте фото и видео для попапа «Our Work». Кнопка появится автоматически, когда добавлен хотя бы один элемент.',
-                    'sub_fields'   => array(
-
-                        array(
-                            'key'           => 'field_svc_work_type',
-                            'label'         => 'Тип',
-                            'name'          => 'work_type',
-                            'type'          => 'select',
-                            'choices'       => array( 'photo' => '📷 Фото', 'video' => '🎬 Видео' ),
-                            'default_value' => 'photo',
-                            'return_format' => 'value',
-                            'wrapper'       => array( 'width' => '20' ),
-                        ),
-
-                        array(
-                            'key'               => 'field_svc_work_image',
-                            'label'             => 'Изображение',
-                            'name'              => 'work_image',
-                            'type'              => 'image',
-                            'return_format'     => 'array',
-                            'preview_size'      => 'medium',
-                            'mime_types'        => 'jpg,jpeg,png,webp',
-                            'wrapper'           => array( 'width' => '40' ),
-                            'conditional_logic' => array(
-                                array( array( 'field' => 'field_svc_work_type', 'operator' => '==', 'value' => 'photo' ) ),
-                            ),
-                        ),
-
-                        array(
-                            'key'               => 'field_svc_work_video',
-                            'label'             => 'Видео-файл (mp4 / webm / mov)',
-                            'name'              => 'work_video',
-                            'type'              => 'file',
-                            'return_format'     => 'array',
-                            'mime_types'        => 'mp4,webm,mov',
-                            'wrapper'           => array( 'width' => '40' ),
-                            'conditional_logic' => array(
-                                array( array( 'field' => 'field_svc_work_type', 'operator' => '==', 'value' => 'video' ) ),
-                            ),
-                        ),
-
-                        array(
-                            'key'         => 'field_svc_work_caption',
-                            'label'       => 'Подпись (необязательно)',
-                            'name'        => 'work_caption',
-                            'type'        => 'text',
-                            'placeholder' => 'Маникюр + дизайн',
-                            'wrapper'     => array( 'width' => '80' ),
-                        ),
-
-                    ),
+                    'key'           => 'field_svc_cat_gallery',
+                    'label'         => '🖼 Наши работы (фото + видео)',
+                    'name'          => 'cat_gallery',
+                    'type'          => 'gallery',
+                    'return_format' => 'array',
+                    'preview_size'  => 'medium',
+                    'insert'        => 'append',
+                    'library'       => 'all',
+                    'min'           => 0,
+                    'max'           => 50,
+                    'mime_types'    => 'jpg,jpeg,png,webp,mp4,webm,mov',
+                    'instructions'  => 'Загружайте фото и видео одновременно: нажмите «Добавить в галерею», в медиатеке выберите несколько файлов (Shift / Cmd + клик), нажмите «Добавить в галерею». Кнопка «Our Work» появится автоматически.',
                 ),
             ),
         ),

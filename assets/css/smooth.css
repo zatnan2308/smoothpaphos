@@ -2426,6 +2426,13 @@ h1, h2, h3, h4, h5 {
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.62));
 }
 
+/* ── Works grid — Tablet (768–900px): 2 columns ── */
+@media (min-width: 768px) and (max-width: 900px) {
+  .works-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 /* ── Works grid — Mobile carousel (scroll-snap) ── */
 @media (max-width: 767px) {
   .works-grid {

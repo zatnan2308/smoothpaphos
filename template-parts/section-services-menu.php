@@ -124,7 +124,8 @@ function smooth_parse_svc_item( $raw ) {
                     $col_right     = array_slice( $services, $half );
 
                     $service_items = $cat['cat_service_items'] ?? array();
-                    $cat_works     = $cat['cat_works'] ?? array();
+                    $cat_gallery   = $cat['cat_gallery'] ?? array();
+                    $has_works     = ! empty( $cat_gallery );
                     $mod_class = $is_even ? 'svc-cat--img-left' : 'svc-cat--img-right';
                 ?>
                 <div class="svc-cat <?php echo esc_attr( $mod_class ); ?>">
@@ -201,7 +202,7 @@ function smooth_parse_svc_item( $raw ) {
                             <a href="<?php echo esc_url( $cat_link ); ?>" class="svc-cat-btn">
                                 Book Online
                             </a>
-                            <?php if ( ! empty( $cat_works ) ) : ?>
+                            <?php if ( $has_works ) : ?>
                             <button class="svc-work-btn" type="button"
                                     data-cat="<?php echo $idx; ?>"
                                     aria-haspopup="dialog">
@@ -223,40 +224,36 @@ function smooth_parse_svc_item( $raw ) {
 <?php
 /* ═══════════════════════════════════════════════════════
    OUR WORK — Hidden data pools (one per category)
+   Источник: поле cat_gallery (ACF Gallery, фото + видео)
    ═══════════════════════════════════════════════════════ */
 if ( ! empty( $categories ) ) :
     foreach ( $categories as $idx => $cat ) :
-        $works = $cat['cat_works'] ?? array();
-        if ( empty( $works ) ) continue;
+        $gallery = $cat['cat_gallery'] ?? array();
+        if ( empty( $gallery ) ) continue;
         $cat_title = esc_attr( $cat['cat_name'] ?? 'Our Work' );
 ?>
 <div class="works-pool" data-cat="<?php echo $idx; ?>" data-title="<?php echo $cat_title; ?>" hidden aria-hidden="true">
-    <?php foreach ( $works as $work ) :
-        $type    = $work['work_type']    ?? 'photo';
-        $caption = esc_html( $work['work_caption'] ?? '' );
+    <?php foreach ( $gallery as $media ) :
+        $mime    = $media['mime_type'] ?? '';
+        $url     = $media['url']       ?? '';
+        if ( ! $url ) continue;
+        $is_video = ( strpos( $mime, 'video/' ) === 0 );
+    ?>
 
-        if ( $type === 'photo' ) :
-            $img   = $work['work_image'] ?? null;
-            if ( ! $img ) continue;
-            $thumb = is_array( $img ) ? ( $img['sizes']['medium_large'] ?? $img['sizes']['medium'] ?? $img['url'] ?? '' ) : wp_get_attachment_image_url( (int) $img, 'medium_large' );
-            $full  = is_array( $img ) ? ( $img['url'] ?? '' ) : wp_get_attachment_image_url( (int) $img, 'full' );
+    <?php if ( $is_video ) : ?>
+    <div class="works-item" data-type="video">
+        <video src="<?php echo esc_url( $url ); ?>"
+               preload="none" playsinline loop muted></video>
+    </div>
+    <?php else :
+        $thumb = $media['sizes']['medium_large'] ?? $media['sizes']['medium'] ?? $url;
+        $full  = $url;
+        $alt   = esc_attr( $media['alt'] ?? $cat_title );
     ?>
     <div class="works-item" data-type="photo" data-full="<?php echo esc_url( $full ); ?>">
         <img src="<?php echo esc_url( $thumb ); ?>"
-             alt="<?php echo $caption ? $caption : $cat_title; ?>"
+             alt="<?php echo $alt; ?>"
              loading="lazy">
-        <?php if ( $caption ) : ?><span class="works-item-cap"><?php echo $caption; ?></span><?php endif; ?>
-    </div>
-
-    <?php elseif ( $type === 'video' ) :
-        $vid = $work['work_video'] ?? null;
-        if ( ! $vid ) continue;
-        $vid_url = is_array( $vid ) ? ( $vid['url'] ?? '' ) : wp_get_attachment_url( (int) $vid );
-    ?>
-    <div class="works-item" data-type="video">
-        <video src="<?php echo esc_url( $vid_url ); ?>"
-               preload="none" playsinline loop muted></video>
-        <?php if ( $caption ) : ?><span class="works-item-cap"><?php echo $caption; ?></span><?php endif; ?>
     </div>
     <?php endif; ?>
 
