@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'SMOOTH_VERSION', '2.1.3' );
+define( 'SMOOTH_VERSION', '2.1.4' );
 define( 'SMOOTH_DIR', get_template_directory() );
 define( 'SMOOTH_URI', get_template_directory_uri() );
 
@@ -104,8 +104,6 @@ add_action( 'acf/init', function () {
 require_once SMOOTH_DIR . '/inc/acf-megamenu.php';
 require_once SMOOTH_DIR . '/inc/acf-footer.php';
 require_once SMOOTH_DIR . '/inc/seed-prices.php';
-require_once SMOOTH_DIR . '/inc/booking-admin.php';
-require_once SMOOTH_DIR . '/inc/booking-handler.php';
 
 
 /* =========================================================================

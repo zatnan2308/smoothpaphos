@@ -18,53 +18,6 @@ add_action( 'acf/init', function () {
         'title'  => 'Футер',
         'fields' => array(
 
-            array( 'key' => 'field_footer_cta_anchor', 'label' => '⚓ Якорь CTA-секции (id)', 'name' => 'footer_cta_anchor', 'type' => 'text', 'default_value' => 'booking', 'placeholder' => 'booking', 'instructions' => 'ID для якорных ссылок в меню. Пример: booking → ссылка #booking', 'wrapper' => array( 'width' => '33' ) ),
-
-            /* ── Таб 1: CTA-секция ── */
-            array( 'key' => 'field_footer_tab_cta', 'label' => '📣 CTA-секция', 'name' => '', 'type' => 'tab', 'placement' => 'top' ),
-
-            array(
-                'key'           => 'field_footer_cta_heading',
-                'label'         => 'Заголовок — первая строка',
-                'name'          => 'footer_cta_heading',
-                'type'          => 'text',
-                'default_value' => 'Ready to feel',
-                'instructions'  => 'Обычный текст (не курсив)',
-                'wrapper'       => array( 'width' => '50' ),
-            ),
-            array(
-                'key'           => 'field_footer_cta_heading_em',
-                'label'         => 'Заголовок — вторая строка (курсив)',
-                'name'          => 'footer_cta_heading_em',
-                'type'          => 'text',
-                'default_value' => 'completely renewed?',
-                'instructions'  => 'Выводится курсивом',
-                'wrapper'       => array( 'width' => '50' ),
-            ),
-            array(
-                'key'           => 'field_footer_cta_desc',
-                'label'         => 'Описание под заголовком',
-                'name'          => 'footer_cta_desc',
-                'type'          => 'textarea',
-                'rows'          => 2,
-                'default_value' => 'Join our community of beauty and wellness lovers. We\'re here to help you shine.',
-            ),
-            array(
-                'key'           => 'field_footer_cta_btn_text',
-                'label'         => 'Кнопка — текст',
-                'name'          => 'footer_cta_btn_text',
-                'type'          => 'text',
-                'default_value' => 'Book Appointment',
-                'wrapper'       => array( 'width' => '50' ),
-            ),
-            array(
-                'key'     => 'field_footer_cta_btn_url',
-                'label'   => 'Кнопка — ссылка',
-                'name'    => 'footer_cta_btn_url',
-                'type'    => 'url',
-                'wrapper' => array( 'width' => '50' ),
-            ),
-
             /* ── Таб 2: Контакты (колонка 1) ── */
             array( 'key' => 'field_footer_tab_contact', 'label' => '📍 Контакты', 'name' => '', 'type' => 'tab', 'placement' => 'top' ),
 
