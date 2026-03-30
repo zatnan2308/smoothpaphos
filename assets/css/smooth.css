@@ -2389,8 +2389,13 @@ h1, h2, h3, h4, h5 {
   padding: 1.5rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: auto;
+  align-items: start;   /* prevents stretch from fighting aspect-ratio */
+  align-content: start;
   gap: 0.75rem;
   overflow-y: auto;
+  flex: 1 1 0;          /* fills modal flex column, allows shrinking */
+  min-height: 0;        /* allows flex shrink below intrinsic size */
 }
 
 .works-item {
@@ -2399,9 +2404,9 @@ h1, h2, h3, h4, h5 {
   overflow: hidden;
   background: var(--bg-card, var(--bg-2));
   aspect-ratio: 3 / 4;
+  width: 100%;          /* fills its grid column */
   cursor: pointer;
 }
-.works-item[data-type="video"] { cursor: pointer; }
 
 /* ── Play-button overlay on video thumbnails ── */
 .works-item[data-type="video"]::before {
@@ -2477,12 +2482,17 @@ h1, h2, h3, h4, h5 {
     gap: 0.75rem;
     padding: 1.25rem;
     scrollbar-width: none;
+    align-items: stretch; /* reset to stretch for carousel */
+    flex: 1 1 0;
+    min-height: 180px;    /* mobile: min-height so carousel is visible */
+    max-height: 70vh;
   }
   .works-grid::-webkit-scrollbar { display: none; }
   .works-item {
-    flex: 0 0 80%;
+    flex: 0 0 75%;
     scroll-snap-align: start;
-    max-width: 80%;
+    width: 75%;
+    aspect-ratio: 3 / 4;
   }
 }
 
