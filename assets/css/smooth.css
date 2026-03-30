@@ -2408,9 +2408,11 @@ h1, h2, h3, h4, h5 {
   overflow: hidden;
   background: var(--bg-card, var(--bg-2));
   aspect-ratio: 3 / 4;
-  width: 100%;          /* fills its grid column */
-  min-height: 0;        /* override grid-item's min-height:auto so a tall
-                           image can't push the container beyond aspect-ratio */
+  width: 100%;
+  /* min-height intentionally NOT set to 0:
+     grid-item's default min-height:auto resolves to the aspect-ratio
+     transferred size (width × 4/3) — that's the correct row height.
+     Images are position:absolute so they no longer inflate this value. */
   cursor: pointer;
 }
 
