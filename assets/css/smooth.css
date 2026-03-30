@@ -2409,6 +2409,8 @@ h1, h2, h3, h4, h5 {
   background: var(--bg-card, var(--bg-2));
   aspect-ratio: 3 / 4;
   width: 100%;          /* fills its grid column */
+  min-height: 0;        /* override grid-item's min-height:auto so a tall
+                           image can't push the container beyond aspect-ratio */
   cursor: pointer;
 }
 
@@ -2446,6 +2448,10 @@ h1, h2, h3, h4, h5 {
 
 .works-item img,
 .works-item video {
+  /* position:absolute removes img/video from layout flow so they
+     cannot affect the container's height — only aspect-ratio defines it */
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
