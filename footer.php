@@ -23,12 +23,15 @@ $col3_links = get_field( 'footer_col3_links', 'option' ) ?: array();
 /* ── Часы ── */
 $hours_title = get_field( 'footer_hours_title', 'option' ) ?: 'Working Hours';
 $hours_rows  = get_field( 'footer_hours',       'option' ) ?: array();
+
+/* ── Якорь ── */
+$footer_anchor = sanitize_key( get_field( 'footer_anchor', 'option' ) ?: 'contacts' );
 ?>
 
 <div class="footer-wrap">
 
     <!-- ══ Footer Grid ══ -->
-    <footer class="site-footer" role="contentinfo">
+    <footer class="site-footer" id="<?php echo esc_attr( $footer_anchor ); ?>" role="contentinfo">
         <div class="footer-grid">
 
             <!-- ── Колонка 1: Логотип + контакты ── -->

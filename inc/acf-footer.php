@@ -18,6 +18,18 @@ add_action( 'acf/init', function () {
         'title'  => 'Футер',
         'fields' => array(
 
+            /* ── Якорь для навигационного меню ── */
+            array(
+                'key'           => 'field_footer_anchor',
+                'label'         => '⚓ Якорь секции (id)',
+                'name'          => 'footer_anchor',
+                'type'          => 'text',
+                'default_value' => 'contacts',
+                'placeholder'   => 'contacts',
+                'instructions'  => 'ID для якорных ссылок в меню. Только латиница, цифры, дефисы. Пример: contacts → ссылка #contacts',
+                'wrapper'       => array( 'width' => '33' ),
+            ),
+
             /* ── Таб 2: Контакты (колонка 1) ── */
             array( 'key' => 'field_footer_tab_contact', 'label' => '📍 Контакты', 'name' => '', 'type' => 'tab', 'placement' => 'top' ),
 
