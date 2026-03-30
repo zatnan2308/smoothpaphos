@@ -243,7 +243,7 @@ if ( ! empty( $categories ) ) :
     <?php if ( $is_video ) : ?>
     <div class="works-item" data-type="video">
         <video src="<?php echo esc_url( $url ); ?>"
-               preload="none" playsinline loop muted></video>
+               preload="metadata" playsinline loop muted></video>
     </div>
     <?php else :
         $thumb = $media['sizes']['medium_large'] ?? $media['sizes']['medium'] ?? $url;
