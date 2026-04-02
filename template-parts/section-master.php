@@ -8,10 +8,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $section_anchor = sanitize_key( get_field( 'master_anchor' ) ?: 'master' );
 
-$label    = get_field( 'master_label' ) ?: 'Your Master';
-$title    = get_field( 'master_name' )  ?: 'Diana';
-$subtitle = 'Massage therapist & beauty specialist';
-$bio      = '<p>Diana has been practising massage therapy for over 5 years, combining classical techniques with a deeply personal approach. Each session is tailored to your needs — whether you seek relaxation, recovery or balance.</p>';
+$label    = get_field( 'master_label' )    ?: 'Your Master';
+$title    = get_field( 'master_name' )     ?: 'Diana';
+$subtitle = get_field( 'master_subtitle' ) ?: 'Massage therapist & beauty specialist';
+
+$bio = get_field( 'master_bio' );
+if ( empty( $bio ) ) {
+    $bio = '<p>Diana has been practising massage therapy for over 5 years, combining classical techniques with a deeply personal approach. Each session is tailored to your needs — whether you seek relaxation, recovery or balance.</p>';
+}
 $image    = get_field( 'master_image' );
 
 $quote = get_field( 'master_quote' );

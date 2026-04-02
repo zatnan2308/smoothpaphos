@@ -583,8 +583,13 @@ acf_add_local_field_group( array(
         /* ── Таб: Контент ── */
         array( 'key' => 'tab_master_content', 'label' => '📝 Контент', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
 
-        array( 'key' => 'field_master_label', 'label' => 'Метка (маленький текст)', 'name' => 'master_label', 'type' => 'text', 'default_value' => 'Your Master' ),
-        array( 'key' => 'field_master_name',  'label' => 'Имя мастера',             'name' => 'master_name',  'type' => 'text', 'default_value' => 'Diana' ),
+        array( 'key' => 'field_master_label',    'label' => 'Метка (маленький текст)',     'name' => 'master_label',    'type' => 'text', 'default_value' => 'Your Master' ),
+        array( 'key' => 'field_master_name',     'label' => 'Имя мастера',                'name' => 'master_name',     'type' => 'text', 'default_value' => 'Diana' ),
+        array( 'key' => 'field_master_subtitle', 'label' => 'Подзаголовок (специализация)', 'name' => 'master_subtitle', 'type' => 'text', 'default_value' => 'Massage therapist & beauty specialist', 'placeholder' => 'Massage therapist & beauty specialist' ),
+
+        smooth_wysiwyg_field( 'field_master_bio', 'Описание / биография', 'master_bio', 'basic',
+            '<p>Diana has been practising massage therapy for over 5 years, combining classical techniques with a deeply personal approach. Each session is tailored to your needs — whether you seek relaxation, recovery or balance.</p>'
+        ),
 
         smooth_wysiwyg_field( 'field_master_quote', 'Цитата мастера', 'master_quote', 'basic',
             '<p>At our studio you will feel lightness, recovery and harmony. I will help you recharge after a long day.</p>'
