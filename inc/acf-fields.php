@@ -563,6 +563,7 @@ acf_add_local_field_group( array(
     ),
     'location'   => array(
         array( array( 'param' => 'page_type',     'operator' => '==', 'value' => 'front_page' ) ),
+        array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-home.php' ) ),
         array( array( 'param' => 'page_template', 'operator' => '==', 'value' => 'page-services.php' ) ),
     ),
     'menu_order' => 2,
