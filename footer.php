@@ -131,7 +131,7 @@ $footer_anchor = sanitize_key( get_field( 'footer_anchor', 'option' ) ?: 'contac
                     <?php if ( $whatsapp_link && $whatsapp_link !== '#' ) : ?>
                     <a href="<?php echo esc_url( $whatsapp_link ); ?>" target="_blank" rel="noopener noreferrer"
                        class="footer-social-btn" aria-label="WhatsApp">
-                        <?php echo smooth_icon( 'message-circle', 18 ); ?>
+                        <?php echo smooth_icon( 'whatsapp', 18 ); ?>
                     </a>
                     <?php endif; ?>
                 </div>

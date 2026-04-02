@@ -1945,7 +1945,12 @@ h1, h2, h3, h4, h5 {
 }
 
 /* ── Соцсети ── */
-.footer-social {
+.footer-social.footer-social {
+  width: auto;
+  height: auto;
+  border: none;
+  border-radius: 0;
+  background: none;
   display: flex;
   gap: 10px;
   margin-top: 24px;
