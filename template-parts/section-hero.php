@@ -123,6 +123,15 @@ $fallback_slides = array(
 
 $slides = ! empty( $slides_acf ) ? $slides_acf : $fallback_slides;
 $total  = count( $slides );
+
+/* ── Booking form data ── */
+$booking_enable    = get_field( 'hero_booking_enable' );
+$booking_title     = get_field( 'hero_booking_title' )     ?: 'Book a Session';
+$booking_subtitle  = get_field( 'hero_booking_subtitle' )  ?: 'Choose your desired service from our menu.';
+$booking_shortcode = get_field( 'hero_booking_shortcode' );
+$booking_footer_l  = get_field( 'hero_booking_footer_left' )  ?: 'AUTHENTIC CARE';
+$booking_footer_r  = get_field( 'hero_booking_footer_right' ) ?: 'SINCE 2024';
+$show_booking      = $booking_enable && ! empty( trim( (string) $booking_shortcode ) );
 ?>
 
 <?php if ( ! empty( $css_vars ) ) : ?>
@@ -180,6 +189,30 @@ $total  = count( $slides );
         </div>
         <?php endforeach; ?>
     </div><!-- .slider-track -->
+
+    <?php if ( $show_booking ) : ?>
+    <!-- ══ Booking form — right column ══ -->
+    <aside class="hero-booking" aria-label="Booking form">
+        <div class="hero-booking-inner">
+            <h2 class="hero-booking-title"><?php echo esc_html( $booking_title ); ?></h2>
+            <?php if ( $booking_subtitle ) : ?>
+                <p class="hero-booking-subtitle"><?php echo esc_html( $booking_subtitle ); ?></p>
+            <?php endif; ?>
+
+            <div class="hero-booking-form">
+                <?php echo do_shortcode( $booking_shortcode ); ?>
+            </div>
+
+            <?php if ( $booking_footer_l || $booking_footer_r ) : ?>
+            <div class="hero-booking-footer">
+                <span class="hbf-left"><?php echo esc_html( $booking_footer_l ); ?></span>
+                <span class="hbf-divider" aria-hidden="true"></span>
+                <span class="hbf-right"><?php echo esc_html( $booking_footer_r ); ?></span>
+            </div>
+            <?php endif; ?>
+        </div>
+    </aside>
+    <?php endif; ?>
 
     <?php if ( $total > 1 ) : ?>
 

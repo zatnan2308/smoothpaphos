@@ -99,6 +99,16 @@ acf_add_local_field_group( array(
             ),
         ),
 
+        /* ── Таб: Форма бронирования ── */
+        array( 'key' => 'field_hero_booking_tab', 'label' => '📝 Форма бронирования', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
+
+        array( 'key' => 'field_hero_booking_enable',    'label' => 'Показать форму на слайдере', 'name' => 'hero_booking_enable',    'type' => 'true_false', 'ui' => 1, 'default_value' => 1 ),
+        array( 'key' => 'field_hero_booking_title',     'label' => 'Заголовок формы',            'name' => 'hero_booking_title',     'type' => 'text', 'default_value' => 'Book a Session' ),
+        array( 'key' => 'field_hero_booking_subtitle',  'label' => 'Подзаголовок формы',         'name' => 'hero_booking_subtitle',  'type' => 'text', 'default_value' => 'Choose your desired service from our menu.' ),
+        array( 'key' => 'field_hero_booking_shortcode', 'label' => 'Shortcode Contact Form 7',   'name' => 'hero_booking_shortcode', 'type' => 'textarea', 'rows' => 2, 'placeholder' => '[contact-form-7 id="123" title="Hero Booking"]', 'instructions' => 'Вставьте шорткод формы из Contact Form 7' ),
+        array( 'key' => 'field_hero_booking_footer_left',  'label' => 'Футер формы — слева',  'name' => 'hero_booking_footer_left',  'type' => 'text', 'default_value' => 'AUTHENTIC CARE' ),
+        array( 'key' => 'field_hero_booking_footer_right', 'label' => 'Футер формы — справа', 'name' => 'hero_booking_footer_right', 'type' => 'text', 'default_value' => 'SINCE 2024' ),
+
         /* ── Таб: Настройки отображения ── */
         array( 'key' => 'field_hero_settings_tab', 'label' => '⚙️ Настройки отображения', 'name' => '', 'type' => 'tab', 'placement' => 'top', 'endpoint' => 0 ),
 
