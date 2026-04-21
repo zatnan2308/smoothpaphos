@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'SMOOTH_VERSION', '2.1.29' );
+define( 'SMOOTH_VERSION', '2.1.30' );
 define( 'SMOOTH_DIR', get_template_directory() );
 define( 'SMOOTH_URI', get_template_directory_uri() );
 
@@ -50,11 +50,26 @@ define( 'SMOOTH_FONT_URL', 'https://fonts.googleapis.com/css2?family=Plus+Jakart
    Enqueue Styles & Scripts
    ========================================================================= */
 function smooth_enqueue_assets() {
+    // Flatpickr (date/time picker) — CDN, loads on all pages w/ form
+    wp_enqueue_style(
+        'flatpickr',
+        'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css',
+        array(),
+        '4.6.13'
+    );
+    wp_enqueue_script(
+        'flatpickr',
+        'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.js',
+        array(),
+        '4.6.13',
+        true
+    );
+
     // Main stylesheet (fonts loaded asynchronously via wp_head)
     wp_enqueue_style(
         'smooth-style',
         SMOOTH_URI . '/assets/css/smooth.css',
-        array(),
+        array( 'flatpickr' ),
         SMOOTH_VERSION
     );
 
@@ -62,10 +77,40 @@ function smooth_enqueue_assets() {
     wp_enqueue_script(
         'smooth-script',
         SMOOTH_URI . '/assets/js/smooth.js',
-        array(),
+        array( 'flatpickr' ),
         SMOOTH_VERSION,
         true
     );
+
+    // Init Flatpickr on .hb-date / .hb-time inputs after DOM ready
+    $init_js = <<<'JS'
+document.addEventListener('DOMContentLoaded', function () {
+  if (typeof flatpickr === 'undefined') return;
+  // Date picker
+  document.querySelectorAll('.hb-date').forEach(function (el) {
+    flatpickr(el, {
+      dateFormat: 'Y-m-d',
+      altInput: true,
+      altFormat: 'F j, Y',
+      minDate: 'today',
+      disableMobile: true,
+      monthSelectorType: 'static'
+    });
+  });
+  // Time picker
+  document.querySelectorAll('.hb-time').forEach(function (el) {
+    flatpickr(el, {
+      enableTime: true,
+      noCalendar: true,
+      dateFormat: 'H:i',
+      time_24hr: true,
+      minuteIncrement: 15,
+      disableMobile: true
+    });
+  });
+});
+JS;
+    wp_add_inline_script( 'smooth-script', $init_js, 'after' );
 }
 add_action( 'wp_enqueue_scripts', 'smooth_enqueue_assets' );
 
