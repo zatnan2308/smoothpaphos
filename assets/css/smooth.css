@@ -752,36 +752,57 @@ h1, h2, h3, h4, h5 {
   background: linear-gradient(135deg, #0f1a0d 0%, #1a3018 45%, #0f1a0d 100%);
 }
 
-/* Dark overlay — stronger on left for readability */
+/* Warm, asymmetric overlay — darker on left, open on right for the form */
 .slide-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to right,
-    rgba(8, 5, 2, 0.76) 0%,
-    rgba(8, 5, 2, 0.48) 50%,
-    rgba(8, 5, 2, 0.18) 100%
-  );
+  background:
+    linear-gradient(
+      to right,
+      rgba(20, 14, 10, 0.55) 0%,
+      rgba(20, 14, 10, 0.32) 40%,
+      rgba(20, 14, 10, 0.18) 70%,
+      rgba(20, 14, 10, 0.10) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(20, 14, 10, 0.18) 0%,
+      rgba(20, 14, 10, 0.00) 35%,
+      rgba(20, 14, 10, 0.00) 65%,
+      rgba(20, 14, 10, 0.22) 100%
+    );
   z-index: 1;
 }
 
-/* Slide content — left aligned, ~55% ширины экрана */
+/* Slide content — left column, single vertical axis */
 .slide-content {
   position: relative;
   z-index: 2;
-  padding-left: max(2rem, calc((100vw - 1200px) / 2 + 2.5rem));
-  padding-right: 2rem;
-  padding-top: 5rem; /* clear the navbar pill */
-  width: 58%;        /* занимаем левую половину, текст не сдавлен */
+  box-sizing: border-box;
+  padding-left: max(2.5rem, calc((100vw - 1200px) / 2 + 4.5rem));
+  padding-right: 2.5rem;
+  padding-top: clamp(5rem, 8vh, 7rem);
+  padding-bottom: clamp(3.5rem, 7vh, 5.5rem);
+  width: 60%;
+  max-width: 620px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* everything snaps to the same left axis */
+}
+@media (min-width: 901px) {
+  .slide-content { width: 60%; max-width: 620px; }
 }
 @media (max-width: 1024px) {
-  .slide-content { width: 70%; }
+  .slide-content { width: 70%; padding-left: max(2rem, 4vw); }
 }
 @media (max-width: 767px) {
   .slide-content {
     width: 100%;
+    max-width: none;
     padding-left: 1.5rem;
+    padding-right: 1.5rem;
     padding-top: 6rem;
+    padding-bottom: 3rem;
   }
 }
 
@@ -789,57 +810,64 @@ h1, h2, h3, h4, h5 {
 .slide-label {
   display: inline-block;
   font-family: var(--font-sans);
-  font-size: var(--hero-label-size, 0.6rem);
+  font-size: var(--hero-label-size, 0.6875rem); /* ≈11px */
   font-weight: 500;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--hero-label-color, rgba(255, 255, 255, 0.65));
-  margin-bottom: 1.5rem;
+  color: var(--hero-label-color, rgba(255, 255, 255, 0.80));
+  margin: 0 0 1.75rem;
 }
 
-/* Heading */
+/* Heading — tight leading, bounded width */
 .slide-title {
   font-family: var(--hero-title-font);
   font-weight: 300;
-  line-height: 1.0;
-  letter-spacing: -0.01em;
-  margin-bottom: 1.75rem;
+  line-height: 0.92;
+  letter-spacing: -0.015em;
+  margin: 0 0 2rem;
+  max-width: 480px;
 }
 .slide-title-line {
   display: block;
-  font-size: var(--hero-title-size);
+  font-size: var(--hero-title-size, clamp(3.5rem, 7vw, 5.5rem));
   color: var(--hero-title-color, var(--text));
   font-style: normal;
 }
 .slide-title-italic {
   display: block;
-  font-size: var(--hero-title-size);
+  font-size: var(--hero-title-size, clamp(3.5rem, 7vw, 5.5rem));
   color: var(--hero-title-color, var(--text));
   font-style: italic;
+  letter-spacing: -0.02em; /* compensate italic */
 }
 
 /* Description */
 .slide-desc {
-  font-size: var(--hero-desc-size);
-  line-height: 1.75;
-  color: var(--hero-desc-color, rgba(240, 235, 227, 0.72));
-  max-width: 42ch;
-  margin-bottom: 2.5rem;
+  font-size: var(--hero-desc-size, 0.9375rem);
+  line-height: 1.65;
+  color: var(--hero-desc-color, rgba(255, 255, 255, 0.86));
+  max-width: 280px;
+  margin: 0 0 2.25rem;
 }
-.slide-desc.wysiwyg-content p { color: var(--hero-desc-color, rgba(240, 235, 227, 0.72)); margin-bottom: 0; }
+.slide-desc.wysiwyg-content p {
+  color: var(--hero-desc-color, rgba(255, 255, 255, 0.86));
+  margin-bottom: 0;
+}
 
-/* CTA button */
+/* CTA button — pill */
 .slide-btn {
   display: inline-flex;
   align-items: center;
-  padding: 1rem 2.5rem;
+  justify-content: center;
+  height: 56px;
+  padding: 0 2rem;
   background: var(--hero-btn-bg);
   border: var(--hero-btn-border);
-  border-radius: 100px;
+  border-radius: 999px;
   font-family: var(--font-sans);
   font-size: var(--hero-btn-font-size, 0.75rem);
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--hero-btn-color);
   transition: background var(--ease), color var(--ease), transform var(--ease), border-color var(--ease);
@@ -852,105 +880,120 @@ h1, h2, h3, h4, h5 {
 
 /* ─────────────────────────────────────────
    HERO BOOKING FORM — right column
+   Vertical rhythm: 8 / 12 / 16 / 24 / 32 / 48 px
 ───────────────────────────────────────── */
 .hero-booking {
   position: absolute;
   top: 50%;
-  right: max(2rem, calc((100vw - 1200px) / 2 + 2.5rem));
+  right: max(2.5rem, calc((100vw - 1200px) / 2 + 4.5rem));
   transform: translateY(-50%);
   z-index: 4;
-  width: min(380px, 32vw);
+  width: min(400px, 36vw);
   pointer-events: auto;
 }
 .hero-booking-inner {
-  background: rgba(15, 12, 10, 0.82);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  background: rgba(24, 18, 14, 0.82);
+  backdrop-filter: blur(14px) saturate(120%);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 18px;
-  padding: 1.75rem 1.5rem 1.25rem;
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+  border-radius: 24px;
+  padding: 32px 28px 24px; /* top / sides / bottom */
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.38);
   color: #fff;
 }
 .hero-booking-title {
   font-family: var(--font-serif, 'Cormorant Garamond', serif);
   font-weight: 400;
-  font-size: 1.875rem;
+  font-size: 1.875rem; /* 30px */
   line-height: 1.1;
   color: #fff;
-  margin: 0 0 0.5rem;
+  margin: 0 0 8px;
 }
 .hero-booking-subtitle {
-  font-size: 0.8125rem;
-  line-height: 1.45;
-  color: rgba(255, 255, 255, 0.55);
-  margin: 0 0 1.25rem;
+  font-size: 0.8125rem; /* 13px */
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.68);
+  margin: 0 0 24px;
 }
 
 /* ── Contact Form 7 styling INSIDE hero booking ── */
 .hero-booking-form .wpcf7 { margin: 0; padding: 0; }
-.hero-booking-form .wpcf7-form { display: flex; flex-direction: column; gap: 0.625rem; }
+.hero-booking-form .wpcf7-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 .hero-booking-form p { margin: 0; }
 
 .hero-booking-form .hb-field {
   position: relative;
   display: block;
+  min-height: 56px; /* reserve height equal to input */
 }
-.hero-booking-form .hb-field svg {
+.hero-booking-form .hb-field > svg {
   position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 16px;
-  height: 16px;
-  color: rgba(255, 255, 255, 0.45);
+  left: 18px;
+  top: 19px; /* (56 - 18) / 2 — true vertical center, independent of CF7 wrappers */
+  width: 18px;
+  height: 18px;
+  color: rgba(255, 255, 255, 0.72);
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
 }
+.hero-booking-form .hb-field .wpcf7-form-control-wrap { display: block; width: 100%; }
+
 .hero-booking-form input[type="text"],
 .hero-booking-form input[type="tel"],
 .hero-booking-form input[type="email"],
 .hero-booking-form select,
 .hero-booking-form textarea,
-.hero-booking-form .wpcf7-form-control:not(.wpcf7-submit):not(.wpcf7-acceptance) {
+.hero-booking-form .wpcf7-form-control:not(.wpcf7-submit):not(.wpcf7-acceptance):not(.wpcf7-list-item-label) {
   width: 100%;
-  height: 46px;
-  padding: 0 14px 0 40px;
+  height: 56px;
+  padding: 0 16px 0 48px;
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
   color: #fff;
   font-family: var(--font-sans, 'Inter', sans-serif);
-  font-size: 0.875rem;
-  line-height: 1.4;
+  font-size: 0.9375rem; /* 15px */
+  line-height: 56px;     /* vertical centering for single-line */
   outline: none;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
   box-sizing: border-box;
   appearance: none;
   -webkit-appearance: none;
 }
 .hero-booking-form textarea {
   height: auto;
-  min-height: 92px;
-  padding-top: 12px;
-  padding-bottom: 12px;
+  min-height: 96px;
+  line-height: 1.5;
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 .hero-booking-form input::placeholder,
 .hero-booking-form textarea::placeholder {
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.55);
+}
+.hero-booking-form input:hover,
+.hero-booking-form select:hover,
+.hero-booking-form textarea:hover {
+  border-color: rgba(255, 255, 255, 0.32);
 }
 .hero-booking-form input:focus,
 .hero-booking-form select:focus,
 .hero-booking-form textarea:focus {
-  border-color: rgba(255, 255, 255, 0.42);
-  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.48);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06);
 }
-/* select dropdown arrow */
+
+/* Select dropdown arrow */
 .hero-booking-form select {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-opacity='0.55' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-opacity='0.6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>");
   background-repeat: no-repeat;
-  background-position: right 14px center;
-  padding-right: 36px;
+  background-position: right 16px center;
+  padding-right: 40px;
   cursor: pointer;
 }
 .hero-booking-form select option {
@@ -961,33 +1004,30 @@ h1, h2, h3, h4, h5 {
 /* Acceptance checkbox row */
 .hero-booking-form .wpcf7-acceptance {
   display: block;
-  margin: 0.25rem 0 0;
+  margin: 4px 0 0;
 }
 .hero-booking-form .wpcf7-acceptance .wpcf7-list-item {
   margin: 0;
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
 }
 .hero-booking-form .wpcf7-acceptance label {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  font-size: 0.75rem;
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: start;
+  gap: 10px;
+  font-size: 0.8125rem; /* 13px */
   line-height: 1.45;
-  color: rgba(255, 255, 255, 0.58);
+  color: rgba(255, 255, 255, 0.70);
   cursor: pointer;
 }
 .hero-booking-form .wpcf7-acceptance input[type="checkbox"] {
   appearance: none;
   -webkit-appearance: none;
-  width: 16px;
-  height: 16px;
-  margin: 2px 0 0;
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  width: 18px;
+  height: 18px;
+  margin: 1px 0 0; /* align with first text line */
+  border: 1px solid rgba(255, 255, 255, 0.38);
   border-radius: 4px;
   background: rgba(255, 255, 255, 0.05);
-  flex-shrink: 0;
   cursor: pointer;
   position: relative;
   transition: background 0.2s ease, border-color 0.2s ease;
@@ -999,35 +1039,40 @@ h1, h2, h3, h4, h5 {
 .hero-booking-form .wpcf7-acceptance input[type="checkbox"]:checked::after {
   content: "";
   position: absolute;
-  left: 4px;
+  left: 5px;
   top: 1px;
   width: 5px;
-  height: 9px;
+  height: 10px;
   border: solid #fff;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
 .hero-booking-form .wpcf7-acceptance a {
-  color: var(--gold, #b98b5a);
+  color: rgba(255, 255, 255, 0.92);
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: color 0.2s ease;
+}
+.hero-booking-form .wpcf7-acceptance a:hover {
+  color: var(--gold, #d5a46a);
 }
 
 /* Submit button */
 .hero-booking-form .wpcf7-submit,
 .hero-booking-form input[type="submit"] {
   width: 100%;
-  height: 50px;
-  padding: 0 20px;
-  margin-top: 0.5rem;
+  height: 56px;
+  padding: 0 24px;
+  margin-top: 16px;
   background: #fff;
   color: #0f0a06;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   font-family: var(--font-sans, 'Inter', sans-serif);
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
+  font-size: 0.8125rem; /* 13px */
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
@@ -1047,8 +1092,8 @@ h1, h2, h3, h4, h5 {
   color: #ff8b8b;
 }
 .hero-booking-form .wpcf7-response-output {
-  margin: 0.75rem 0 0 !important;
-  padding: 0.6rem 0.75rem !important;
+  margin: 12px 0 0 !important;
+  padding: 10px 12px !important;
   border: 1px solid rgba(255,255,255,0.18) !important;
   border-radius: 8px;
   font-size: 0.75rem;
@@ -1058,58 +1103,54 @@ h1, h2, h3, h4, h5 {
   border-color: rgba(255, 139, 139, 0.6) !important;
 }
 
-/* Footer row */
+/* Footer row — 3-part layout */
 .hero-booking-footer {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-top: 1rem;
-  padding-top: 0.9rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  font-size: 0.625rem;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  font-size: 0.625rem; /* 10px */
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.42);
 }
 .hbf-divider {
-  flex: 1;
   height: 1px;
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.14);
 }
 
 /* Responsive */
+@media (max-width: 1200px) {
+  .hero-booking { right: 2.5rem; width: min(380px, 34vw); }
+}
 @media (max-width: 1024px) {
-  .hero-booking { width: min(340px, 38vw); right: 1.5rem; }
+  .hero-booking { width: min(340px, 38vw); right: 2rem; }
+  .hero-booking-inner { padding: 24px 20px 20px; }
   .hero-booking-title { font-size: 1.625rem; }
 }
 @media (max-width: 900px) {
   .hero-booking {
     position: static;
     transform: none;
-    width: 100%;
+    width: calc(100% - 3rem);
     max-width: 480px;
     margin: 0 auto 2rem;
     right: auto;
-    padding: 0 1.25rem;
   }
-  .slide-content { padding-bottom: 2rem; }
-}
-
-/* Pull slide content to the left so the form doesn't overlap on desktop */
-@media (min-width: 901px) {
-  .slide-content { width: 55%; max-width: 640px; }
 }
 
 /* ── Pagination — bottom left ── */
 .slider-pagination {
   position: absolute;
   bottom: 2.5rem;
-  left: max(2rem, calc((100vw - 1200px) / 2 + 2.5rem));
+  left: max(2.5rem, calc((100vw - 1200px) / 2 + 4.5rem));
   z-index: 10;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 8px;
 }
 @media (max-width: 767px) {
   .slider-pagination { left: 1.5rem; bottom: 2rem; }
@@ -1126,7 +1167,7 @@ h1, h2, h3, h4, h5 {
   transition: background 0.35s ease, width 0.35s ease;
 }
 .pag-dot.is-active {
-  width: 48px;
+  width: 40px;
   background: #fff;
 }
 .pag-dot:hover:not(.is-active) { background: rgba(255, 255, 255, 0.55); }
@@ -1134,11 +1175,14 @@ h1, h2, h3, h4, h5 {
 /* ── Arrows — bottom right ── */
 .slider-arrows {
   position: absolute;
-  bottom: 2.25rem;
-  right: max(2rem, calc((100vw - 1200px) / 2 + 2.5rem));
+  bottom: 2.5rem;
+  right: max(2.5rem, calc((100vw - 1200px) / 2 + 4.5rem));
   z-index: 10;
   display: flex;
-  gap: 0.625rem;
+  gap: 10px;
+}
+@media (max-width: 900px) {
+  .slider-arrows { right: 2rem; bottom: 2rem; }
 }
 @media (max-width: 767px) {
   .slider-arrows { right: 1.5rem; bottom: 1.75rem; }
@@ -1146,11 +1190,12 @@ h1, h2, h3, h4, h5 {
 
 .slider-prev,
 .slider-next {
-  width: 48px; height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.30);
-  background: transparent;
-  color: rgba(255, 255, 255, 0.80);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.70);
   display: flex;
   align-items: center;
   justify-content: center;
