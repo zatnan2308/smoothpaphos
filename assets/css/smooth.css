@@ -1293,14 +1293,30 @@ h1, h2, h3, h4, h5 {
   .hero-booking-title { font-size: 1.625rem; }
 }
 @media (max-width: 900px) {
+  /* Let the form flow below the slide — allow the hero to grow */
+  .hero-slider {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding-bottom: 2rem;
+  }
+  .slider-track {
+    position: relative;
+    height: 100svh;
+    min-height: 560px;
+  }
   .hero-booking {
     position: static;
     transform: none;
-    width: calc(100% - 3rem);
+    width: calc(100% - 2rem);
     max-width: 480px;
-    margin: 0 auto 2rem;
+    margin: 1.5rem auto 0;
     right: auto;
   }
+  /* Hide slider UI on mobile — users swipe */
+  .slider-pagination,
+  .slider-arrows { display: none; }
 }
 
 /* ── Pagination — bottom left ── */
