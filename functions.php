@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'SMOOTH_VERSION', '2.1.32' );
+define( 'SMOOTH_VERSION', '2.1.33' );
 define( 'SMOOTH_DIR', get_template_directory() );
 define( 'SMOOTH_URI', get_template_directory_uri() );
 
@@ -129,6 +129,26 @@ function smooth_head_resources() {
     <?php
 }
 add_action( 'wp_head', 'smooth_head_resources', 1 );
+
+
+/* =========================================================================
+   CF7 — fire Google Analytics event on successful submission
+   ========================================================================= */
+function smooth_cf7_ga_event() {
+    ?>
+    <script>
+    document.addEventListener( 'wpcf7mailsent', function( event ) {
+        if ( typeof gtag === 'function' ) {
+            gtag( 'event', 'book_appointment', {
+                'event_category': 'form',
+                'event_label': 'Appointment Booked'
+            } );
+        }
+    }, false );
+    </script>
+    <?php
+}
+add_action( 'wp_footer', 'smooth_cf7_ga_event', 99 );
 
 
 /* =========================================================================
